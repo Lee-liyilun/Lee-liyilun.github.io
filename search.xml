@@ -1,35 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>CURL(60)无法获得本地颁发者证书</title>
-    <url>/2017/11/06/10.html</url>
-    <content><![CDATA[<p>今天在部署一个有关微信项目的环境时，访问直接报如下错误：    <code>curl(60)SSL certificate problem：unable to get local issuer certificate.</code></p>
-<a id="more"></a>
-<p>此问题是由于没有配置信任的服务器HTTPS验证。默认，curl被设为不信任任何CA证书，就是不信任任何服务器的验证。因此，浏览器无法通过HTTPS访问你的服务器，而报curl(60)的错误。</p>
-<p><strong>解决方法有2种：</strong></p>
-<ol>
-<li>如果你的内容不敏感，可以在使用curl_exec()之前跳过ssl检查项【因为笔者对这个项目的代码不熟（￣□￣｜｜），所以直接跳过这个方法】</li>
-</ol>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, <span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>下载一个 <a href="https://github.com/bagder/ca-bundle/blob/e9175fec5d0c4d42de24ed6d84a06d504d5e5a09/ca-bundle.crt" target="_blank" rel="noopener">ca-bundle.crt</a> ，放到对应的目录，在php.ini文件中配置下路径，然后重启php【此处不得不感叹一下GitHub真的是大神云集】</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl.cainfo&#x3D;&quot;绝对路径&#x2F;ca-bundle.crt&quot;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>参考文章：<a href="https://www.cnblogs.com/loveyouyou616/p/5513384.html" target="_blank" rel="noopener">https://www.cnblogs.com/loveyouyou616/p/5513384.html</a></p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>LNMP</tag>
-        <tag>一键脚本</tag>
-        <tag>运行环境</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux 10字符串木马病毒</title>
     <url>/2017/09/15/1.html</url>
     <content><![CDATA[<p>今天客户的WAP端注册显示不知名的报错，进入网站查看。可是访问缓慢，于是进入服务器查看情况，结果SSH连接也是十分的卡。等了半天，使用命令查看负载，发现CPU达到了100%，一个10字符串的进程占据了第一的位置。二话不说直接kill掉它，可是立马有生成了另一个10字符串进程。</p>
@@ -97,42 +68,73 @@
       </tags>
   </entry>
   <entry>
-    <title>多机部署之使用rsync+inotify实时双向同步代码</title>
-    <url>/2017/12/24/15.html</url>
-    <content><![CDATA[<p>rsync可以实现触发式的文件同步，但是通过crontab守护进程方式进行触发，同步的数据和实际数据会有差异，而inotify可以监控文件系统的各种变化，当文件有任何变动时，就触发rsync同步，这样刚好解决了同步数据的实时性问题。</p>
+    <title>CURL(60)无法获得本地颁发者证书</title>
+    <url>/2017/11/06/10.html</url>
+    <content><![CDATA[<p>今天在部署一个有关微信项目的环境时，访问直接报如下错误：    <code>curl(60)SSL certificate problem：unable to get local issuer certificate.</code></p>
+<a id="more"></a>
+<p>此问题是由于没有配置信任的服务器HTTPS验证。默认，curl被设为不信任任何CA证书，就是不信任任何服务器的验证。因此，浏览器无法通过HTTPS访问你的服务器，而报curl(60)的错误。</p>
+<p><strong>解决方法有2种：</strong></p>
+<ol>
+<li>如果你的内容不敏感，可以在使用curl_exec()之前跳过ssl检查项【因为笔者对这个项目的代码不熟（￣□￣｜｜），所以直接跳过这个方法】</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, <span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>下载一个 <a href="https://github.com/bagder/ca-bundle/blob/e9175fec5d0c4d42de24ed6d84a06d504d5e5a09/ca-bundle.crt" target="_blank" rel="noopener">ca-bundle.crt</a> ，放到对应的目录，在php.ini文件中配置下路径，然后重启php【此处不得不感叹一下GitHub真的是大神云集】</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl.cainfo&#x3D;&quot;绝对路径&#x2F;ca-bundle.crt&quot;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>参考文章：<a href="https://www.cnblogs.com/loveyouyou616/p/5513384.html" target="_blank" rel="noopener">https://www.cnblogs.com/loveyouyou616/p/5513384.html</a></p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>LNMP</tag>
+        <tag>一键脚本</tag>
+        <tag>运行环境</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SVN服务器搭建（简篇）</title>
+    <url>/2017/12/05/12.html</url>
+    <content><![CDATA[<p>Subversion是一个自由开源的版本控制系统，相对于RCS、CVS，采用了分支管理系统。SVN实现多个人共同开发同一个项目，共用资源的目的。</p>
 <a id="more"></a>
 <ol>
-<li><p>安装rsync(两台服务器都要装)</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y rsync</span><br></pre></td></tr></table></figure>
+<li><p>安装apache（已装请忽略）</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y httpd</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>创建或者修改 <code>/etc/rsyncd.conf</code></p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">rsync通用配置文件,配置的注释不要写在配置后面，否则会有问题</span></span><br><span class="line">uid = root</span><br><span class="line">gid = root</span><br><span class="line">use chroot = 0</span><br><span class="line">port = 873</span><br><span class="line"><span class="meta">#</span><span class="bash">允许ip访问设置，请根据实际需要进行配置,这里为了方便设为全网段 *,生产环境下为了安全请指定ip或ip段</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> hosts allow = 192.168.0.1/255.255.255.0 198.162.145.1 10.0.1.0/255.255.255.0</span></span><br><span class="line">hosts allow = *</span><br><span class="line">max connections = 0</span><br><span class="line">timeout = 300</span><br><span class="line">pid file = /var/run/rsyncd.pid</span><br><span class="line">lock file = /var/run/rsyncd.lock</span><br><span class="line">log file = /var/log/rsyncd.log</span><br><span class="line">log format = %t %a %m %f %b</span><br><span class="line">transfer logging = yes</span><br><span class="line">syslog facility = local3</span><br><span class="line"><span class="meta">#</span><span class="bash">方括号中为模块声明，对应命名,这里master_web对应了主web机配置,从服务器可都为[slave_web]，方便inotify脚本配置</span></span><br><span class="line">[master_web]</span><br><span class="line"><span class="meta">#</span><span class="bash">指定当前模块在rsync服务器上的同步路径，该参数是必须指定的</span></span><br><span class="line">path = /home/wwwroot/</span><br><span class="line"><span class="meta">#</span><span class="bash">注释，可以同模块名一样,从服务器可都为slave_web</span></span><br><span class="line">comment = master_web</span><br><span class="line">ignore errors</span><br><span class="line"><span class="meta">#</span><span class="bash">是否允许客户端上传文件</span></span><br><span class="line">read only = no</span><br><span class="line">list = no</span><br><span class="line"><span class="meta">#</span><span class="bash">指定由空格或逗号分隔的用户名列表，只有这些用户才允许连接该模块</span></span><br><span class="line">auth users = rsync</span><br><span class="line"><span class="meta">#</span><span class="bash">保存密码和用户名文件，需要自己生成</span></span><br><span class="line">secrets file = /etc/rsyncd.passwd</span><br></pre></td></tr></table></figure></li>
-<li><p>创建或者修改 <code>/etc/rsyncd.passwd和/root/rsyncd.passwd</code></p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">/etc/rsyncd.passwd中内容格式 用户名:密码 ，多个用户名密码则每添加多行，建议从web机都是一样的用户名和密码</span></span><br><span class="line">rsync:123456</span><br><span class="line"><span class="meta">#</span><span class="bash">/root/rsyncd.passwd中内容只需要填写从服务器的密码，例如这里从服务器配的用户名密码都是rsync:123456，这里主服务器则写123456一个就可以了</span></span><br><span class="line">123456</span><br></pre></td></tr></table></figure>
+<li><p>安装SVN主程序和apache扩展</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y subversion mod_dav_svn</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>给文件赋权限</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod 600 /etc/rsyncd.passwd</span><br><span class="line">chmod 600 /root/rsyncd.passwd</span><br></pre></td></tr></table></figure>
+<li><p>建立SVN库，创建项目目录</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir -p /var/www/svn</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>以守护进程方式启动rsync服务</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/usr/bin/rsync --daemon --config=/etc/rsyncd.conf</span><br></pre></td></tr></table></figure>
+<li><p>创建版本库</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /var/www/svn</span><br><span class="line">svnadmin create ceshi</span><br></pre></td></tr></table></figure>
+
+<p> 创建之后有这几个文件夹和文件</p>
+<blockquote>
+<p>conf db format hooks locks README.txt</p>
+</blockquote>
 </li>
-<li><p>添加开机自启动</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo "/usr/bin/rsync --daemon --config=/etc/rsyncd.conf"&gt;&gt;/etc/rc.local</span><br></pre></td></tr></table></figure>
+<li><p>添加账号</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">htpasswd -cmb /var/www/svn/passwd nsxsg nsxsg2333</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>验证代码是否同步</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 主web服务器推送代码到从web服务器，命令中的</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> rsync@192.168.10.230::slave_web<span class="comment"># 192.168.10.230 为从web服务器的ip,</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> slave_web 为从web服务器的 rsyncd.conf 中配置的模块名，</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> rsync 为为从web服务器的中 rsyncd.passwd 中配置的用户名</span></span><br><span class="line">rsync -vzrtopg --delete --progress /home/wwwroot/ rsync@192.168.10.230::slave_web --password-file=/root/rsyncd.passwd</span><br></pre></td></tr></table></figure>
+<li><p>设置权限</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chown -R apache:apache /var/www/svn</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>安装inotify(两台服务器都要安装)</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget http://github.com/downloads/rvoicilas/inotify-tools/inotify-tools-3.14.tar.gz --no-check-certificate</span><br><span class="line">tar -zxvf inotify-tools-3.14.tar.gz</span><br><span class="line">makedir /usr/local/inotify</span><br><span class="line">cd inotify-tools-3.14.tar.gz</span><br><span class="line">./configure --prefix=/usr/local/inotify</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看是否安装成功</span></span><br><span class="line">ls -alh /usr/local/inotify/bin/inotify*</span><br><span class="line"><span class="meta">#</span><span class="bash"> 建立软连接</span></span><br><span class="line">ln -s /usr/local/inotify/bin/inotifywait /usr/bin/inotifywait</span><br><span class="line">ln -s /usr/local/inotify/bin/inotifywatch /usr/bin/inotifywatch</span><br></pre></td></tr></table></figure>
+<li><p>修改 <code>subversion.conf</code></p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi /etc/httpd/conf.d/subversion.conf</span><br></pre></td></tr></table></figure>
+
+<p> <strong>如下：</strong></p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;Location &#x2F;ceshi&gt;</span><br><span class="line">	DAV svn</span><br><span class="line">	SVNPath &#x2F;var&#x2F;www&#x2F;svn&#x2F;ceshi</span><br><span class="line">	Require valid-user</span><br><span class="line">	AuthType basic</span><br><span class="line">	AuthName &quot;Subversion&quot;</span><br><span class="line">	AuthUserFile &#x2F;var&#x2F;www&#x2F;svn&#x2F;passwd</span><br><span class="line">&lt;&#x2F;Location&gt;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>配置rsync.sh同步监控脚本</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi /root/rsync.sh</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 内容如下</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">src=/home/wwwroot/</span><br><span class="line">des=master_web #视情况自己配置，注意与下面的rsync命令结合配置</span><br><span class="line">user=rsync</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">多个ip就用空格间断,所有IP用一个双引号包起来</span></span><br><span class="line">host="192.168.10.230"</span><br><span class="line">/usr/bin/inotifywait -mrq –exclude=public –exclude=themes –exclude=wap_themes –timefmt '%d/%m/%y %H:%M' –format '%T %w%f' -e modify,delete,create,attrib src | while read file</span><br><span class="line">do</span><br><span class="line">    for hostip in host</span><br><span class="line">    do</span><br><span class="line">        rsync -vzrtopg –delete –progress –exclude=themes –exclude=wap_themes –exclude=public &#123;src&#125; &#123;user&#125;@&#123;hostip&#125;::&#123;des&#125; –password-file=/root/rsyncd.passwd</span><br><span class="line">        echo "$&#123;file&#125; was rsynced" &gt;&gt; /tmp/rsync.log 2&gt;&amp;1</span><br><span class="line">    done</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<li><p>重启apache</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/httpd restart</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>给rsync.sh脚本赋可执行权限</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod +x /root/rsync.sh</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>运行rsync.sh同步监控脚本和配置守护进程</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nohup sh /root/rsync.sh &amp;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">建立守护进程运行rsync.sh脚本</span></span><br><span class="line">echo “nohup sh /root/rsync.sh &amp;” &gt;&gt; /etc/rc.local</span><br></pre></td></tr></table></figure>
+<li><p>访问http://[ip或者域名]/ceshi 即可</p>
 </li>
 </ol>
 ]]></content>
@@ -140,9 +142,7 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>多机部署</tag>
-        <tag>rsync+inotify</tag>
-        <tag>双向实时同步代码</tag>
+        <tag>SVN</tag>
       </tags>
   </entry>
   <entry>
@@ -198,169 +198,6 @@
       </categories>
       <tags>
         <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>多机部署之MySQL主从配置</title>
-    <url>/2018/01/01/17.html</url>
-    <content><![CDATA[<p>MySQL的主从配置可以让我们很好地减轻数据库的压力而完成更多的业务需求，下面笔者就来介绍一下简单的MySQL主从配置。</p>
-<a id="more"></a>
-<ol>
-<li>主（从）服务器配置，修改配置文件 <code>/etc/my.cnf</code> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">log-bin=mysql-bin #[必须]启用二进制日志</span><br><span class="line">server-id=110     #[必须]服务器唯一ID，默认是1，一般取IP最后一段</span><br></pre></td></tr></table></figure></li>
-<li>重启数据库 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/mysqld restart</span><br></pre></td></tr></table></figure></li>
-<li>登陆主服务器，给从服务器授权 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql &gt; GRANT REPLICATION SLAVE ON *.* TO '用户名'@'从服务器IP' identified by '密码';</span><br><span class="line"><span class="meta">#</span><span class="bash">查看是否添加成功</span></span><br><span class="line">mysql &gt; SELECT user,host,password FROM mysql.user;</span><br></pre></td></tr></table></figure></li>
-<li>查看主数据库状态 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql &gt; show master status;</span><br><span class="line"></span><br><span class="line">+——————+———-+————–+——————+——————-+</span><br><span class="line">| File | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |</span><br><span class="line">+——————+———-+————–+——————+——————-+</span><br><span class="line">| mysql-bin.000001 | 640 | | | |</span><br><span class="line">+——————+———-+————–+——————+——————-+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">这里需要记录File以及Position的值，在操作从服务器时会用到</span></span><br></pre></td></tr></table></figure></li>
-<li>登陆从数据库 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">执行sql</span></span><br><span class="line">mysql &gt; change master to master_host='主数据库ip',master_user='数据库登陆用户名',master_password='数据库登陆密码',master_log_file='mysql-bin.000001',master_log_pos=640;</span><br><span class="line"><span class="meta">#</span><span class="bash">启动同步进程</span></span><br><span class="line">mysql &gt; start slave;</span><br><span class="line"><span class="meta">#</span><span class="bash">主从同步检查</span></span><br><span class="line">mysql &gt; show slave status\G</span><br><span class="line"><span class="meta">#</span><span class="bash">可以看到：Slave_IO_Running | Slave_SQL_Running两个值都是YES，说明配置成功了</span></span><br></pre></td></tr></table></figure></li>
-<li>主从服务器测试 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">主服务器MySQL，建立数据库，并在这个库中建表插入一条数据</span></span><br><span class="line"><span class="meta">#</span><span class="bash">从服务器查看是否拥有此数据</span></span><br></pre></td></tr></table></figure></li>
-<li>MySQL主服务器给web服务器授权访问 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql &gt; GRANT ALL PRIVILEGES  ON 数据库名.* to '用户名'@'web服务器ip' identified by '密码';</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>多机部署</tag>
-        <tag>MySQL主从配置</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SVN服务器搭建（简篇）</title>
-    <url>/2017/12/05/12.html</url>
-    <content><![CDATA[<p>Subversion是一个自由开源的版本控制系统，相对于RCS、CVS，采用了分支管理系统。SVN实现多个人共同开发同一个项目，共用资源的目的。</p>
-<a id="more"></a>
-<ol>
-<li><p>安装apache（已装请忽略）</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y httpd</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装SVN主程序和apache扩展</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y subversion mod_dav_svn</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>建立SVN库，创建项目目录</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir -p /var/www/svn</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建版本库</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /var/www/svn</span><br><span class="line">svnadmin create ceshi</span><br></pre></td></tr></table></figure>
-
-<p> 创建之后有这几个文件夹和文件</p>
-<blockquote>
-<p>conf db format hooks locks README.txt</p>
-</blockquote>
-</li>
-<li><p>添加账号</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">htpasswd -cmb /var/www/svn/passwd nsxsg nsxsg2333</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置权限</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chown -R apache:apache /var/www/svn</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改 <code>subversion.conf</code></p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi /etc/httpd/conf.d/subversion.conf</span><br></pre></td></tr></table></figure>
-
-<p> <strong>如下：</strong></p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;Location &#x2F;ceshi&gt;</span><br><span class="line">	DAV svn</span><br><span class="line">	SVNPath &#x2F;var&#x2F;www&#x2F;svn&#x2F;ceshi</span><br><span class="line">	Require valid-user</span><br><span class="line">	AuthType basic</span><br><span class="line">	AuthName &quot;Subversion&quot;</span><br><span class="line">	AuthUserFile &#x2F;var&#x2F;www&#x2F;svn&#x2F;passwd</span><br><span class="line">&lt;&#x2F;Location&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>重启apache</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/httpd restart</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>访问http://[ip或者域名]/ceshi 即可</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>SVN</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Sublime自定义快捷键（绑定插件）</title>
-    <url>/2017/12/07/13.html</url>
-    <content><![CDATA[<p>大家在使用Sublime的时候，是不是对于打印一些数据流的函数既爱又恨。爱的是这个东西对于排错和修改BUG是真的很有用，恨的是这个东西每次打起来是又多又长。那今天小编就介绍一种插件和快捷键结合的方法，快速输出打印函数。</p>
-<a id="more"></a>
-<ol>
-<li><p>新增插件</p>
-<blockquote>
-<p>操作流程：工具（T）-&gt; 插件开发 -&gt; 新建插件</p>
-</blockquote>
-<p> 之后会有一个untitled文件，内容如下</p>
- <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sublime, sublime_plugin</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExampleCommand</span><span class="params">(sublime_plugin.TextCommand)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self, edit)</span>:</span></span><br><span class="line">        self.view.insert(edit, <span class="number">0</span>, “Hello, World!”)</span><br></pre></td></tr></table></figure>
-
-<p> 这个代码什么意思哪，小编也不知道，但是没关系，不用懂它，知道怎么借鉴就可以了。大致意思如下：<code>class ExampleCommand()</code> 这个是一个类，也是我们接下来要用的。也和之后绑定快捷键有关，它是以大写字母来区分如何调用这个类名。</p>
-<p> <strong>比如：</strong><br> <code>ExampleCommand</code>这个类名，之后调用就用 <code>example</code> ；<code>EchoVdCommand</code> 这个类名，之后调用就用 <code>echo_vd</code>。</p>
-</li>
-<li><p>编辑插件<br> <strong>具体内容如下：</strong></p>
- <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sublime, sublime_plugin</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EchoVdCommand</span><span class="params">(sublime_plugin.TextCommand)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self, edit)</span>:</span></span><br><span class="line">        self.view.run_command(<span class="string">"insert_snippet"</span>,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">"contents"</span>:<span class="string">"echo '&lt;pre&gt;';var_dump(\$content);exit;"</span></span><br><span class="line">                &#125;</span><br><span class="line">            )</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FileVdCommand</span><span class="params">(sublime_plugin.TextCommand)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self, edit)</span>:</span></span><br><span class="line">        self.view.run_command(<span class="string">"insert_snippet"</span>,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">"contents"</span>:<span class="string">"file_put_contents(DATA_DIR.'/abcd.log',print_r(\$content,true),FILE_APPEND);"</span></span><br><span class="line">                &#125;</span><br><span class="line">            )</span><br></pre></td></tr></table></figure>
-
-<p> 不用管这个是啥意思，只要记住类名（<code>EchoVdCommand、FileVdCommand</code>）和内容（<code>“echo ‘&lt;pre&gt;’;var_dump(content);exit;”、“file_put_contents(DATA_DIR.’/abcd.log’,print_r(content,true),FILE_APPEND);”</code>）</p>
-</li>
-<li><p>保存插件<br> 插件名随便，不要和其它文件重复就可以了。</p>
-</li>
-<li><p>绑定快捷键</p>
-<blockquote>
-<p>操作步骤：首选项（N）-&gt; 按键绑定-用户</p>
-</blockquote>
-<p> 如果没有“按键绑定-用户”，那就安装一个 <code>Emmet插件</code>（如何安装自行百度） 出现如下内容：</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123; &quot;keys&quot;: [&quot;alt+m&quot;], &quot;command&quot;: &quot;markdown_preview&quot;, &quot;args&quot;: &#123;&quot;target&quot;: &quot;browser&quot;, &quot;parser&quot;:&quot;markdown&quot;&#125; &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p> 然后编辑内容，结果如下：</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123; &quot;keys&quot;: [&quot;alt+m&quot;], &quot;command&quot;: &quot;markdown_preview&quot;, &quot;args&quot;: &#123;&quot;target&quot;: &quot;browser&quot;, &quot;parser&quot;:&quot;markdown&quot;&#125; &#125;,</span><br><span class="line">    &#123; &quot;keys&quot;: [&quot;alt+e&quot;], &quot;command&quot;: &quot;echo_vd&quot; &#125;,</span><br><span class="line">    &#123; &quot;keys&quot;: [&quot;alt+f&quot;], &quot;command&quot;: &quot;file_vd&quot; &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p> 为啥是这样我也不知道，不过大致可以理解为，使用 <code>“alt+e”</code> 键，调用 <code>echo_vd</code> （即对应刚才编辑的<code>EchoVdCommand</code>类） 注：按键 <code>“alt+e”</code> 、<code>“alt+f”</code> 可自定义，但不能与其它按键冲突</p>
-</li>
-<li><p>试验</p>
-<p> 使用 <code>“alt+e”</code> 键，输出</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo &#39;&lt;pre&gt;&#39;;var_dump($content);</span><br></pre></td></tr></table></figure>
-
-<p> 使用 <code>“alt+f”</code> 键，输出</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">file_put_contents(DATA_DIR.&#39;&#x2F;abcd.log&#39;,print_r($content,true),FILE_APPEND);</span><br></pre></td></tr></table></figure>
-
-<p> 出现这样的结果那么即成功。</p>
-</li>
-</ol>
-<hr>
-<p>参考文章：<a href="https://jinjiajin.net/792.html" target="_blank" rel="noopener">https://jinjiajin.net/792.html</a></p>
-]]></content>
-      <categories>
-        <category>Windows</category>
-      </categories>
-      <tags>
-        <tag>Sublime</tag>
-        <tag>快捷键</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>多机部署之NFS的安装与配置</title>
-    <url>/2018/01/01/16.html</url>
-    <content><![CDATA[<p>NFS即网络文件系统，说的通俗一点就是网络共享文件。它能够让不同的服务器共享同一个资源，这个在集群部署中普遍运用。</p>
-<a id="more"></a>
-<ol>
-<li><p>安装nfs</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y nfs-utils</span><br><span class="line">yum install -y rpcbind #适用centos 6</span><br><span class="line">yum install -y portmap #适用centos 5</span><br></pre></td></tr></table></figure></li>
-<li><p>启动NFS服务，一定要先启动rpcbind，后启动nfs</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/rpcbind start</span><br><span class="line">/etc/init.d/nfs start</span><br></pre></td></tr></table></figure></li>
-<li><p>在资源服务器（服务器端）上配置NFS，修改 <code>/etc/exports</code></p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/data/httpd/www/public 客户端ip（rw,sync,no_root_squash）</span><br><span class="line">/data/httpd/www/themes 客户端ip（rw,sync,no_root_squash）</span><br><span class="line">/data/httpd/www/wap_themes 客户端ip（rw,sync,no_root_squash）</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">修改好之后执行命令</span></span><br><span class="line">exportfs -rv</span><br></pre></td></tr></table></figure>
-
-<p> 查看是否成功</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">showmount -e 服务器端ip</span><br><span class="line">Export list for 服务器端ip</span><br><span class="line">/data/httpd/www/public 客户端ip</span><br><span class="line">/data/httpd/www/themes 客户端ip</span><br><span class="line">/data/httpd/www/wap_themes 客户端ip</span><br></pre></td></tr></table></figure></li>
-<li><p>web服务器（客户端）挂载资源服务器的资源</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mount 服务器端ip:/data/httpd/www/public /data/httpd/www/public</span><br><span class="line">mount 服务器端ip:/data/httpd/www/themes /data/httpd/www/themes</span><br><span class="line">mount 服务器端ip:/data/httpd/www/wap_themes /data/httpd/www/wap_themes</span><br></pre></td></tr></table></figure></li>
-<li><p>防止重启服务器忘记挂载</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi /etc/rc.local</span><br><span class="line">mount 服务器端ip:/data/httpd/www/public /data/httpd/www/public</span><br><span class="line">mount 服务器端ip:/data/httpd/www/themes /data/httpd/www/themes</span><br><span class="line">mount 服务器端ip:/data/httpd/www/wap_themes /data/httpd/www/wap_themes</span><br></pre></td></tr></table></figure></li>
-<li><p>重启服务</p>
-<blockquote>
-<p>先启动：service rpcbind start 再启动：service nfs start<br>先关闭：service nfs stop 再关闭：service rpcbind stop</p>
-</blockquote>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>多机部署</tag>
-        <tag>NFS</tag>
       </tags>
   </entry>
   <entry>
@@ -424,6 +261,62 @@
       </tags>
   </entry>
   <entry>
+    <title>Sublime自定义快捷键（绑定插件）</title>
+    <url>/2017/12/07/13.html</url>
+    <content><![CDATA[<p>大家在使用Sublime的时候，是不是对于打印一些数据流的函数既爱又恨。爱的是这个东西对于排错和修改BUG是真的很有用，恨的是这个东西每次打起来是又多又长。那今天小编就介绍一种插件和快捷键结合的方法，快速输出打印函数。</p>
+<a id="more"></a>
+<ol>
+<li><p>新增插件</p>
+<blockquote>
+<p>操作流程：工具（T）-&gt; 插件开发 -&gt; 新建插件</p>
+</blockquote>
+<p> 之后会有一个untitled文件，内容如下</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sublime, sublime_plugin</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExampleCommand</span><span class="params">(sublime_plugin.TextCommand)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self, edit)</span>:</span></span><br><span class="line">        self.view.insert(edit, <span class="number">0</span>, “Hello, World!”)</span><br></pre></td></tr></table></figure>
+
+<p> 这个代码什么意思哪，小编也不知道，但是没关系，不用懂它，知道怎么借鉴就可以了。大致意思如下：<code>class ExampleCommand()</code> 这个是一个类，也是我们接下来要用的。也和之后绑定快捷键有关，它是以大写字母来区分如何调用这个类名。</p>
+<p> <strong>比如：</strong><br> <code>ExampleCommand</code>这个类名，之后调用就用 <code>example</code> ；<code>EchoVdCommand</code> 这个类名，之后调用就用 <code>echo_vd</code>。</p>
+</li>
+<li><p>编辑插件<br> <strong>具体内容如下：</strong></p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sublime, sublime_plugin</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EchoVdCommand</span><span class="params">(sublime_plugin.TextCommand)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self, edit)</span>:</span></span><br><span class="line">        self.view.run_command(<span class="string">"insert_snippet"</span>,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">"contents"</span>:<span class="string">"echo '&lt;pre&gt;';var_dump(\$content);exit;"</span></span><br><span class="line">                &#125;</span><br><span class="line">            )</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FileVdCommand</span><span class="params">(sublime_plugin.TextCommand)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self, edit)</span>:</span></span><br><span class="line">        self.view.run_command(<span class="string">"insert_snippet"</span>,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">"contents"</span>:<span class="string">"file_put_contents(DATA_DIR.'/abcd.log',print_r(\$content,true),FILE_APPEND);"</span></span><br><span class="line">                &#125;</span><br><span class="line">            )</span><br></pre></td></tr></table></figure>
+
+<p> 不用管这个是啥意思，只要记住类名（<code>EchoVdCommand、FileVdCommand</code>）和内容（<code>“echo ‘&lt;pre&gt;’;var_dump(content);exit;”、“file_put_contents(DATA_DIR.’/abcd.log’,print_r(content,true),FILE_APPEND);”</code>）</p>
+</li>
+<li><p>保存插件<br> 插件名随便，不要和其它文件重复就可以了。</p>
+</li>
+<li><p>绑定快捷键</p>
+<blockquote>
+<p>操作步骤：首选项（N）-&gt; 按键绑定-用户</p>
+</blockquote>
+<p> 如果没有“按键绑定-用户”，那就安装一个 <code>Emmet插件</code>（如何安装自行百度） 出现如下内容：</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123; &quot;keys&quot;: [&quot;alt+m&quot;], &quot;command&quot;: &quot;markdown_preview&quot;, &quot;args&quot;: &#123;&quot;target&quot;: &quot;browser&quot;, &quot;parser&quot;:&quot;markdown&quot;&#125; &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p> 然后编辑内容，结果如下：</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123; &quot;keys&quot;: [&quot;alt+m&quot;], &quot;command&quot;: &quot;markdown_preview&quot;, &quot;args&quot;: &#123;&quot;target&quot;: &quot;browser&quot;, &quot;parser&quot;:&quot;markdown&quot;&#125; &#125;,</span><br><span class="line">    &#123; &quot;keys&quot;: [&quot;alt+e&quot;], &quot;command&quot;: &quot;echo_vd&quot; &#125;,</span><br><span class="line">    &#123; &quot;keys&quot;: [&quot;alt+f&quot;], &quot;command&quot;: &quot;file_vd&quot; &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p> 为啥是这样我也不知道，不过大致可以理解为，使用 <code>“alt+e”</code> 键，调用 <code>echo_vd</code> （即对应刚才编辑的<code>EchoVdCommand</code>类） 注：按键 <code>“alt+e”</code> 、<code>“alt+f”</code> 可自定义，但不能与其它按键冲突</p>
+</li>
+<li><p>试验</p>
+<p> 使用 <code>“alt+e”</code> 键，输出</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo &#39;&lt;pre&gt;&#39;;var_dump($content);</span><br></pre></td></tr></table></figure>
+
+<p> 使用 <code>“alt+f”</code> 键，输出</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">file_put_contents(DATA_DIR.&#39;&#x2F;abcd.log&#39;,print_r($content,true),FILE_APPEND);</span><br></pre></td></tr></table></figure>
+
+<p> 出现这样的结果那么即成功。</p>
+</li>
+</ol>
+<hr>
+<p>参考文章：<a href="https://jinjiajin.net/792.html" target="_blank" rel="noopener">https://jinjiajin.net/792.html</a></p>
+]]></content>
+      <categories>
+        <category>Windows</category>
+      </categories>
+      <tags>
+        <tag>Sublime</tag>
+        <tag>快捷键</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Nginx配置--区分PC和WAP访问不同域名</title>
     <url>/2018/01/13/18.html</url>
     <content><![CDATA[<p>考虑到网站在多种设备下的兼容性，有很多网站会有手机版和电脑版两个版本。访问同一个网站URL，当服务器识别出用户使用电脑访问，就打开电脑版的页面，如果使用手机访问，就会得到手机版的页面。</p>
@@ -449,41 +342,42 @@
       </tags>
   </entry>
   <entry>
-    <title>Ubuntu系统下配置Apache虚拟主机</title>
-    <url>/2018/05/24/21.html</url>
-    <content><![CDATA[<p>Ubuntu系统下安装了Apache服务，想要通过IP、域名、端口访问多个Web应用。</p>
+    <title>多机部署之使用rsync+inotify实时双向同步代码</title>
+    <url>/2017/12/24/15.html</url>
+    <content><![CDATA[<p>rsync可以实现触发式的文件同步，但是通过crontab守护进程方式进行触发，同步的数据和实际数据会有差异，而inotify可以监控文件系统的各种变化，当文件有任何变动时，就触发rsync同步，这样刚好解决了同步数据的实时性问题。</p>
 <a id="more"></a>
-<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><blockquote>
-<p>此教程适合apt-get install apache2安装的apache</p>
-</blockquote>
-<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><ol>
-<li><p>进入配置文件目录</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /etc/apache2/</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>安装rsync(两台服务器都要装)</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y rsync</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>配置文件说明</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apache2.conf  #apache总的配置文件</span><br><span class="line">ports.conf    #端口配置文件</span><br><span class="line">sites-enables/000-default.conf    #虚拟主机配置文件</span><br></pre></td></tr></table></figure>
-
+<li><p>创建或者修改 <code>/etc/rsyncd.conf</code></p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">rsync通用配置文件,配置的注释不要写在配置后面，否则会有问题</span></span><br><span class="line">uid = root</span><br><span class="line">gid = root</span><br><span class="line">use chroot = 0</span><br><span class="line">port = 873</span><br><span class="line"><span class="meta">#</span><span class="bash">允许ip访问设置，请根据实际需要进行配置,这里为了方便设为全网段 *,生产环境下为了安全请指定ip或ip段</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> hosts allow = 192.168.0.1/255.255.255.0 198.162.145.1 10.0.1.0/255.255.255.0</span></span><br><span class="line">hosts allow = *</span><br><span class="line">max connections = 0</span><br><span class="line">timeout = 300</span><br><span class="line">pid file = /var/run/rsyncd.pid</span><br><span class="line">lock file = /var/run/rsyncd.lock</span><br><span class="line">log file = /var/log/rsyncd.log</span><br><span class="line">log format = %t %a %m %f %b</span><br><span class="line">transfer logging = yes</span><br><span class="line">syslog facility = local3</span><br><span class="line"><span class="meta">#</span><span class="bash">方括号中为模块声明，对应命名,这里master_web对应了主web机配置,从服务器可都为[slave_web]，方便inotify脚本配置</span></span><br><span class="line">[master_web]</span><br><span class="line"><span class="meta">#</span><span class="bash">指定当前模块在rsync服务器上的同步路径，该参数是必须指定的</span></span><br><span class="line">path = /home/wwwroot/</span><br><span class="line"><span class="meta">#</span><span class="bash">注释，可以同模块名一样,从服务器可都为slave_web</span></span><br><span class="line">comment = master_web</span><br><span class="line">ignore errors</span><br><span class="line"><span class="meta">#</span><span class="bash">是否允许客户端上传文件</span></span><br><span class="line">read only = no</span><br><span class="line">list = no</span><br><span class="line"><span class="meta">#</span><span class="bash">指定由空格或逗号分隔的用户名列表，只有这些用户才允许连接该模块</span></span><br><span class="line">auth users = rsync</span><br><span class="line"><span class="meta">#</span><span class="bash">保存密码和用户名文件，需要自己生成</span></span><br><span class="line">secrets file = /etc/rsyncd.passwd</span><br></pre></td></tr></table></figure></li>
+<li><p>创建或者修改 <code>/etc/rsyncd.passwd和/root/rsyncd.passwd</code></p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">/etc/rsyncd.passwd中内容格式 用户名:密码 ，多个用户名密码则每添加多行，建议从web机都是一样的用户名和密码</span></span><br><span class="line">rsync:123456</span><br><span class="line"><span class="meta">#</span><span class="bash">/root/rsyncd.passwd中内容只需要填写从服务器的密码，例如这里从服务器配的用户名密码都是rsync:123456，这里主服务器则写123456一个就可以了</span></span><br><span class="line">123456</span><br></pre></td></tr></table></figure>
 </li>
-</ol>
-<h2 id="配置多个虚拟主机"><a href="#配置多个虚拟主机" class="headerlink" title="配置多个虚拟主机"></a>配置多个虚拟主机</h2><ol>
-<li><p>使用不同的端口访问网站的不同目录</p>
-<ul>
-<li>新增目录 <code>/var/www/html1</code> ,新增文件<code>/var/www/html1/index.php</code>（index.php文件内容自定）</li>
-<li>修改 <code>ports.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Listen 8006</span><br></pre></td></tr></table></figure>
-效果如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdDN0MnhqMzBuNzA4cmpydi5qcGc?x-oss-process=image/format,png" alt=""></li>
-<li>修改 <code>sites-enables/000-default.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"> &lt;VirtualHost *:8006&gt;</span><br><span class="line">        ServerName 192.168.0.109</span><br><span class="line">        ServerAdmin webmaster@localhost</span><br><span class="line">        DocumentRoot /var/www/html1</span><br><span class="line"></span><br><span class="line">        ErrorLog $&#123;APACHE_LOG_DIR&#125;/error80.log</span><br><span class="line">        CustomLog $&#123;APACHE_LOG_DIR&#125;/access80.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
-内容如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDQuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVxcnYycnZqMzBydTBqZDQwcy5qcGc?x-oss-process=image/format,png" alt=""></li>
-<li>重启apache2<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/apache2 restart</span><br></pre></td></tr></table></figure></li>
-<li>访问 ( IP:8006 ) , 效果如下图<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdGhrcXFqMzBmMzA3Ymdsbi5qcGc?x-oss-process=image/format,png" alt=""></li>
-</ul>
+<li><p>给文件赋权限</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod 600 /etc/rsyncd.passwd</span><br><span class="line">chmod 600 /root/rsyncd.passwd</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>使用域名访问网站的不同目录</p>
-<ul>
-<li>修改本地host文件, 自定义一个域名, 指向服务器<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdHRqZ3NqMzBjdzA2N3dlaC5qcGc?x-oss-process=image/format,png" alt=""></li>
-<li>修改 <code>sites-enables/000-default.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"> &lt;VirtualHost *:80&gt;</span><br><span class="line">        ServerName abcd.com</span><br><span class="line">        ServerAdmin webmaster@localhost</span><br><span class="line">        DocumentRoot /var/www/html1</span><br><span class="line"></span><br><span class="line">        ErrorLog $&#123;APACHE_LOG_DIR&#125;/error801.log</span><br><span class="line">        CustomLog $&#123;APACHE_LOG_DIR&#125;/access801.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
-内容如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVxc2c4bDBqMzBvczBhN2pzYy5qcGc?x-oss-process=image/format,png" alt=""></li>
-<li>访问（<code>http://abcd.com</code>）, 效果如下图<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdTUxdjRqMzBkbTA2ZmdsbC5qcGc?x-oss-process=image/format,png" alt=""></li>
-</ul>
+<li><p>以守护进程方式启动rsync服务</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/usr/bin/rsync --daemon --config=/etc/rsyncd.conf</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加开机自启动</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo "/usr/bin/rsync --daemon --config=/etc/rsyncd.conf"&gt;&gt;/etc/rc.local</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>验证代码是否同步</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 主web服务器推送代码到从web服务器，命令中的</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> rsync@192.168.10.230::slave_web<span class="comment"># 192.168.10.230 为从web服务器的ip,</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> slave_web 为从web服务器的 rsyncd.conf 中配置的模块名，</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> rsync 为为从web服务器的中 rsyncd.passwd 中配置的用户名</span></span><br><span class="line">rsync -vzrtopg --delete --progress /home/wwwroot/ rsync@192.168.10.230::slave_web --password-file=/root/rsyncd.passwd</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装inotify(两台服务器都要安装)</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget http://github.com/downloads/rvoicilas/inotify-tools/inotify-tools-3.14.tar.gz --no-check-certificate</span><br><span class="line">tar -zxvf inotify-tools-3.14.tar.gz</span><br><span class="line">makedir /usr/local/inotify</span><br><span class="line">cd inotify-tools-3.14.tar.gz</span><br><span class="line">./configure --prefix=/usr/local/inotify</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看是否安装成功</span></span><br><span class="line">ls -alh /usr/local/inotify/bin/inotify*</span><br><span class="line"><span class="meta">#</span><span class="bash"> 建立软连接</span></span><br><span class="line">ln -s /usr/local/inotify/bin/inotifywait /usr/bin/inotifywait</span><br><span class="line">ln -s /usr/local/inotify/bin/inotifywatch /usr/bin/inotifywatch</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置rsync.sh同步监控脚本</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi /root/rsync.sh</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 内容如下</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">src=/home/wwwroot/</span><br><span class="line">des=master_web #视情况自己配置，注意与下面的rsync命令结合配置</span><br><span class="line">user=rsync</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">多个ip就用空格间断,所有IP用一个双引号包起来</span></span><br><span class="line">host="192.168.10.230"</span><br><span class="line">/usr/bin/inotifywait -mrq –exclude=public –exclude=themes –exclude=wap_themes –timefmt '%d/%m/%y %H:%M' –format '%T %w%f' -e modify,delete,create,attrib src | while read file</span><br><span class="line">do</span><br><span class="line">    for hostip in host</span><br><span class="line">    do</span><br><span class="line">        rsync -vzrtopg –delete –progress –exclude=themes –exclude=wap_themes –exclude=public &#123;src&#125; &#123;user&#125;@&#123;hostip&#125;::&#123;des&#125; –password-file=/root/rsyncd.passwd</span><br><span class="line">        echo "$&#123;file&#125; was rsynced" &gt;&gt; /tmp/rsync.log 2&gt;&amp;1</span><br><span class="line">    done</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>给rsync.sh脚本赋可执行权限</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod +x /root/rsync.sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行rsync.sh同步监控脚本和配置守护进程</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nohup sh /root/rsync.sh &amp;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">建立守护进程运行rsync.sh脚本</span></span><br><span class="line">echo “nohup sh /root/rsync.sh &amp;” &gt;&gt; /etc/rc.local</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 ]]></content>
@@ -491,8 +385,67 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Apache</tag>
-        <tag>Ubuntu</tag>
+        <tag>多机部署</tag>
+        <tag>rsync+inotify</tag>
+        <tag>双向实时同步代码</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>多机部署之MySQL主从配置</title>
+    <url>/2018/01/01/17.html</url>
+    <content><![CDATA[<p>MySQL的主从配置可以让我们很好地减轻数据库的压力而完成更多的业务需求，下面笔者就来介绍一下简单的MySQL主从配置。</p>
+<a id="more"></a>
+<ol>
+<li>主（从）服务器配置，修改配置文件 <code>/etc/my.cnf</code> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">log-bin=mysql-bin #[必须]启用二进制日志</span><br><span class="line">server-id=110     #[必须]服务器唯一ID，默认是1，一般取IP最后一段</span><br></pre></td></tr></table></figure></li>
+<li>重启数据库 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/mysqld restart</span><br></pre></td></tr></table></figure></li>
+<li>登陆主服务器，给从服务器授权 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql &gt; GRANT REPLICATION SLAVE ON *.* TO '用户名'@'从服务器IP' identified by '密码';</span><br><span class="line"><span class="meta">#</span><span class="bash">查看是否添加成功</span></span><br><span class="line">mysql &gt; SELECT user,host,password FROM mysql.user;</span><br></pre></td></tr></table></figure></li>
+<li>查看主数据库状态 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql &gt; show master status;</span><br><span class="line"></span><br><span class="line">+——————+———-+————–+——————+——————-+</span><br><span class="line">| File | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |</span><br><span class="line">+——————+———-+————–+——————+——————-+</span><br><span class="line">| mysql-bin.000001 | 640 | | | |</span><br><span class="line">+——————+———-+————–+——————+——————-+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">这里需要记录File以及Position的值，在操作从服务器时会用到</span></span><br></pre></td></tr></table></figure></li>
+<li>登陆从数据库 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">执行sql</span></span><br><span class="line">mysql &gt; change master to master_host='主数据库ip',master_user='数据库登陆用户名',master_password='数据库登陆密码',master_log_file='mysql-bin.000001',master_log_pos=640;</span><br><span class="line"><span class="meta">#</span><span class="bash">启动同步进程</span></span><br><span class="line">mysql &gt; start slave;</span><br><span class="line"><span class="meta">#</span><span class="bash">主从同步检查</span></span><br><span class="line">mysql &gt; show slave status\G</span><br><span class="line"><span class="meta">#</span><span class="bash">可以看到：Slave_IO_Running | Slave_SQL_Running两个值都是YES，说明配置成功了</span></span><br></pre></td></tr></table></figure></li>
+<li>主从服务器测试 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">主服务器MySQL，建立数据库，并在这个库中建表插入一条数据</span></span><br><span class="line"><span class="meta">#</span><span class="bash">从服务器查看是否拥有此数据</span></span><br></pre></td></tr></table></figure></li>
+<li>MySQL主服务器给web服务器授权访问 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql &gt; GRANT ALL PRIVILEGES  ON 数据库名.* to '用户名'@'web服务器ip' identified by '密码';</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>多机部署</tag>
+        <tag>MySQL主从配置</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>多机部署之NFS的安装与配置</title>
+    <url>/2018/01/01/16.html</url>
+    <content><![CDATA[<p>NFS即网络文件系统，说的通俗一点就是网络共享文件。它能够让不同的服务器共享同一个资源，这个在集群部署中普遍运用。</p>
+<a id="more"></a>
+<ol>
+<li><p>安装nfs</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y nfs-utils</span><br><span class="line">yum install -y rpcbind #适用centos 6</span><br><span class="line">yum install -y portmap #适用centos 5</span><br></pre></td></tr></table></figure></li>
+<li><p>启动NFS服务，一定要先启动rpcbind，后启动nfs</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/rpcbind start</span><br><span class="line">/etc/init.d/nfs start</span><br></pre></td></tr></table></figure></li>
+<li><p>在资源服务器（服务器端）上配置NFS，修改 <code>/etc/exports</code></p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/data/httpd/www/public 客户端ip（rw,sync,no_root_squash）</span><br><span class="line">/data/httpd/www/themes 客户端ip（rw,sync,no_root_squash）</span><br><span class="line">/data/httpd/www/wap_themes 客户端ip（rw,sync,no_root_squash）</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">修改好之后执行命令</span></span><br><span class="line">exportfs -rv</span><br></pre></td></tr></table></figure>
+
+<p> 查看是否成功</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">showmount -e 服务器端ip</span><br><span class="line">Export list for 服务器端ip</span><br><span class="line">/data/httpd/www/public 客户端ip</span><br><span class="line">/data/httpd/www/themes 客户端ip</span><br><span class="line">/data/httpd/www/wap_themes 客户端ip</span><br></pre></td></tr></table></figure></li>
+<li><p>web服务器（客户端）挂载资源服务器的资源</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mount 服务器端ip:/data/httpd/www/public /data/httpd/www/public</span><br><span class="line">mount 服务器端ip:/data/httpd/www/themes /data/httpd/www/themes</span><br><span class="line">mount 服务器端ip:/data/httpd/www/wap_themes /data/httpd/www/wap_themes</span><br></pre></td></tr></table></figure></li>
+<li><p>防止重启服务器忘记挂载</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi /etc/rc.local</span><br><span class="line">mount 服务器端ip:/data/httpd/www/public /data/httpd/www/public</span><br><span class="line">mount 服务器端ip:/data/httpd/www/themes /data/httpd/www/themes</span><br><span class="line">mount 服务器端ip:/data/httpd/www/wap_themes /data/httpd/www/wap_themes</span><br></pre></td></tr></table></figure></li>
+<li><p>重启服务</p>
+<blockquote>
+<p>先启动：service rpcbind start 再启动：service nfs start<br>先关闭：service nfs stop 再关闭：service rpcbind stop</p>
+</blockquote>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>多机部署</tag>
+        <tag>NFS</tag>
       </tags>
   </entry>
   <entry>
@@ -524,6 +477,65 @@
       </categories>
       <tags>
         <tag>数据库备份</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ThinkPHP5.0模型之基础篇</title>
+    <url>/2018/07/05/22.html</url>
+    <content><![CDATA[<p>使用ThinkPHP5.0的模型，进行基本的增删改查操作。</p>
+<a id="more"></a>
+<h2 id="定义和初始化模型"><a href="#定义和初始化模型" class="headerlink" title="定义和初始化模型"></a>定义和初始化模型</h2><pre><code>1. 新建数据库表girls，插入数据
+2. 在application/index/model目录下新建一个Girls.php文件
+3. 设置数据表
+4. 模型初始化  </code></pre><p>效果如图：  </p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3d4NC5zaW5haW1nLmNuL2xhcmdlLzAwNm9sazJubHkxZnN3ZzB5dTdvYmozMHBtMGQ3bXliLmpwZw?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><pre><code>1. 查询单个数据
+2. 查询多个数据（无法使用toArray，请查看，模型中自定义数据集对象）
+3. 查询所有数据
+4. 使用闭包查询指定字段</code></pre><p>效果如图：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZzd2hmZTM4anRqMzBzMDBpa2dubS5qcGc?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h2><pre><code>1. 添加一条数据
+2. 添加多条数据（查手册）</code></pre><p>效果如图：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZzd2oyOW4xMjNqMzB0ejBmYWduNS5qcGc?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><pre><code>1. 更新过滤后的数据
+2. 其它更新（查手册）</code></pre><p>效果如图：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZzd2tidGp6b3hqMzBzbTBmaTc1cy5qcGc?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><pre><code>1. 根据主键删除
+2. 其它删除（查手册）</code></pre><p>效果如图：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZzd2trZnFuZW1qMzBsaDBkZ2dtbC5qcGc?x-oss-process=image/format,png" alt="image"></p>
+]]></content>
+      <categories>
+        <category>PHP</category>
+      </categories>
+      <tags>
+        <tag>ThinkPHP框架</tag>
+        <tag>模型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git使用之开发者</title>
+    <url>/2018/10/18/23.html</url>
+    <content><![CDATA[<p>近年来Git的热度居高不下，本文是笔者对Git的一些常用命令做的记录。</p>
+<a id="more"></a>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git init</span><br><span class="line"># 初始化本地仓库</span><br><span class="line"></span><br><span class="line">git remote add &lt;remote&gt; &lt;url&gt;</span><br><span class="line"># 添加远程版本库，remote可自行取名，默认origin，url为远程仓库的HTTPS或者SSH地址</span><br><span class="line"></span><br><span class="line">git remote -v</span><br><span class="line"># 查看远程版本库信息</span><br><span class="line"></span><br><span class="line">git remote remove &lt;remote&gt;</span><br><span class="line"># 删除远程remote链接</span><br><span class="line"></span><br><span class="line">git pull &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 下载代码及快速合并 remote为添加的版本库别名，branch可以是dev:master（dev为远端分支，master为本地分支）</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmx5MWZ0NGtjajdkcm5qMzBoMzBhdWdtYS5qcGc?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="代码拉取和推送"><a href="#代码拉取和推送" class="headerlink" title="代码拉取和推送"></a>代码拉取和推送</h2><ul>
+<li><p><strong>每天开发之前需要先拉取一遍远程版本库的代码</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git fetch &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 将远端库获取到本地但不合并，remote为添加的版本库别名，branch为远端的分支名</span><br><span class="line"></span><br><span class="line">git merge &lt;branch&gt;</span><br><span class="line"># 将获取的远端分支合并到本地目前所在的分支</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmx5MWZ0NGtjam9leWdqMzBmdDA5bHEzZi5qcGc?x-oss-process=image/format,png" alt="image"></p>
+</li>
+<li><p><strong>每天开发完成后进行代码提交（需要再次进行线上的拉取）</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git add .</span><br><span class="line"># 添加所有改动到缓存区</span><br><span class="line"></span><br><span class="line">git commit -m &#39;描述&#39;</span><br><span class="line"># 提交缓存区内的文件，并提供描述</span><br><span class="line"></span><br><span class="line">git status</span><br><span class="line"># 查看当前版本状态（是否clean）</span><br><span class="line"></span><br><span class="line">git fetch &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 将远端库获取到本地但不合并，remote为添加的版本库别名，branch为远端的分支名</span><br><span class="line"></span><br><span class="line">git merge &lt;branch&gt;</span><br><span class="line"># 将获取的远端分支合并到本地目前所在的分支</span><br><span class="line"></span><br><span class="line">git push &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 上传代码及快速合并，remote为添加的版本库别名，branch可以是master:dev（master为本地分支，dev为远端分支）</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDQuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmx5MWZ0NGtjazl6NW5qMzBnbjBleWFiMy5qcGc?x-oss-process=image/format,png" alt="image"></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+        <tag>版本控制系统</tag>
       </tags>
   </entry>
   <entry>
@@ -575,101 +587,6 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>Git使用之开发者</title>
-    <url>/2018/10/18/23.html</url>
-    <content><![CDATA[<p>近年来Git的热度居高不下，本文是笔者对Git的一些常用命令做的记录。</p>
-<a id="more"></a>
-<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git init</span><br><span class="line"># 初始化本地仓库</span><br><span class="line"></span><br><span class="line">git remote add &lt;remote&gt; &lt;url&gt;</span><br><span class="line"># 添加远程版本库，remote可自行取名，默认origin，url为远程仓库的HTTPS或者SSH地址</span><br><span class="line"></span><br><span class="line">git remote -v</span><br><span class="line"># 查看远程版本库信息</span><br><span class="line"></span><br><span class="line">git remote remove &lt;remote&gt;</span><br><span class="line"># 删除远程remote链接</span><br><span class="line"></span><br><span class="line">git pull &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 下载代码及快速合并 remote为添加的版本库别名，branch可以是dev:master（dev为远端分支，master为本地分支）</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmx5MWZ0NGtjajdkcm5qMzBoMzBhdWdtYS5qcGc?x-oss-process=image/format,png" alt="image"></p>
-<h2 id="代码拉取和推送"><a href="#代码拉取和推送" class="headerlink" title="代码拉取和推送"></a>代码拉取和推送</h2><ul>
-<li><p><strong>每天开发之前需要先拉取一遍远程版本库的代码</strong>  </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git fetch &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 将远端库获取到本地但不合并，remote为添加的版本库别名，branch为远端的分支名</span><br><span class="line"></span><br><span class="line">git merge &lt;branch&gt;</span><br><span class="line"># 将获取的远端分支合并到本地目前所在的分支</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmx5MWZ0NGtjam9leWdqMzBmdDA5bHEzZi5qcGc?x-oss-process=image/format,png" alt="image"></p>
-</li>
-<li><p><strong>每天开发完成后进行代码提交（需要再次进行线上的拉取）</strong>  </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git add .</span><br><span class="line"># 添加所有改动到缓存区</span><br><span class="line"></span><br><span class="line">git commit -m &#39;描述&#39;</span><br><span class="line"># 提交缓存区内的文件，并提供描述</span><br><span class="line"></span><br><span class="line">git status</span><br><span class="line"># 查看当前版本状态（是否clean）</span><br><span class="line"></span><br><span class="line">git fetch &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 将远端库获取到本地但不合并，remote为添加的版本库别名，branch为远端的分支名</span><br><span class="line"></span><br><span class="line">git merge &lt;branch&gt;</span><br><span class="line"># 将获取的远端分支合并到本地目前所在的分支</span><br><span class="line"></span><br><span class="line">git push &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 上传代码及快速合并，remote为添加的版本库别名，branch可以是master:dev（master为本地分支，dev为远端分支）</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDQuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmx5MWZ0NGtjazl6NW5qMzBnbjBleWFiMy5qcGc?x-oss-process=image/format,png" alt="image"></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-        <tag>版本控制系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>搭建Git服务器</title>
-    <url>/2018/10/23/24.html</url>
-    <content><![CDATA[<p>顺应时代的发展，Git成为了许多互联网公司进行项目版本控制的首选，本文笔者就对搭建Git服务器的过程做个记录。</p>
-<a id="more"></a>
-<h2 id="Apache和Git的安装"><a href="#Apache和Git的安装" class="headerlink" title="Apache和Git的安装"></a>Apache和Git的安装</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y httpd git</span><br></pre></td></tr></table></figure>
-
-<h2 id="创建Git仓库"><a href="#创建Git仓库" class="headerlink" title="创建Git仓库"></a>创建Git仓库</h2><ol>
-<li>新建一个目录<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir /data/httpd/git</span><br></pre></td></tr></table></figure></li>
-<li>进入目录<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /data/httpd/git</span><br></pre></td></tr></table></figure></li>
-<li>创建项目目录并进入该目录<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir demo</span><br><span class="line">cd demo</span><br></pre></td></tr></table></figure></li>
-<li>创建Git仓库<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git init --bare demo.git</span><br></pre></td></tr></table></figure></li>
-<li>分配权限<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chown -R apache:apache .</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h2 id="创建Git用户验证的账号"><a href="#创建Git用户验证的账号" class="headerlink" title="创建Git用户验证的账号"></a>创建Git用户验证的账号</h2><ol>
-<li>创建用户<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">htpasswd -m -c /etc/httpd/conf.d/git-team.htpasswd zh1(zh1是账号然后连续输入两次密码)</span><br><span class="line"><span class="meta">#</span><span class="bash"> -c 是创建的意思，没有的时候创建，有的话会先删除文件再创建</span></span><br><span class="line">htpasswd -m /etc/httpd/conf.d/git-team.htpasswd zh2(如果第一个账号命令里有了-c 其它账号要去掉-c)</span><br></pre></td></tr></table></figure></li>
-<li>修改密码<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 先删除用户</span></span><br><span class="line">htpasswd -D 存放用户名和密码的文件名 用户</span><br><span class="line"><span class="meta">#</span><span class="bash"> 再添加用户</span></span><br><span class="line">htpasswd -m 存放用户名和密码的文件名 用户</span><br></pre></td></tr></table></figure></li>
-<li>修改用户密码文件的访问权限和所有者<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chown apache:apache /etc/httpd/conf.d/git-team.htpasswd</span><br><span class="line">chmod 640 /etc/httpd/conf.d/git-team.htpasswd</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h2 id="修改apache的配置文件"><a href="#修改apache的配置文件" class="headerlink" title="修改apache的配置文件"></a>修改apache的配置文件</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi /etc/httpd/conf/httpd.conf</span><br><span class="line"></span><br><span class="line">内容如下：</span><br><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">    ServerName git.nsxsg.com(git服务器域名)</span><br><span class="line">    SetEnv GIT_HTTP_EXPORT_ALL</span><br><span class="line">    SetEnv GIT_PROJECT_ROOT /data/httpd/git(git仓库文件夹)</span><br><span class="line">    ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/(URL中以/git/开头访问路径映射到Git，所以访问的时候域名后面要紧跟http://域名/git/项目名/项目名.git)</span><br><span class="line">    &lt;Location /&gt;</span><br><span class="line">        AuthType Basic</span><br><span class="line">        AuthName "Git"</span><br><span class="line">        AuthUserFile /etc/httpd/conf.d/git-team.htpasswd(用户密码文件地址)</span><br><span class="line">        Require valid-user</span><br><span class="line">    &lt;/Location&gt;</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="重启apache"><a href="#重启apache" class="headerlink" title="重启apache"></a>重启apache</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/httpd restart</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Apache</tag>
-        <tag>Git</tag>
-        <tag>版本控制系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ThinkPHP5.0模型之基础篇</title>
-    <url>/2018/07/05/22.html</url>
-    <content><![CDATA[<p>使用ThinkPHP5.0的模型，进行基本的增删改查操作。</p>
-<a id="more"></a>
-<h2 id="定义和初始化模型"><a href="#定义和初始化模型" class="headerlink" title="定义和初始化模型"></a>定义和初始化模型</h2><pre><code>1. 新建数据库表girls，插入数据
-2. 在application/index/model目录下新建一个Girls.php文件
-3. 设置数据表
-4. 模型初始化  </code></pre><p>效果如图：  </p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3d4NC5zaW5haW1nLmNuL2xhcmdlLzAwNm9sazJubHkxZnN3ZzB5dTdvYmozMHBtMGQ3bXliLmpwZw?x-oss-process=image/format,png" alt="image"></p>
-<h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><pre><code>1. 查询单个数据
-2. 查询多个数据（无法使用toArray，请查看，模型中自定义数据集对象）
-3. 查询所有数据
-4. 使用闭包查询指定字段</code></pre><p>效果如图：</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZzd2hmZTM4anRqMzBzMDBpa2dubS5qcGc?x-oss-process=image/format,png" alt="image"></p>
-<h2 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h2><pre><code>1. 添加一条数据
-2. 添加多条数据（查手册）</code></pre><p>效果如图：</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZzd2oyOW4xMjNqMzB0ejBmYWduNS5qcGc?x-oss-process=image/format,png" alt="image"></p>
-<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><pre><code>1. 更新过滤后的数据
-2. 其它更新（查手册）</code></pre><p>效果如图：</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZzd2tidGp6b3hqMzBzbTBmaTc1cy5qcGc?x-oss-process=image/format,png" alt="image"></p>
-<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><pre><code>1. 根据主键删除
-2. 其它删除（查手册）</code></pre><p>效果如图：</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZzd2trZnFuZW1qMzBsaDBkZ2dtbC5qcGc?x-oss-process=image/format,png" alt="image"></p>
-]]></content>
-      <categories>
-        <category>PHP</category>
-      </categories>
-      <tags>
-        <tag>ThinkPHP框架</tag>
-        <tag>模型</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>修改MySql数据库密码</title>
     <url>/2017/09/17/2.html</url>
     <content><![CDATA[<p>笔者记性不太好，所以忘记密码是常有的事情。这不连数据库的密码也忘了。下面就来介绍一下如何暴力地修改数据库密码。</p>
@@ -711,27 +628,85 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>Ubuntu下安装Redis</title>
-    <url>/2018/11/01/25.html</url>
-    <content><![CDATA[<p>许多的互联网公司将Redis作为数据库和缓存工具，本文笔者就如何在Ubuntu下安装Redis做一个记录。</p>
+    <title>搭建Git服务器</title>
+    <url>/2018/10/23/24.html</url>
+    <content><![CDATA[<p>顺应时代的发展，Git成为了许多互联网公司进行项目版本控制的首选，本文笔者就对搭建Git服务器的过程做个记录。</p>
 <a id="more"></a>
-<p><strong>1. 安装Redis服务器端</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install -y redis-server</span><br></pre></td></tr></table></figure>
-<p><strong>2. 查看Redis状态</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo /etc/init.d/redis-server status</span><br></pre></td></tr></table></figure>
-<p><strong>3. 链接Redis</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo redis-cli -h 127.0.0.1 -p 6379</span><br></pre></td></tr></table></figure>
-<p><strong>4. 简单操作</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看所有的key</span></span><br><span class="line">127.0.0.1:6379&gt; keys *</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置一个key</span></span><br><span class="line">127.0.0.1:6379&gt; set key1 'hello world'</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看key</span></span><br><span class="line">127.0.0.1:6379&gt; get key1</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除key</span></span><br><span class="line">127.0.0.1:6379&gt; del key1</span><br></pre></td></tr></table></figure>
+<h2 id="Apache和Git的安装"><a href="#Apache和Git的安装" class="headerlink" title="Apache和Git的安装"></a>Apache和Git的安装</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y httpd git</span><br></pre></td></tr></table></figure>
 
-<p><strong>5. 删除Redis</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get remove -y redis-server</span><br></pre></td></tr></table></figure>
+<h2 id="创建Git仓库"><a href="#创建Git仓库" class="headerlink" title="创建Git仓库"></a>创建Git仓库</h2><ol>
+<li>新建一个目录<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir /data/httpd/git</span><br></pre></td></tr></table></figure></li>
+<li>进入目录<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /data/httpd/git</span><br></pre></td></tr></table></figure></li>
+<li>创建项目目录并进入该目录<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir demo</span><br><span class="line">cd demo</span><br></pre></td></tr></table></figure></li>
+<li>创建Git仓库<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git init --bare demo.git</span><br></pre></td></tr></table></figure></li>
+<li>分配权限<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chown -R apache:apache .</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="创建Git用户验证的账号"><a href="#创建Git用户验证的账号" class="headerlink" title="创建Git用户验证的账号"></a>创建Git用户验证的账号</h2><ol>
+<li>创建用户<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">htpasswd -m -c /etc/httpd/conf.d/git-team.htpasswd zh1(zh1是账号然后连续输入两次密码)</span><br><span class="line"><span class="meta">#</span><span class="bash"> -c 是创建的意思，没有的时候创建，有的话会先删除文件再创建</span></span><br><span class="line">htpasswd -m /etc/httpd/conf.d/git-team.htpasswd zh2(如果第一个账号命令里有了-c 其它账号要去掉-c)</span><br></pre></td></tr></table></figure></li>
+<li>修改密码<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 先删除用户</span></span><br><span class="line">htpasswd -D 存放用户名和密码的文件名 用户</span><br><span class="line"><span class="meta">#</span><span class="bash"> 再添加用户</span></span><br><span class="line">htpasswd -m 存放用户名和密码的文件名 用户</span><br></pre></td></tr></table></figure></li>
+<li>修改用户密码文件的访问权限和所有者<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chown apache:apache /etc/httpd/conf.d/git-team.htpasswd</span><br><span class="line">chmod 640 /etc/httpd/conf.d/git-team.htpasswd</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="修改apache的配置文件"><a href="#修改apache的配置文件" class="headerlink" title="修改apache的配置文件"></a>修改apache的配置文件</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi /etc/httpd/conf/httpd.conf</span><br><span class="line"></span><br><span class="line">内容如下：</span><br><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">    ServerName git.nsxsg.com(git服务器域名)</span><br><span class="line">    SetEnv GIT_HTTP_EXPORT_ALL</span><br><span class="line">    SetEnv GIT_PROJECT_ROOT /data/httpd/git(git仓库文件夹)</span><br><span class="line">    ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/(URL中以/git/开头访问路径映射到Git，所以访问的时候域名后面要紧跟http://域名/git/项目名/项目名.git)</span><br><span class="line">    &lt;Location /&gt;</span><br><span class="line">        AuthType Basic</span><br><span class="line">        AuthName "Git"</span><br><span class="line">        AuthUserFile /etc/httpd/conf.d/git-team.htpasswd(用户密码文件地址)</span><br><span class="line">        Require valid-user</span><br><span class="line">    &lt;/Location&gt;</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="重启apache"><a href="#重启apache" class="headerlink" title="重启apache"></a>重启apache</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/httpd restart</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Redis</tag>
+        <tag>Git</tag>
+        <tag>版本控制系统</tag>
+        <tag>Apache</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ubuntu系统下配置Apache虚拟主机</title>
+    <url>/2018/05/24/21.html</url>
+    <content><![CDATA[<p>Ubuntu系统下安装了Apache服务，想要通过IP、域名、端口访问多个Web应用。</p>
+<a id="more"></a>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><blockquote>
+<p>此教程适合apt-get install apache2安装的apache</p>
+</blockquote>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><ol>
+<li><p>进入配置文件目录</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /etc/apache2/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置文件说明</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apache2.conf  #apache总的配置文件</span><br><span class="line">ports.conf    #端口配置文件</span><br><span class="line">sites-enables/000-default.conf    #虚拟主机配置文件</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="配置多个虚拟主机"><a href="#配置多个虚拟主机" class="headerlink" title="配置多个虚拟主机"></a>配置多个虚拟主机</h2><ol>
+<li><p>使用不同的端口访问网站的不同目录</p>
+<ul>
+<li>新增目录 <code>/var/www/html1</code> ,新增文件<code>/var/www/html1/index.php</code>（index.php文件内容自定）</li>
+<li>修改 <code>ports.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Listen 8006</span><br></pre></td></tr></table></figure>
+效果如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdDN0MnhqMzBuNzA4cmpydi5qcGc?x-oss-process=image/format,png" alt=""></li>
+<li>修改 <code>sites-enables/000-default.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"> &lt;VirtualHost *:8006&gt;</span><br><span class="line">        ServerName 192.168.0.109</span><br><span class="line">        ServerAdmin webmaster@localhost</span><br><span class="line">        DocumentRoot /var/www/html1</span><br><span class="line"></span><br><span class="line">        ErrorLog $&#123;APACHE_LOG_DIR&#125;/error80.log</span><br><span class="line">        CustomLog $&#123;APACHE_LOG_DIR&#125;/access80.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+内容如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDQuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVxcnYycnZqMzBydTBqZDQwcy5qcGc?x-oss-process=image/format,png" alt=""></li>
+<li>重启apache2<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/apache2 restart</span><br></pre></td></tr></table></figure></li>
+<li>访问 ( IP:8006 ) , 效果如下图<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdGhrcXFqMzBmMzA3Ymdsbi5qcGc?x-oss-process=image/format,png" alt=""></li>
+</ul>
+</li>
+<li><p>使用域名访问网站的不同目录</p>
+<ul>
+<li>修改本地host文件, 自定义一个域名, 指向服务器<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdHRqZ3NqMzBjdzA2N3dlaC5qcGc?x-oss-process=image/format,png" alt=""></li>
+<li>修改 <code>sites-enables/000-default.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"> &lt;VirtualHost *:80&gt;</span><br><span class="line">        ServerName abcd.com</span><br><span class="line">        ServerAdmin webmaster@localhost</span><br><span class="line">        DocumentRoot /var/www/html1</span><br><span class="line"></span><br><span class="line">        ErrorLog $&#123;APACHE_LOG_DIR&#125;/error801.log</span><br><span class="line">        CustomLog $&#123;APACHE_LOG_DIR&#125;/access801.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+内容如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVxc2c4bDBqMzBvczBhN2pzYy5qcGc?x-oss-process=image/format,png" alt=""></li>
+<li>访问（<code>http://abcd.com</code>）, 效果如下图<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdTUxdjRqMzBkbTA2ZmdsbC5qcGc?x-oss-process=image/format,png" alt=""></li>
+</ul>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Apache</tag>
         <tag>Ubuntu</tag>
       </tags>
   </entry>
@@ -778,6 +753,127 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
         <tag>SSRF漏洞</tag>
         <tag>WordPress</tag>
         <tag>安全漏洞</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ubuntu下安装Redis</title>
+    <url>/2018/11/01/25.html</url>
+    <content><![CDATA[<p>许多的互联网公司将Redis作为数据库和缓存工具，本文笔者就如何在Ubuntu下安装Redis做一个记录。</p>
+<a id="more"></a>
+<p><strong>1. 安装Redis服务器端</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install -y redis-server</span><br></pre></td></tr></table></figure>
+<p><strong>2. 查看Redis状态</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo /etc/init.d/redis-server status</span><br></pre></td></tr></table></figure>
+<p><strong>3. 链接Redis</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo redis-cli -h 127.0.0.1 -p 6379</span><br></pre></td></tr></table></figure>
+<p><strong>4. 简单操作</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看所有的key</span></span><br><span class="line">127.0.0.1:6379&gt; keys *</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置一个key</span></span><br><span class="line">127.0.0.1:6379&gt; set key1 'hello world'</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看key</span></span><br><span class="line">127.0.0.1:6379&gt; get key1</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除key</span></span><br><span class="line">127.0.0.1:6379&gt; del key1</span><br></pre></td></tr></table></figure>
+
+<p><strong>5. 删除Redis</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get remove -y redis-server</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Redis</tag>
+        <tag>Ubuntu</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ThinkPHP5.1使用PHPExcel进行数据的导入导出</title>
+    <url>/2019/01/18/27.html</url>
+    <content><![CDATA[<p>数据的批量导入和导出是一个项目的基本功能，本文笔者介绍一下如何在ThinkPHP框架中使用PHPExcel进行数据的导入和导出。</p>
+<a id="more"></a>
+<ol>
+<li>进入项目目录，使用composer安装PHPExcel</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">composer require phpoffice&#x2F;phpexcel</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlLm5zeHNnLmNvbS91cGxvYWRzLzIwMTkwMTE4LzIwMTkwMTE4MTAwNzEwX2Q5ZDQzYmJiNDE0NzI0YzY1MzA0MGRiMjYwNWJjMDliLnBuZw?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="导入数据"><a href="#导入数据" class="headerlink" title="导入数据"></a>导入数据</h2><ol>
+<li>准备一个含有数据的Excel表格，表头和数据表中的表字段相对应</li>
+</ol>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlLm5zeHNnLmNvbS91cGxvYWRzLzIwMTkwMTE4LzIwMTkwMTE4MTAwNzEwX2Q3ZjliM2I3NGQ5NjgzNDQyMDBlYTZiYzNiMzU1ZjI4LnBuZw?x-oss-process=image/format,png" alt="image"></p>
+<ol start="2">
+<li>在ThinkPHP中引入PHPExcel类库</li>
+</ol>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlLm5zeHNnLmNvbS91cGxvYWRzLzIwMTkwMTE4LzIwMTkwMTE4MTAwNzEwX2JlMWU2Mzg0MjIyMzQxZmE1ZjMyYjI5YjE2OGU5NTJkLnBuZw?x-oss-process=image/format,png" alt="image"></p>
+<ol start="3">
+<li>编写导入的PHP代码</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 批量导入管理员model</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> array 导入的数据</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 返回成功或者失败信息</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">inputAdmins</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 实例化类库</span></span><br><span class="line">    $obj_phpexcel = <span class="keyword">new</span> \PHPExcel();</span><br><span class="line">    $objReader = \PHPExcel_IOFactory::createReader(<span class="string">'Excel5'</span>);</span><br><span class="line">    <span class="comment">// 接收文件</span></span><br><span class="line">    $inputdata = $_FILES;</span><br><span class="line">    <span class="comment">// 获取并处理数据</span></span><br><span class="line">    $objData = $objReader-&gt;load($inputdata[<span class="string">'file'</span>][<span class="string">'tmp_name'</span>], $encode = <span class="string">'utf-8'</span>);</span><br><span class="line">    $excel_array=$objData-&gt;getsheet(<span class="number">0</span>)-&gt;toArray();</span><br><span class="line">    <span class="keyword">unset</span>($excel_array[<span class="number">0</span>]);</span><br><span class="line">    $num = <span class="number">0</span>;</span><br><span class="line">    $insertData = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">foreach</span> ($excel_array <span class="keyword">as</span> $key =&gt; $value) &#123;</span><br><span class="line">        $insertData[$num][<span class="string">'adminname'</span>] = $value[<span class="number">1</span>];</span><br><span class="line">        $insertData[$num][<span class="string">'status'</span>] = $value[<span class="number">2</span>];</span><br><span class="line">        $insertData[$num][<span class="string">'icon'</span>] = $value[<span class="number">3</span>];</span><br><span class="line">        $insertData[$num][<span class="string">'password'</span>] = $value[<span class="number">4</span>];</span><br><span class="line">        $insertData[$num][<span class="string">'uptime'</span>] = $value[<span class="number">5</span>];</span><br><span class="line">        $insertData[$num][<span class="string">'addtime'</span>] = $value[<span class="number">6</span>];</span><br><span class="line">        $insertData[$num][<span class="string">'delete'</span>] = $value[<span class="number">7</span>];</span><br><span class="line">        $num++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 添加数据</span></span><br><span class="line">    $user = <span class="keyword">new</span> Apiadmins;</span><br><span class="line">    $res = $user-&gt;saveAll($insertData);</span><br><span class="line">    <span class="keyword">if</span> ($res) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span> -&gt; cbMsg(<span class="keyword">true</span>, <span class="string">'导入成功！'</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span> -&gt; cbMsg(<span class="keyword">false</span>, <span class="string">'导入失败！'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlLm5zeHNnLmNvbS91cGxvYWRzLzIwMTkwMTE4LzIwMTkwMTE4MTAwNzEwXzYyZGU4YmM3YzZjNmE4MzgyMTM0MDQyMmQ2NWMwZDE1LnBuZw?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="导出数据"><a href="#导出数据" class="headerlink" title="导出数据"></a>导出数据</h2><ol>
+<li>编写导出的PHP代码</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 批量导出管理员model</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> string $fileName 导出文件名</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> array $headArr 表头</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 导出Excel表格</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">outputAdmins</span><span class="params">($fileName = <span class="string">'文件名'</span>, $headArr = [<span class="string">'id'</span>,<span class="string">'adminname'</span>,<span class="string">'status'</span>,<span class="string">'icon'</span>,<span class="string">'password'</span>,<span class="string">'uptime'</span>,<span class="string">'addtim'</span>,<span class="string">'delete'</span>])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $fileName .= <span class="string">"_"</span> . date(<span class="string">"Ymd_His"</span>, time()) . <span class="string">".xls"</span>;</span><br><span class="line">    $objPHPExcel = <span class="keyword">new</span> \PHPExcel();</span><br><span class="line">    <span class="comment">// Set document properties （设置文档属性）</span></span><br><span class="line">    $objPHPExcel-&gt;getProperties()-&gt;setCreator(<span class="string">"Maarten Balliauw"</span>)</span><br><span class="line">                                -&gt;setLastModifiedBy(<span class="string">"Maarten Balliauw"</span>)</span><br><span class="line">                                -&gt;setTitle(<span class="string">"Office 2007 XLSX Test Document"</span>)</span><br><span class="line">                                -&gt;setSubject(<span class="string">"Office 2007 XLSX Test Document"</span>)</span><br><span class="line">                                -&gt;setDescription(<span class="string">"Test document for Office 2007 XLSX, generated using PHP classes."</span>)</span><br><span class="line">                                -&gt;setKeywords(<span class="string">"office 2007 openxml php"</span>)</span><br><span class="line">                                -&gt;setCategory(<span class="string">"Test result file"</span>);</span><br><span class="line">    <span class="comment">// 设置头信息</span></span><br><span class="line">    $objPHPExcel-&gt;setActiveSheetIndex(<span class="number">0</span>);</span><br><span class="line">    $key = ord(<span class="string">'A'</span>);</span><br><span class="line">    <span class="keyword">foreach</span> ($headArr <span class="keyword">as</span> $v) &#123;</span><br><span class="line">        $colum = chr($key);</span><br><span class="line">        $objPHPExcel-&gt;getActiveSheet()-&gt;setCellValue($colum . <span class="string">'1'</span>, $v);</span><br><span class="line">        $key += <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 获取管理员全部数据</span></span><br><span class="line">    $data = Apiadmins::all();</span><br><span class="line">    $data = $data-&gt;toArray();</span><br><span class="line">    $column = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">foreach</span> ($data <span class="keyword">as</span> $key =&gt; $rows) &#123; <span class="comment">// 行写入</span></span><br><span class="line">        $span = ord(<span class="string">"A"</span>);</span><br><span class="line">        <span class="keyword">foreach</span> ($data[$key] <span class="keyword">as</span> $keyName =&gt; $value) &#123; <span class="comment">// 列写入</span></span><br><span class="line">            $objPHPExcel-&gt;getActiveSheet()-&gt;setCellValue(chr($span) . $column, $value);</span><br><span class="line">            $span++;</span><br><span class="line">        &#125;</span><br><span class="line">        $column++;</span><br><span class="line">    &#125;</span><br><span class="line">    $objPHPExcel-&gt;setActiveSheetIndex(<span class="number">0</span>); <span class="comment">// 设置活动单指数到第一个表,所以Excel打开这是第一个表</span></span><br><span class="line">    $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, <span class="string">'Excel5'</span>);</span><br><span class="line">    $objWriter-&gt;save(str_replace(<span class="string">'.php'</span>, <span class="string">'.xls'</span>, Env::get(<span class="string">'runtime_path'</span>).$fileName));</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span> -&gt; cbMsg(<span class="keyword">true</span>, <span class="string">'导出成功，请去目录：'</span>.Env::get(<span class="string">'runtime_path'</span>).<span class="string">' 查看！文件：'</span>.$fileName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="http://image.nsxsg.com/uploads/20190118/20190118100710_4aa9dd9e9b75394c641eadcd089b4b74.png" alt="image"></p>
+<ol start="2">
+<li>导出测试</li>
+</ol>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlLm5zeHNnLmNvbS91cGxvYWRzLzIwMTkwMTE4LzIwMTkwMTE4MTAwNzEwXzBiY2VmZjJkMGUyYmIzODdmYTg1OWY5NzI1NjgyNjJkLnBuZw?x-oss-process=image/format,png" alt="image"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlLm5zeHNnLmNvbS91cGxvYWRzLzIwMTkwMTE4LzIwMTkwMTE4MTAwNzExXzMwYThhZTgzNGQ2ZTQ1MTkxNzZhYzBjOTI3ODk5Zjc4LnBuZw?x-oss-process=image/format,png" alt="image"></p>
+]]></content>
+      <categories>
+        <category>PHP</category>
+      </categories>
+      <tags>
+        <tag>ThinkPHP框架</tag>
+        <tag>PHPExcel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ThinkPHP框架应用之定时任务</title>
+    <url>/2018/12/13/26.html</url>
+    <content><![CDATA[<p>定时任务是每个项目必不可少的功能。本文介绍一下如何使用ThinkPHP框架的定时任务。</p>
+<a id="more"></a>
+<h2 id="新建一个定时类"><a href="#新建一个定时类" class="headerlink" title="新建一个定时类"></a>新建一个定时类</h2><ol>
+<li><p>在 <code>application/admin/command</code> 目录下新建一个 <code>Test.php</code> 文件  </p>
+</li>
+<li><p>文件内容如下：  </p>
+</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">app</span>\<span class="title">admin</span>\<span class="title">command</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">console</span>\<span class="title">Command</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">console</span>\<span class="title">Input</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">console</span>\<span class="title">Output</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">Db</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> <span class="keyword">extends</span> <span class="title">Command</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">configure</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;setName(<span class="string">'test'</span>)-&gt;setDescription(<span class="string">"计划任务 Test"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">execute</span><span class="params">(Input $input, Output $output)</span></span>&#123;</span><br><span class="line">        $output-&gt;writeln(<span class="string">'Date Crontab job start...'</span>);</span><br><span class="line">        <span class="comment">/*** 这里写计划任务列表集 START ***/</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">$this</span>-&gt;test();</span><br><span class="line"> </span><br><span class="line">        <span class="comment">/*** 这里写计划任务列表集 END ***/</span></span><br><span class="line">        $output-&gt;writeln(<span class="string">'Date Crontab job end...'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'定时任务成功啦~'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果图如下：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3ZTV6a29qMzFhcjBwbmdwZi5qcGc?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="修改-command-php-文件"><a href="#修改-command-php-文件" class="headerlink" title="修改 command.php 文件"></a>修改 <code>command.php</code> 文件</h2><blockquote>
+<p>文件位置 <code>application/command.php</code></p>
+</blockquote>
+<ul>
+<li>修改内容如下</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">return</span> [</span><br><span class="line">    <span class="string">'app\admin\command\Test'</span></span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>效果图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3Z3M1MWpqMzE3YzBsMzc2ZC5qcGc?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="查看ThinkPHP框架中定时是否添加成功"><a href="#查看ThinkPHP框架中定时是否添加成功" class="headerlink" title="查看ThinkPHP框架中定时是否添加成功"></a>查看ThinkPHP框架中定时是否添加成功</h2><ul>
+<li>进入项目目录 <strong>（并非是根目录）</strong> ，使用命令查看</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">php think</span><br></pre></td></tr></table></figure>
+
+<p>效果图如下：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3ajM0eTZqMzFoNjBvYnRiYS5qcGc?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="运行定时任务"><a href="#运行定时任务" class="headerlink" title="运行定时任务"></a>运行定时任务</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">php think test</span><br></pre></td></tr></table></figure>
+
+<p>效果如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3bGJwMTlqMzFoNjBvYm16Zy5qcGc?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="在Linux中添加crontab"><a href="#在Linux中添加crontab" class="headerlink" title="在Linux中添加crontab"></a>在Linux中添加crontab</h2><ul>
+<li>编辑crontab</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 编辑crontab</span></span><br><span class="line">crontab -e</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 进入编辑模式后添加如下内容</span></span><br><span class="line">* * * * * php /home/wwwroot/demo.com/think test    # 每分钟执行一次计划任务</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 保存退出后重启crontab</span></span><br><span class="line">/etc/init.d/crond restart</span><br></pre></td></tr></table></figure>
+
+<p>效果图如下：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3bmswcWJqMzB0djA2ZGRnMC5qcGc?x-oss-process=image/format,png" alt="image"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDQuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF4MGpvdTBqMzB0djAzandlbC5qcGc?x-oss-process=image/format,png" alt="image"></p>
+]]></content>
+      <categories>
+        <category>PHP</category>
+      </categories>
+      <tags>
+        <tag>ThinkPHP框架</tag>
+        <tag>定时任务</tag>
       </tags>
   </entry>
   <entry>
@@ -922,167 +1018,32 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>ThinkPHP框架应用之定时任务</title>
-    <url>/2018/12/13/26.html</url>
-    <content><![CDATA[<p>定时任务是每个项目必不可少的功能。本文介绍一下如何使用ThinkPHP框架的定时任务。</p>
+    <title>Linux软件漏洞修复</title>
+    <url>/2019/09/26/30.html</url>
+    <content><![CDATA[<p>阿里云安全中心提示待处理漏洞，通过搜集资料笔者对漏洞进行了相应的处理，并通过了阿里云的验证。</p>
 <a id="more"></a>
-<h2 id="新建一个定时类"><a href="#新建一个定时类" class="headerlink" title="新建一个定时类"></a>新建一个定时类</h2><ol>
-<li><p>在 <code>application/admin/command</code> 目录下新建一个 <code>Test.php</code> 文件  </p>
-</li>
-<li><p>文件内容如下：  </p>
-</li>
+<h2 id="libssh2-安全更新"><a href="#libssh2-安全更新" class="headerlink" title="libssh2 安全更新"></a>libssh2 安全更新</h2><h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ol>
+<li>查看yum源设置<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ll &#x2F;etc&#x2F;yum.repos.d&#x2F;</span><br></pre></td></tr></table></figure></li>
+<li>安装更新<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install -y libssh2</span><br><span class="line">或者</span><br><span class="line">yum update -y libssh2</span><br></pre></td></tr></table></figure></li>
+<li>复查<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rpm -qa libssh2</span><br></pre></td></tr></table></figure></li>
+<li>去阿里云安全中心验证，通过即可</li>
 </ol>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">app</span>\<span class="title">admin</span>\<span class="title">command</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">console</span>\<span class="title">Command</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">console</span>\<span class="title">Input</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">console</span>\<span class="title">Output</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">Db</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> <span class="keyword">extends</span> <span class="title">Command</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">configure</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;setName(<span class="string">'test'</span>)-&gt;setDescription(<span class="string">"计划任务 Test"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">execute</span><span class="params">(Input $input, Output $output)</span></span>&#123;</span><br><span class="line">        $output-&gt;writeln(<span class="string">'Date Crontab job start...'</span>);</span><br><span class="line">        <span class="comment">/*** 这里写计划任务列表集 START ***/</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">$this</span>-&gt;test();</span><br><span class="line"> </span><br><span class="line">        <span class="comment">/*** 这里写计划任务列表集 END ***/</span></span><br><span class="line">        $output-&gt;writeln(<span class="string">'Date Crontab job end...'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'定时任务成功啦~'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>效果图如下：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3ZTV6a29qMzFhcjBwbmdwZi5qcGc?x-oss-process=image/format,png" alt="image"></p>
-<h2 id="修改-command-php-文件"><a href="#修改-command-php-文件" class="headerlink" title="修改 command.php 文件"></a>修改 <code>command.php</code> 文件</h2><blockquote>
-<p>文件位置 <code>application/command.php</code></p>
-</blockquote>
-<ul>
-<li>修改内容如下</li>
-</ul>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">return</span> [</span><br><span class="line">    <span class="string">'app\admin\command\Test'</span></span><br><span class="line">];</span><br></pre></td></tr></table></figure>
-
-<p>效果图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3Z3M1MWpqMzE3YzBsMzc2ZC5qcGc?x-oss-process=image/format,png" alt="image"></p>
-<h2 id="查看ThinkPHP框架中定时是否添加成功"><a href="#查看ThinkPHP框架中定时是否添加成功" class="headerlink" title="查看ThinkPHP框架中定时是否添加成功"></a>查看ThinkPHP框架中定时是否添加成功</h2><ul>
-<li>进入项目目录 <strong>（并非是根目录）</strong> ，使用命令查看</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">php think</span><br></pre></td></tr></table></figure>
-
-<p>效果图如下：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3ajM0eTZqMzFoNjBvYnRiYS5qcGc?x-oss-process=image/format,png" alt="image"></p>
-<h2 id="运行定时任务"><a href="#运行定时任务" class="headerlink" title="运行定时任务"></a>运行定时任务</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">php think test</span><br></pre></td></tr></table></figure>
-
-<p>效果如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3bGJwMTlqMzFoNjBvYm16Zy5qcGc?x-oss-process=image/format,png" alt="image"></p>
-<h2 id="在Linux中添加crontab"><a href="#在Linux中添加crontab" class="headerlink" title="在Linux中添加crontab"></a>在Linux中添加crontab</h2><ul>
-<li>编辑crontab</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 编辑crontab</span></span><br><span class="line">crontab -e</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 进入编辑模式后添加如下内容</span></span><br><span class="line">* * * * * php /home/wwwroot/demo.com/think test    # 每分钟执行一次计划任务</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 保存退出后重启crontab</span></span><br><span class="line">/etc/init.d/crond restart</span><br></pre></td></tr></table></figure>
-
-<p>效果图如下：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3bmswcWJqMzB0djA2ZGRnMC5qcGc?x-oss-process=image/format,png" alt="image"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDQuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF4MGpvdTBqMzB0djAzandlbC5qcGc?x-oss-process=image/format,png" alt="image"></p>
+<hr>
+<p>参考文章：<a href="https://forum.bclinux.org/topic/955/blsa-2019-0038-%E9%87%8D%E8%A6%81-libssh2-%E5%AE%89%E5%85%A8%E6%9B%B4%E6%96%B0%E5%85%AC%E5%91%8A" target="_blank" rel="noopener">https://forum.bclinux.org/topic/955/blsa-2019-0038-%E9%87%8D%E8%A6%81-libssh2-%E5%AE%89%E5%85%A8%E6%9B%B4%E6%96%B0%E5%85%AC%E5%91%8A</a></p>
+<h2 id="curl-安全和BUG修复更新"><a href="#curl-安全和BUG修复更新" class="headerlink" title="curl 安全和BUG修复更新"></a>curl 安全和BUG修复更新</h2><h3 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h3><ol>
+<li>查看yum源设置<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ll &#x2F;etc&#x2F;yum.repos.d&#x2F;</span><br></pre></td></tr></table></figure></li>
+<li>安装更新<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install -y libcurl-devel</span><br><span class="line">yum install -y libcurl</span><br><span class="line">yum install -y curl</span><br><span class="line">或者</span><br><span class="line">yum update -y libcurl-devel</span><br><span class="line">yum update -y libcurl</span><br><span class="line">yum update -y curl</span><br></pre></td></tr></table></figure></li>
+<li>去阿里云安全中心验证，通过即可</li>
+</ol>
+<hr>
+<p>参考文章：<a href="https://www.xuexiareas.com/index/Articles/details/num/315.html" target="_blank" rel="noopener">https://www.xuexiareas.com/index/Articles/details/num/315.html</a></p>
 ]]></content>
       <categories>
-        <category>PHP</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>ThinkPHP框架</tag>
-        <tag>定时任务</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ThinkPHP5.1使用PHPExcel进行数据的导入导出</title>
-    <url>/2019/01/18/27.html</url>
-    <content><![CDATA[<p>数据的批量导入和导出是一个项目的基本功能，本文笔者介绍一下如何在ThinkPHP框架中使用PHPExcel进行数据的导入和导出。</p>
-<a id="more"></a>
-<ol>
-<li>进入项目目录，使用composer安装PHPExcel</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">composer require phpoffice&#x2F;phpexcel</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlLm5zeHNnLmNvbS91cGxvYWRzLzIwMTkwMTE4LzIwMTkwMTE4MTAwNzEwX2Q5ZDQzYmJiNDE0NzI0YzY1MzA0MGRiMjYwNWJjMDliLnBuZw?x-oss-process=image/format,png" alt="image"></p>
-<h2 id="导入数据"><a href="#导入数据" class="headerlink" title="导入数据"></a>导入数据</h2><ol>
-<li>准备一个含有数据的Excel表格，表头和数据表中的表字段相对应</li>
-</ol>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlLm5zeHNnLmNvbS91cGxvYWRzLzIwMTkwMTE4LzIwMTkwMTE4MTAwNzEwX2Q3ZjliM2I3NGQ5NjgzNDQyMDBlYTZiYzNiMzU1ZjI4LnBuZw?x-oss-process=image/format,png" alt="image"></p>
-<ol start="2">
-<li>在ThinkPHP中引入PHPExcel类库</li>
-</ol>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlLm5zeHNnLmNvbS91cGxvYWRzLzIwMTkwMTE4LzIwMTkwMTE4MTAwNzEwX2JlMWU2Mzg0MjIyMzQxZmE1ZjMyYjI5YjE2OGU5NTJkLnBuZw?x-oss-process=image/format,png" alt="image"></p>
-<ol start="3">
-<li>编写导入的PHP代码</li>
-</ol>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 批量导入管理员model</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> array 导入的数据</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 返回成功或者失败信息</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">inputAdmins</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 实例化类库</span></span><br><span class="line">    $obj_phpexcel = <span class="keyword">new</span> \PHPExcel();</span><br><span class="line">    $objReader = \PHPExcel_IOFactory::createReader(<span class="string">'Excel5'</span>);</span><br><span class="line">    <span class="comment">// 接收文件</span></span><br><span class="line">    $inputdata = $_FILES;</span><br><span class="line">    <span class="comment">// 获取并处理数据</span></span><br><span class="line">    $objData = $objReader-&gt;load($inputdata[<span class="string">'file'</span>][<span class="string">'tmp_name'</span>], $encode = <span class="string">'utf-8'</span>);</span><br><span class="line">    $excel_array=$objData-&gt;getsheet(<span class="number">0</span>)-&gt;toArray();</span><br><span class="line">    <span class="keyword">unset</span>($excel_array[<span class="number">0</span>]);</span><br><span class="line">    $num = <span class="number">0</span>;</span><br><span class="line">    $insertData = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">foreach</span> ($excel_array <span class="keyword">as</span> $key =&gt; $value) &#123;</span><br><span class="line">        $insertData[$num][<span class="string">'adminname'</span>] = $value[<span class="number">1</span>];</span><br><span class="line">        $insertData[$num][<span class="string">'status'</span>] = $value[<span class="number">2</span>];</span><br><span class="line">        $insertData[$num][<span class="string">'icon'</span>] = $value[<span class="number">3</span>];</span><br><span class="line">        $insertData[$num][<span class="string">'password'</span>] = $value[<span class="number">4</span>];</span><br><span class="line">        $insertData[$num][<span class="string">'uptime'</span>] = $value[<span class="number">5</span>];</span><br><span class="line">        $insertData[$num][<span class="string">'addtime'</span>] = $value[<span class="number">6</span>];</span><br><span class="line">        $insertData[$num][<span class="string">'delete'</span>] = $value[<span class="number">7</span>];</span><br><span class="line">        $num++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 添加数据</span></span><br><span class="line">    $user = <span class="keyword">new</span> Apiadmins;</span><br><span class="line">    $res = $user-&gt;saveAll($insertData);</span><br><span class="line">    <span class="keyword">if</span> ($res) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span> -&gt; cbMsg(<span class="keyword">true</span>, <span class="string">'导入成功！'</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span> -&gt; cbMsg(<span class="keyword">false</span>, <span class="string">'导入失败！'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlLm5zeHNnLmNvbS91cGxvYWRzLzIwMTkwMTE4LzIwMTkwMTE4MTAwNzEwXzYyZGU4YmM3YzZjNmE4MzgyMTM0MDQyMmQ2NWMwZDE1LnBuZw?x-oss-process=image/format,png" alt="image"></p>
-<h2 id="导出数据"><a href="#导出数据" class="headerlink" title="导出数据"></a>导出数据</h2><ol>
-<li>编写导出的PHP代码</li>
-</ol>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 批量导出管理员model</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> string $fileName 导出文件名</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> array $headArr 表头</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 导出Excel表格</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">outputAdmins</span><span class="params">($fileName = <span class="string">'文件名'</span>, $headArr = [<span class="string">'id'</span>,<span class="string">'adminname'</span>,<span class="string">'status'</span>,<span class="string">'icon'</span>,<span class="string">'password'</span>,<span class="string">'uptime'</span>,<span class="string">'addtim'</span>,<span class="string">'delete'</span>])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $fileName .= <span class="string">"_"</span> . date(<span class="string">"Ymd_His"</span>, time()) . <span class="string">".xls"</span>;</span><br><span class="line">    $objPHPExcel = <span class="keyword">new</span> \PHPExcel();</span><br><span class="line">    <span class="comment">// Set document properties （设置文档属性）</span></span><br><span class="line">    $objPHPExcel-&gt;getProperties()-&gt;setCreator(<span class="string">"Maarten Balliauw"</span>)</span><br><span class="line">                                -&gt;setLastModifiedBy(<span class="string">"Maarten Balliauw"</span>)</span><br><span class="line">                                -&gt;setTitle(<span class="string">"Office 2007 XLSX Test Document"</span>)</span><br><span class="line">                                -&gt;setSubject(<span class="string">"Office 2007 XLSX Test Document"</span>)</span><br><span class="line">                                -&gt;setDescription(<span class="string">"Test document for Office 2007 XLSX, generated using PHP classes."</span>)</span><br><span class="line">                                -&gt;setKeywords(<span class="string">"office 2007 openxml php"</span>)</span><br><span class="line">                                -&gt;setCategory(<span class="string">"Test result file"</span>);</span><br><span class="line">    <span class="comment">// 设置头信息</span></span><br><span class="line">    $objPHPExcel-&gt;setActiveSheetIndex(<span class="number">0</span>);</span><br><span class="line">    $key = ord(<span class="string">'A'</span>);</span><br><span class="line">    <span class="keyword">foreach</span> ($headArr <span class="keyword">as</span> $v) &#123;</span><br><span class="line">        $colum = chr($key);</span><br><span class="line">        $objPHPExcel-&gt;getActiveSheet()-&gt;setCellValue($colum . <span class="string">'1'</span>, $v);</span><br><span class="line">        $key += <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 获取管理员全部数据</span></span><br><span class="line">    $data = Apiadmins::all();</span><br><span class="line">    $data = $data-&gt;toArray();</span><br><span class="line">    $column = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">foreach</span> ($data <span class="keyword">as</span> $key =&gt; $rows) &#123; <span class="comment">// 行写入</span></span><br><span class="line">        $span = ord(<span class="string">"A"</span>);</span><br><span class="line">        <span class="keyword">foreach</span> ($data[$key] <span class="keyword">as</span> $keyName =&gt; $value) &#123; <span class="comment">// 列写入</span></span><br><span class="line">            $objPHPExcel-&gt;getActiveSheet()-&gt;setCellValue(chr($span) . $column, $value);</span><br><span class="line">            $span++;</span><br><span class="line">        &#125;</span><br><span class="line">        $column++;</span><br><span class="line">    &#125;</span><br><span class="line">    $objPHPExcel-&gt;setActiveSheetIndex(<span class="number">0</span>); <span class="comment">// 设置活动单指数到第一个表,所以Excel打开这是第一个表</span></span><br><span class="line">    $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, <span class="string">'Excel5'</span>);</span><br><span class="line">    $objWriter-&gt;save(str_replace(<span class="string">'.php'</span>, <span class="string">'.xls'</span>, Env::get(<span class="string">'runtime_path'</span>).$fileName));</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span> -&gt; cbMsg(<span class="keyword">true</span>, <span class="string">'导出成功，请去目录：'</span>.Env::get(<span class="string">'runtime_path'</span>).<span class="string">' 查看！文件：'</span>.$fileName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="http://image.nsxsg.com/uploads/20190118/20190118100710_4aa9dd9e9b75394c641eadcd089b4b74.png" alt="image"></p>
-<ol start="2">
-<li>导出测试</li>
-</ol>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlLm5zeHNnLmNvbS91cGxvYWRzLzIwMTkwMTE4LzIwMTkwMTE4MTAwNzEwXzBiY2VmZjJkMGUyYmIzODdmYTg1OWY5NzI1NjgyNjJkLnBuZw?x-oss-process=image/format,png" alt="image"></p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlLm5zeHNnLmNvbS91cGxvYWRzLzIwMTkwMTE4LzIwMTkwMTE4MTAwNzExXzMwYThhZTgzNGQ2ZTQ1MTkxNzZhYzBjOTI3ODk5Zjc4LnBuZw?x-oss-process=image/format,png" alt="image"></p>
-]]></content>
-      <categories>
-        <category>PHP</category>
-      </categories>
-      <tags>
-        <tag>ThinkPHP框架</tag>
-        <tag>PHPExcel</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Dockerfile+Compose搭建dnmp开发环境</title>
-    <url>/2019/11/27/32.html</url>
-    <content><![CDATA[<p>本文是对Windows10系统下使用Dockerfile+Compose搭建dnmp开发环境的步骤做一次记录，顺便对搭建过程中遇到的问题进行相应的说明。</p>
-<a id="more"></a>
-<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><ol>
-<li>Dockerfile： <code>一个用来构建镜像的文本文件</code></li>
-<li>Compose： <code>用于定义和运行多容器 Docker 应用程序的工具</code></li>
-</ol>
-<h2 id="搭建环境"><a href="#搭建环境" class="headerlink" title="搭建环境"></a>搭建环境</h2><h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">dnmp[脚本项目名称目录]</span><br><span class="line">    |-- Dockerfile [存放Dockerfile文件的目录]</span><br><span class="line">        |-- Dockerfile-php [php镜像的Dockerfile文件]</span><br><span class="line">        ...</span><br><span class="line">    |-- docker-compose.yml [compose文件]</span><br></pre></td></tr></table></figure>
-
-<p><strong>注：如果PHP、MySQL、NGINX的相应数据需要存在本地，那么其目录，根据实际情况创建。并在docker-compose.yml文件中的 <code>volumes</code> 配置项中体现。</strong></p>
-<h3 id="脚本内容"><a href="#脚本内容" class="headerlink" title="脚本内容"></a>脚本内容</h3><ol>
-<li>Dockerfile-php</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">FROM php:7.2-fpm</span><br><span class="line">RUN &#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker-php-ext-install pdo pdo_mysql</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>docker-compose.yml</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># lnmp 配置</span><br><span class="line">version: &#39;3&#39;</span><br><span class="line">services:</span><br><span class="line">  php:</span><br><span class="line">    build:</span><br><span class="line">      context: .&#x2F;Dockerfile</span><br><span class="line">      dockerfile: Dockerfile-php</span><br><span class="line">    container_name: &quot;php-fpm7.2&quot;</span><br><span class="line">    expose:</span><br><span class="line">      - &quot;9000&quot;</span><br><span class="line">    volumes:</span><br><span class="line">      - &quot;D:\\dnmp\\www:&#x2F;www&quot;</span><br><span class="line">  nginx:</span><br><span class="line">    image: &quot;nginx:latest&quot;</span><br><span class="line">    container_name: &quot;nginx&quot;</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;80:80&quot;</span><br><span class="line">    volumes:</span><br><span class="line">      - &quot;D:\\dnmp\\www:&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&quot;</span><br><span class="line">      - &quot;D:\\dnmp\\nginx\\conf\\conf.d:&#x2F;etc&#x2F;nginx&#x2F;conf.d&quot;</span><br><span class="line">  mysql:</span><br><span class="line">    image: &quot;mysql:5.7&quot;</span><br><span class="line">    container_name: &quot;mysql5.7&quot;</span><br><span class="line">    environment:</span><br><span class="line">      MYSQL_ROOT_PASSWORD: 123456</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;3306:3306&quot;</span><br><span class="line">    volumes:</span><br><span class="line">      - &quot;D:\\dnmp\\mysql:&#x2F;var&#x2F;lib&#x2F;mysql&quot;</span><br></pre></td></tr></table></figure>
-
-<h3 id="运行脚本"><a href="#运行脚本" class="headerlink" title="运行脚本"></a>运行脚本</h3><p>在脚本目录中运行命令： <code>docker-compose up</code><br>后台执行该服务可以加上 <code>-d</code> 参数： <code>docker-compose up -d</code></p>
-<h2 id="Docker-compose命令"><a href="#Docker-compose命令" class="headerlink" title="Docker-compose命令"></a>Docker-compose命令</h2><table>
-<thead>
-<tr>
-<th>命令</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>docker-compose up -d</td>
-<td>后台创建并运行容器</td>
-</tr>
-<tr>
-<td>docker-compose start</td>
-<td>开始服务</td>
-</tr>
-<tr>
-<td>docker-compose stop</td>
-<td>停止服务</td>
-</tr>
-<tr>
-<td>docker-compose restart</td>
-<td>重启服务</td>
-</tr>
-<tr>
-<td>docker-compose pause nginx</td>
-<td>暂停nginx容器</td>
-</tr>
-<tr>
-<td>docker-compose unpause nginx</td>
-<td>恢复nginx容器</td>
-</tr>
-<tr>
-<td>…</td>
-<td>…</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>Windows</category>
-      </categories>
-      <tags>
-        <tag>dnmp环境</tag>
-        <tag>Docker</tag>
+        <tag>安全防护</tag>
+        <tag>Linux软件漏洞</tag>
       </tags>
   </entry>
   <entry>
@@ -1132,25 +1093,6 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </categories>
       <tags>
         <tag>随机数</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Windows10下Docker无法共享磁盘卷</title>
-    <url>/2019/11/28/33.html</url>
-    <content><![CDATA[<p>使用Docker-Compose启动时，无法共享本地磁盘卷，并且在 <code>Settings -&gt; Shared Drives</code> 中重新设置并单击 <code>Apply</code> 后，仍然失败无法应用。</p>
-<a id="more"></a>
-<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><ol>
-<li>查看docker日志，日志位置为： <code>C:\Users\[本机用户名]\AppData\Local\Docker</code> 。查看是否有权限问题，<em>基本不显示</em> 。</li>
-<li>修改策略组权限： <code>运行 -&gt; gpedit.msc -&gt; 计算机配置 -&gt; Windows设置 -&gt; 安全设置 -&gt; 本地策略 -&gt; 安全选项 -&gt; 网络访问：本地账户的共享和安全模式</code> 打开，设置为 <code>经典</code> 。</li>
-<li>保存后重新设置docker的共享文件。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Windows</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>磁盘共享</tag>
       </tags>
   </entry>
   <entry>
@@ -1227,32 +1169,71 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>Linux软件漏洞修复</title>
-    <url>/2019/09/26/30.html</url>
-    <content><![CDATA[<p>阿里云安全中心提示待处理漏洞，通过搜集资料笔者对漏洞进行了相应的处理，并通过了阿里云的验证。</p>
+    <title>使用Dockerfile+Compose搭建dnmp开发环境</title>
+    <url>/2019/11/27/32.html</url>
+    <content><![CDATA[<p>本文是对Windows10系统下使用Dockerfile+Compose搭建dnmp开发环境的步骤做一次记录，顺便对搭建过程中遇到的问题进行相应的说明。</p>
 <a id="more"></a>
-<h2 id="libssh2-安全更新"><a href="#libssh2-安全更新" class="headerlink" title="libssh2 安全更新"></a>libssh2 安全更新</h2><h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ol>
-<li>查看yum源设置<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ll &#x2F;etc&#x2F;yum.repos.d&#x2F;</span><br></pre></td></tr></table></figure></li>
-<li>安装更新<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install -y libssh2</span><br><span class="line">或者</span><br><span class="line">yum update -y libssh2</span><br></pre></td></tr></table></figure></li>
-<li>复查<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">rpm -qa libssh2</span><br></pre></td></tr></table></figure></li>
-<li>去阿里云安全中心验证，通过即可</li>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><ol>
+<li>Dockerfile： <code>一个用来构建镜像的文本文件</code></li>
+<li>Compose： <code>用于定义和运行多容器 Docker 应用程序的工具</code></li>
 </ol>
-<hr>
-<p>参考文章：<a href="https://forum.bclinux.org/topic/955/blsa-2019-0038-%E9%87%8D%E8%A6%81-libssh2-%E5%AE%89%E5%85%A8%E6%9B%B4%E6%96%B0%E5%85%AC%E5%91%8A" target="_blank" rel="noopener">https://forum.bclinux.org/topic/955/blsa-2019-0038-%E9%87%8D%E8%A6%81-libssh2-%E5%AE%89%E5%85%A8%E6%9B%B4%E6%96%B0%E5%85%AC%E5%91%8A</a></p>
-<h2 id="curl-安全和BUG修复更新"><a href="#curl-安全和BUG修复更新" class="headerlink" title="curl 安全和BUG修复更新"></a>curl 安全和BUG修复更新</h2><h3 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h3><ol>
-<li>查看yum源设置<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ll &#x2F;etc&#x2F;yum.repos.d&#x2F;</span><br></pre></td></tr></table></figure></li>
-<li>安装更新<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install -y libcurl-devel</span><br><span class="line">yum install -y libcurl</span><br><span class="line">yum install -y curl</span><br><span class="line">或者</span><br><span class="line">yum update -y libcurl-devel</span><br><span class="line">yum update -y libcurl</span><br><span class="line">yum update -y curl</span><br></pre></td></tr></table></figure></li>
-<li>去阿里云安全中心验证，通过即可</li>
+<h2 id="搭建环境"><a href="#搭建环境" class="headerlink" title="搭建环境"></a>搭建环境</h2><h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">dnmp[脚本项目名称目录]</span><br><span class="line">    |-- Dockerfile [存放Dockerfile文件的目录]</span><br><span class="line">        |-- Dockerfile-php [php镜像的Dockerfile文件]</span><br><span class="line">        ...</span><br><span class="line">    |-- docker-compose.yml [compose文件]</span><br></pre></td></tr></table></figure>
+
+<p><strong>注：如果PHP、MySQL、NGINX的相应数据需要存在本地，那么其目录，根据实际情况创建。并在docker-compose.yml文件中的 <code>volumes</code> 配置项中体现。</strong></p>
+<h3 id="脚本内容"><a href="#脚本内容" class="headerlink" title="脚本内容"></a>脚本内容</h3><ol>
+<li>Dockerfile-php</li>
 </ol>
-<hr>
-<p>参考文章：<a href="https://www.xuexiareas.com/index/Articles/details/num/315.html" target="_blank" rel="noopener">https://www.xuexiareas.com/index/Articles/details/num/315.html</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">FROM php:7.2-fpm</span><br><span class="line">RUN &#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker-php-ext-install pdo pdo_mysql</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>docker-compose.yml</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># lnmp 配置</span><br><span class="line">version: &#39;3&#39;</span><br><span class="line">services:</span><br><span class="line">  php:</span><br><span class="line">    build:</span><br><span class="line">      context: .&#x2F;Dockerfile</span><br><span class="line">      dockerfile: Dockerfile-php</span><br><span class="line">    container_name: &quot;php-fpm7.2&quot;</span><br><span class="line">    expose:</span><br><span class="line">      - &quot;9000&quot;</span><br><span class="line">    volumes:</span><br><span class="line">      - &quot;D:\\dnmp\\www:&#x2F;www&quot;</span><br><span class="line">  nginx:</span><br><span class="line">    image: &quot;nginx:latest&quot;</span><br><span class="line">    container_name: &quot;nginx&quot;</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;80:80&quot;</span><br><span class="line">    volumes:</span><br><span class="line">      - &quot;D:\\dnmp\\www:&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&quot;</span><br><span class="line">      - &quot;D:\\dnmp\\nginx\\conf\\conf.d:&#x2F;etc&#x2F;nginx&#x2F;conf.d&quot;</span><br><span class="line">  mysql:</span><br><span class="line">    image: &quot;mysql:5.7&quot;</span><br><span class="line">    container_name: &quot;mysql5.7&quot;</span><br><span class="line">    environment:</span><br><span class="line">      MYSQL_ROOT_PASSWORD: 123456</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;3306:3306&quot;</span><br><span class="line">    volumes:</span><br><span class="line">      - &quot;D:\\dnmp\\mysql:&#x2F;var&#x2F;lib&#x2F;mysql&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行脚本"><a href="#运行脚本" class="headerlink" title="运行脚本"></a>运行脚本</h3><p>在脚本目录中运行命令： <code>docker-compose up</code><br>后台执行该服务可以加上 <code>-d</code> 参数： <code>docker-compose up -d</code></p>
+<h2 id="Docker-compose命令"><a href="#Docker-compose命令" class="headerlink" title="Docker-compose命令"></a>Docker-compose命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>docker-compose up -d</td>
+<td>后台创建并运行容器</td>
+</tr>
+<tr>
+<td>docker-compose start</td>
+<td>开始服务</td>
+</tr>
+<tr>
+<td>docker-compose stop</td>
+<td>停止服务</td>
+</tr>
+<tr>
+<td>docker-compose restart</td>
+<td>重启服务</td>
+</tr>
+<tr>
+<td>docker-compose pause nginx</td>
+<td>暂停nginx容器</td>
+</tr>
+<tr>
+<td>docker-compose unpause nginx</td>
+<td>恢复nginx容器</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody></table>
 ]]></content>
       <categories>
-        <category>Linux</category>
+        <category>Windows</category>
       </categories>
       <tags>
-        <tag>安全防护</tag>
-        <tag>Linux软件漏洞</tag>
+        <tag>dnmp环境</tag>
+        <tag>Docker</tag>
       </tags>
   </entry>
   <entry>
@@ -1299,28 +1280,6 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>使用PHPMailer封装类发送邮件</title>
-    <url>/2017/09/30/7.html</url>
-    <content><![CDATA[<p>近期，打算做一个邮箱注册，使用的是smtp服务。可是奇怪的是在本地调试是好的，一搬到阿里云的服务器上就不行了。想了好久没有答案，所以提了一下工单给阿里云，以下是阿里云的回复。</p>
-<a id="more"></a>
-<blockquote>
-<p>由于国际与国内均对垃圾邮件进行严格管控，我国《互联网信息服务管理办法》、《中国互联网协会反垃圾邮件规范》均对垃圾邮件进行说明与管理规范。鉴于服务器25端口被大量垃圾邮件充斥，严重影响广大用户正常使用。为了共同维护良好的网络环境，自即日起阿里云新购服务器不再提供25端口邮件服务，建议您尝试使用465加密端口发送邮件，或与邮件发信提供商咨询是否还有其他smtp发信端口。</p>
-</blockquote>
-<p>好吧，原来是25端口不能用了。改呗，换端口，可是换完之后本地也不能用了。天哪，这是怎么回事。想了一想，原本是好的，但是换了端口就不行了，那么肯定是这个邮件发送类不支持其它端口。马上换个邮件发送类，在GitHub搜索<a href="https://github.com/PHPMailer/PHPMailer" target="_blank" rel="noopener">PHPMailer</a>， 一堆英文看不懂，尴尬了。好在看到了一个A Simple Example，行，照着改呗。下面就贴出这个简单的例子及我的一些中文注释。</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="comment">// Import PHPMailer classes into the global namespace</span></span><br><span class="line">	<span class="comment">// These must be at the top of your script, not inside a function</span></span><br><span class="line">	<span class="comment">// use PHPMailer\PHPMailer\PHPMailer;</span></span><br><span class="line">	<span class="comment">// use PHPMailer\PHPMailer\Exception;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//Load composer’s autoloader</span></span><br><span class="line">	<span class="comment">// require ‘vendor/autoload.php’;</span></span><br><span class="line">	<span class="comment">//导入文件，文件内容自己去GitHub下载，地址：https://github.com/PHPMailer/PHPMailer</span></span><br><span class="line">    <span class="keyword">require</span> <span class="string">'./PHPMailer.php'</span>;</span><br><span class="line">    <span class="keyword">require</span> <span class="string">'./SMTP.php'</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	mail = <span class="keyword">new</span> PHPMailer(<span class="keyword">true</span>);                              <span class="comment">// Passing true enables exceptions</span></span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">	    <span class="comment">//Server settings（服务器设置）</span></span><br><span class="line">	    mail-&gt;SMTPDebug = <span class="number">2</span>;                                 <span class="comment">// Enable verbose debug output（启用详细调试输出）</span></span><br><span class="line">	    mail-&gt;isSMTP();                                      <span class="comment">// Set mailer to use SMTP（设置使用SMTP服务）</span></span><br><span class="line">	    mail-&gt;Host = <span class="string">'smtp.163.com'</span>;                         <span class="comment">// Specify main and backup SMTP servers（SMTP服务器）</span></span><br><span class="line">	    mail-&gt;SMTPAuth = <span class="keyword">true</span>;                               <span class="comment">// Enable SMTP authentication（启用SMTP验证）</span></span><br><span class="line">	    mail-&gt;Username = <span class="string">'abcde@163.com'</span>;                    <span class="comment">// SMTP username</span></span><br><span class="line">	    mail-&gt;Password = <span class="string">'abcde123456'</span>;                      <span class="comment">// SMTP password</span></span><br><span class="line">	    mail-&gt;SMTPSecure = <span class="string">'ssl'</span>;                            <span class="comment">// Enable TLS encryption, ssl also accepted（启用TLS加密，ssl也被接受）</span></span><br><span class="line">	    $mail-&gt;Port = <span class="number">465</span>;                                    <span class="comment">// TCP port to connect to（要连接的TCP端口）</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">//Recipients（收件人）</span></span><br><span class="line">		$mail-&gt;setFrom(<span class="string">'abcde@163.com'</span>, <span class="string">'Mailer'</span>);            <span class="comment">//Mailer随便写一个名字</span></span><br><span class="line">		$mail-&gt;addAddress(<span class="string">'123456@qq.com'</span>, <span class="string">'Joe User'</span>);       <span class="comment">// Add a recipient（添加一个收件人）</span></span><br><span class="line">		$mail-&gt;addAddress(<span class="string">'ellen@example.com'</span>);               <span class="comment">// Name is optional（再添加一个收件人，其中Joe User及名字可以不写）</span></span><br><span class="line">		$mail-&gt;addReplyTo(<span class="string">'info@example.com'</span>, <span class="string">'Information'</span>); <span class="comment">//抄送</span></span><br><span class="line">		<span class="comment">// $mail-&gt;addCC('cc@example.com');</span></span><br><span class="line">		<span class="comment">// $mail-&gt;addBCC('bcc@example.com');</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">//Attachments（附件）</span></span><br><span class="line">		$mail-&gt;addAttachment(<span class="string">'/var/tmp/file.tar.gz'</span>);         <span class="comment">// Add attachments（添加一个文件在服务器上的完整路径）</span></span><br><span class="line">		<span class="comment">// $mail-&gt;addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">//Content（邮件内容）</span></span><br><span class="line">		$mail-&gt;isHTML(<span class="keyword">true</span>);                                  <span class="comment">// Set email format to HTML</span></span><br><span class="line">		$mail-&gt;Subject = <span class="string">'Here is the subject'</span>;               <span class="comment">// 邮件标题</span></span><br><span class="line">		$mail-&gt;Body    = <span class="string">'This is the HTML message body &lt;b&gt;in bold!&lt;/b&gt;'</span>;               <span class="comment">//邮件内容（可以使用html标签）</span></span><br><span class="line">		<span class="comment">// $mail-&gt;AltBody = 'This is the body in plain text for non-HTML mail clients';</span></span><br><span class="line">		</span><br><span class="line">		$mail-&gt;send();</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">'Message has been sent'</span>;</span><br><span class="line">	&#125; <span class="keyword">catch</span> (<span class="keyword">Exception</span> e) &#123;</span><br><span class="line">	    <span class="keyword">echo</span> <span class="string">'Message could not be sent.'</span>;</span><br><span class="line">	    <span class="comment">// echo 'Mailer Error: ' . mail-&gt;ErrorInfo;          // 具体报错信息，基本不用，歪果仁写的就是好，一用就成功</span></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>各位大神，如果有好的见解，记得告诉我，让我完善完善。</strong></p>
-]]></content>
-      <categories>
-        <category>PHP</category>
-      </categories>
-      <tags>
-        <tag>PHPMailer</tag>
-        <tag>smtp服务</tag>
-        <tag>邮件发送类</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Centos环境下PHP5.3开启curl_init扩展</title>
     <url>/2017/09/28/5.html</url>
     <content><![CDATA[<p>Centos环境下PHP5.3开启curl_init扩展，也可根据此方法开启其它的PHP扩展。</p>
@@ -1355,6 +1314,25 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </categories>
       <tags>
         <tag>PHP5.3扩展</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows10下Docker无法共享磁盘卷</title>
+    <url>/2019/11/28/33.html</url>
+    <content><![CDATA[<p>使用Docker-Compose启动时，无法共享本地磁盘卷，并且在 <code>Settings -&gt; Shared Drives</code> 中重新设置并单击 <code>Apply</code> 后，仍然失败无法应用。</p>
+<a id="more"></a>
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><ol>
+<li>查看docker日志，日志位置为： <code>C:\Users\[本机用户名]\AppData\Local\Docker</code> 。查看是否有权限问题，<em>基本不显示</em> 。</li>
+<li>修改策略组权限： <code>运行 -&gt; gpedit.msc -&gt; 计算机配置 -&gt; Windows设置 -&gt; 安全设置 -&gt; 本地策略 -&gt; 安全选项 -&gt; 网络访问：本地账户的共享和安全模式</code> 打开，设置为 <code>经典</code> 。</li>
+<li>保存后重新设置docker的共享文件。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Windows</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>磁盘共享</tag>
       </tags>
   </entry>
   <entry>
@@ -1444,6 +1422,28 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
         <tag>LNMP</tag>
         <tag>一键脚本</tag>
         <tag>运行环境</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用PHPMailer封装类发送邮件</title>
+    <url>/2017/09/30/7.html</url>
+    <content><![CDATA[<p>近期，打算做一个邮箱注册，使用的是smtp服务。可是奇怪的是在本地调试是好的，一搬到阿里云的服务器上就不行了。想了好久没有答案，所以提了一下工单给阿里云，以下是阿里云的回复。</p>
+<a id="more"></a>
+<blockquote>
+<p>由于国际与国内均对垃圾邮件进行严格管控，我国《互联网信息服务管理办法》、《中国互联网协会反垃圾邮件规范》均对垃圾邮件进行说明与管理规范。鉴于服务器25端口被大量垃圾邮件充斥，严重影响广大用户正常使用。为了共同维护良好的网络环境，自即日起阿里云新购服务器不再提供25端口邮件服务，建议您尝试使用465加密端口发送邮件，或与邮件发信提供商咨询是否还有其他smtp发信端口。</p>
+</blockquote>
+<p>好吧，原来是25端口不能用了。改呗，换端口，可是换完之后本地也不能用了。天哪，这是怎么回事。想了一想，原本是好的，但是换了端口就不行了，那么肯定是这个邮件发送类不支持其它端口。马上换个邮件发送类，在GitHub搜索<a href="https://github.com/PHPMailer/PHPMailer" target="_blank" rel="noopener">PHPMailer</a>， 一堆英文看不懂，尴尬了。好在看到了一个A Simple Example，行，照着改呗。下面就贴出这个简单的例子及我的一些中文注释。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="comment">// Import PHPMailer classes into the global namespace</span></span><br><span class="line">	<span class="comment">// These must be at the top of your script, not inside a function</span></span><br><span class="line">	<span class="comment">// use PHPMailer\PHPMailer\PHPMailer;</span></span><br><span class="line">	<span class="comment">// use PHPMailer\PHPMailer\Exception;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//Load composer’s autoloader</span></span><br><span class="line">	<span class="comment">// require ‘vendor/autoload.php’;</span></span><br><span class="line">	<span class="comment">//导入文件，文件内容自己去GitHub下载，地址：https://github.com/PHPMailer/PHPMailer</span></span><br><span class="line">    <span class="keyword">require</span> <span class="string">'./PHPMailer.php'</span>;</span><br><span class="line">    <span class="keyword">require</span> <span class="string">'./SMTP.php'</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	mail = <span class="keyword">new</span> PHPMailer(<span class="keyword">true</span>);                              <span class="comment">// Passing true enables exceptions</span></span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">	    <span class="comment">//Server settings（服务器设置）</span></span><br><span class="line">	    mail-&gt;SMTPDebug = <span class="number">2</span>;                                 <span class="comment">// Enable verbose debug output（启用详细调试输出）</span></span><br><span class="line">	    mail-&gt;isSMTP();                                      <span class="comment">// Set mailer to use SMTP（设置使用SMTP服务）</span></span><br><span class="line">	    mail-&gt;Host = <span class="string">'smtp.163.com'</span>;                         <span class="comment">// Specify main and backup SMTP servers（SMTP服务器）</span></span><br><span class="line">	    mail-&gt;SMTPAuth = <span class="keyword">true</span>;                               <span class="comment">// Enable SMTP authentication（启用SMTP验证）</span></span><br><span class="line">	    mail-&gt;Username = <span class="string">'abcde@163.com'</span>;                    <span class="comment">// SMTP username</span></span><br><span class="line">	    mail-&gt;Password = <span class="string">'abcde123456'</span>;                      <span class="comment">// SMTP password</span></span><br><span class="line">	    mail-&gt;SMTPSecure = <span class="string">'ssl'</span>;                            <span class="comment">// Enable TLS encryption, ssl also accepted（启用TLS加密，ssl也被接受）</span></span><br><span class="line">	    $mail-&gt;Port = <span class="number">465</span>;                                    <span class="comment">// TCP port to connect to（要连接的TCP端口）</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">//Recipients（收件人）</span></span><br><span class="line">		$mail-&gt;setFrom(<span class="string">'abcde@163.com'</span>, <span class="string">'Mailer'</span>);            <span class="comment">//Mailer随便写一个名字</span></span><br><span class="line">		$mail-&gt;addAddress(<span class="string">'123456@qq.com'</span>, <span class="string">'Joe User'</span>);       <span class="comment">// Add a recipient（添加一个收件人）</span></span><br><span class="line">		$mail-&gt;addAddress(<span class="string">'ellen@example.com'</span>);               <span class="comment">// Name is optional（再添加一个收件人，其中Joe User及名字可以不写）</span></span><br><span class="line">		$mail-&gt;addReplyTo(<span class="string">'info@example.com'</span>, <span class="string">'Information'</span>); <span class="comment">//抄送</span></span><br><span class="line">		<span class="comment">// $mail-&gt;addCC('cc@example.com');</span></span><br><span class="line">		<span class="comment">// $mail-&gt;addBCC('bcc@example.com');</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">//Attachments（附件）</span></span><br><span class="line">		$mail-&gt;addAttachment(<span class="string">'/var/tmp/file.tar.gz'</span>);         <span class="comment">// Add attachments（添加一个文件在服务器上的完整路径）</span></span><br><span class="line">		<span class="comment">// $mail-&gt;addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">//Content（邮件内容）</span></span><br><span class="line">		$mail-&gt;isHTML(<span class="keyword">true</span>);                                  <span class="comment">// Set email format to HTML</span></span><br><span class="line">		$mail-&gt;Subject = <span class="string">'Here is the subject'</span>;               <span class="comment">// 邮件标题</span></span><br><span class="line">		$mail-&gt;Body    = <span class="string">'This is the HTML message body &lt;b&gt;in bold!&lt;/b&gt;'</span>;               <span class="comment">//邮件内容（可以使用html标签）</span></span><br><span class="line">		<span class="comment">// $mail-&gt;AltBody = 'This is the body in plain text for non-HTML mail clients';</span></span><br><span class="line">		</span><br><span class="line">		$mail-&gt;send();</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">'Message has been sent'</span>;</span><br><span class="line">	&#125; <span class="keyword">catch</span> (<span class="keyword">Exception</span> e) &#123;</span><br><span class="line">	    <span class="keyword">echo</span> <span class="string">'Message could not be sent.'</span>;</span><br><span class="line">	    <span class="comment">// echo 'Mailer Error: ' . mail-&gt;ErrorInfo;          // 具体报错信息，基本不用，歪果仁写的就是好，一用就成功</span></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>各位大神，如果有好的见解，记得告诉我，让我完善完善。</strong></p>
+]]></content>
+      <categories>
+        <category>PHP</category>
+      </categories>
+      <tags>
+        <tag>PHPMailer</tag>
+        <tag>smtp服务</tag>
+        <tag>邮件发送类</tag>
       </tags>
   </entry>
 </search>
