@@ -68,62 +68,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Sublime自定义快捷键（绑定插件）</title>
-    <url>/2017/12/07/13.html</url>
-    <content><![CDATA[<p>大家在使用Sublime的时候，是不是对于打印一些数据流的函数既爱又恨。爱的是这个东西对于排错和修改BUG是真的很有用，恨的是这个东西每次打起来是又多又长。那今天小编就介绍一种插件和快捷键结合的方法，快速输出打印函数。</p>
-<a id="more"></a>
-<ol>
-<li><p>新增插件</p>
-<blockquote>
-<p>操作流程：工具（T）-&gt; 插件开发 -&gt; 新建插件</p>
-</blockquote>
-<p> 之后会有一个untitled文件，内容如下</p>
- <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sublime, sublime_plugin</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExampleCommand</span><span class="params">(sublime_plugin.TextCommand)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self, edit)</span>:</span></span><br><span class="line">        self.view.insert(edit, <span class="number">0</span>, “Hello, World!”)</span><br></pre></td></tr></table></figure>
-
-<p> 这个代码什么意思哪，小编也不知道，但是没关系，不用懂它，知道怎么借鉴就可以了。大致意思如下：<code>class ExampleCommand()</code> 这个是一个类，也是我们接下来要用的。也和之后绑定快捷键有关，它是以大写字母来区分如何调用这个类名。</p>
-<p> <strong>比如：</strong><br> <code>ExampleCommand</code>这个类名，之后调用就用 <code>example</code> ；<code>EchoVdCommand</code> 这个类名，之后调用就用 <code>echo_vd</code>。</p>
-</li>
-<li><p>编辑插件<br> <strong>具体内容如下：</strong></p>
- <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sublime, sublime_plugin</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EchoVdCommand</span><span class="params">(sublime_plugin.TextCommand)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self, edit)</span>:</span></span><br><span class="line">        self.view.run_command(<span class="string">"insert_snippet"</span>,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">"contents"</span>:<span class="string">"echo '&lt;pre&gt;';var_dump(\$content);exit;"</span></span><br><span class="line">                &#125;</span><br><span class="line">            )</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FileVdCommand</span><span class="params">(sublime_plugin.TextCommand)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self, edit)</span>:</span></span><br><span class="line">        self.view.run_command(<span class="string">"insert_snippet"</span>,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">"contents"</span>:<span class="string">"file_put_contents(DATA_DIR.'/abcd.log',print_r(\$content,true),FILE_APPEND);"</span></span><br><span class="line">                &#125;</span><br><span class="line">            )</span><br></pre></td></tr></table></figure>
-
-<p> 不用管这个是啥意思，只要记住类名（<code>EchoVdCommand、FileVdCommand</code>）和内容（<code>“echo ‘&lt;pre&gt;’;var_dump(content);exit;”、“file_put_contents(DATA_DIR.’/abcd.log’,print_r(content,true),FILE_APPEND);”</code>）</p>
-</li>
-<li><p>保存插件<br> 插件名随便，不要和其它文件重复就可以了。</p>
-</li>
-<li><p>绑定快捷键</p>
-<blockquote>
-<p>操作步骤：首选项（N）-&gt; 按键绑定-用户</p>
-</blockquote>
-<p> 如果没有“按键绑定-用户”，那就安装一个 <code>Emmet插件</code>（如何安装自行百度） 出现如下内容：</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123; &quot;keys&quot;: [&quot;alt+m&quot;], &quot;command&quot;: &quot;markdown_preview&quot;, &quot;args&quot;: &#123;&quot;target&quot;: &quot;browser&quot;, &quot;parser&quot;:&quot;markdown&quot;&#125; &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p> 然后编辑内容，结果如下：</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123; &quot;keys&quot;: [&quot;alt+m&quot;], &quot;command&quot;: &quot;markdown_preview&quot;, &quot;args&quot;: &#123;&quot;target&quot;: &quot;browser&quot;, &quot;parser&quot;:&quot;markdown&quot;&#125; &#125;,</span><br><span class="line">    &#123; &quot;keys&quot;: [&quot;alt+e&quot;], &quot;command&quot;: &quot;echo_vd&quot; &#125;,</span><br><span class="line">    &#123; &quot;keys&quot;: [&quot;alt+f&quot;], &quot;command&quot;: &quot;file_vd&quot; &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p> 为啥是这样我也不知道，不过大致可以理解为，使用 <code>“alt+e”</code> 键，调用 <code>echo_vd</code> （即对应刚才编辑的<code>EchoVdCommand</code>类） 注：按键 <code>“alt+e”</code> 、<code>“alt+f”</code> 可自定义，但不能与其它按键冲突</p>
-</li>
-<li><p>试验</p>
-<p> 使用 <code>“alt+e”</code> 键，输出</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo &#39;&lt;pre&gt;&#39;;var_dump($content);</span><br></pre></td></tr></table></figure>
-
-<p> 使用 <code>“alt+f”</code> 键，输出</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">file_put_contents(DATA_DIR.&#39;&#x2F;abcd.log&#39;,print_r($content,true),FILE_APPEND);</span><br></pre></td></tr></table></figure>
-
-<p> 出现这样的结果那么即成功。</p>
-</li>
-</ol>
-<hr>
-<p>参考文章：<a href="https://jinjiajin.net/792.html" target="_blank" rel="noopener">https://jinjiajin.net/792.html</a></p>
-]]></content>
-      <categories>
-        <category>Windows</category>
-      </categories>
-      <tags>
-        <tag>Sublime</tag>
-        <tag>快捷键</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CURL(60)无法获得本地颁发者证书</title>
     <url>/2017/11/06/10.html</url>
     <content><![CDATA[<p>今天在部署一个有关微信项目的环境时，访问直接报如下错误：    <code>curl(60)SSL certificate problem：unable to get local issuer certificate.</code></p>
@@ -257,6 +201,62 @@
       </tags>
   </entry>
   <entry>
+    <title>Sublime自定义快捷键（绑定插件）</title>
+    <url>/2017/12/07/13.html</url>
+    <content><![CDATA[<p>大家在使用Sublime的时候，是不是对于打印一些数据流的函数既爱又恨。爱的是这个东西对于排错和修改BUG是真的很有用，恨的是这个东西每次打起来是又多又长。那今天小编就介绍一种插件和快捷键结合的方法，快速输出打印函数。</p>
+<a id="more"></a>
+<ol>
+<li><p>新增插件</p>
+<blockquote>
+<p>操作流程：工具（T）-&gt; 插件开发 -&gt; 新建插件</p>
+</blockquote>
+<p> 之后会有一个untitled文件，内容如下</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sublime, sublime_plugin</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExampleCommand</span><span class="params">(sublime_plugin.TextCommand)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self, edit)</span>:</span></span><br><span class="line">        self.view.insert(edit, <span class="number">0</span>, “Hello, World!”)</span><br></pre></td></tr></table></figure>
+
+<p> 这个代码什么意思哪，小编也不知道，但是没关系，不用懂它，知道怎么借鉴就可以了。大致意思如下：<code>class ExampleCommand()</code> 这个是一个类，也是我们接下来要用的。也和之后绑定快捷键有关，它是以大写字母来区分如何调用这个类名。</p>
+<p> <strong>比如：</strong><br> <code>ExampleCommand</code>这个类名，之后调用就用 <code>example</code> ；<code>EchoVdCommand</code> 这个类名，之后调用就用 <code>echo_vd</code>。</p>
+</li>
+<li><p>编辑插件<br> <strong>具体内容如下：</strong></p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sublime, sublime_plugin</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EchoVdCommand</span><span class="params">(sublime_plugin.TextCommand)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self, edit)</span>:</span></span><br><span class="line">        self.view.run_command(<span class="string">"insert_snippet"</span>,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">"contents"</span>:<span class="string">"echo '&lt;pre&gt;';var_dump(\$content);exit;"</span></span><br><span class="line">                &#125;</span><br><span class="line">            )</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FileVdCommand</span><span class="params">(sublime_plugin.TextCommand)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self, edit)</span>:</span></span><br><span class="line">        self.view.run_command(<span class="string">"insert_snippet"</span>,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">"contents"</span>:<span class="string">"file_put_contents(DATA_DIR.'/abcd.log',print_r(\$content,true),FILE_APPEND);"</span></span><br><span class="line">                &#125;</span><br><span class="line">            )</span><br></pre></td></tr></table></figure>
+
+<p> 不用管这个是啥意思，只要记住类名（<code>EchoVdCommand、FileVdCommand</code>）和内容（<code>“echo ‘&lt;pre&gt;’;var_dump(content);exit;”、“file_put_contents(DATA_DIR.’/abcd.log’,print_r(content,true),FILE_APPEND);”</code>）</p>
+</li>
+<li><p>保存插件<br> 插件名随便，不要和其它文件重复就可以了。</p>
+</li>
+<li><p>绑定快捷键</p>
+<blockquote>
+<p>操作步骤：首选项（N）-&gt; 按键绑定-用户</p>
+</blockquote>
+<p> 如果没有“按键绑定-用户”，那就安装一个 <code>Emmet插件</code>（如何安装自行百度） 出现如下内容：</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123; &quot;keys&quot;: [&quot;alt+m&quot;], &quot;command&quot;: &quot;markdown_preview&quot;, &quot;args&quot;: &#123;&quot;target&quot;: &quot;browser&quot;, &quot;parser&quot;:&quot;markdown&quot;&#125; &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p> 然后编辑内容，结果如下：</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123; &quot;keys&quot;: [&quot;alt+m&quot;], &quot;command&quot;: &quot;markdown_preview&quot;, &quot;args&quot;: &#123;&quot;target&quot;: &quot;browser&quot;, &quot;parser&quot;:&quot;markdown&quot;&#125; &#125;,</span><br><span class="line">    &#123; &quot;keys&quot;: [&quot;alt+e&quot;], &quot;command&quot;: &quot;echo_vd&quot; &#125;,</span><br><span class="line">    &#123; &quot;keys&quot;: [&quot;alt+f&quot;], &quot;command&quot;: &quot;file_vd&quot; &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p> 为啥是这样我也不知道，不过大致可以理解为，使用 <code>“alt+e”</code> 键，调用 <code>echo_vd</code> （即对应刚才编辑的<code>EchoVdCommand</code>类） 注：按键 <code>“alt+e”</code> 、<code>“alt+f”</code> 可自定义，但不能与其它按键冲突</p>
+</li>
+<li><p>试验</p>
+<p> 使用 <code>“alt+e”</code> 键，输出</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo &#39;&lt;pre&gt;&#39;;var_dump($content);</span><br></pre></td></tr></table></figure>
+
+<p> 使用 <code>“alt+f”</code> 键，输出</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">file_put_contents(DATA_DIR.&#39;&#x2F;abcd.log&#39;,print_r($content,true),FILE_APPEND);</span><br></pre></td></tr></table></figure>
+
+<p> 出现这样的结果那么即成功。</p>
+</li>
+</ol>
+<hr>
+<p>参考文章：<a href="https://jinjiajin.net/792.html" target="_blank" rel="noopener">https://jinjiajin.net/792.html</a></p>
+]]></content>
+      <categories>
+        <category>Windows</category>
+      </categories>
+      <tags>
+        <tag>Sublime</tag>
+        <tag>快捷键</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>多机部署之使用NTPD服务平滑同步时间</title>
     <url>/2017/12/24/14.html</url>
     <content><![CDATA[<p>多机部署中时间的同步是很重要的，当然有人说了搞毛啊ntpdate命令直接同步不就完事了嘛。是的，这样的确可以达到同步时间的效果，但是会有一定的隐患，具体例子这里就不说明了，自行百度。下面就来介绍一下如何使用NTPD服务平滑同步时间。</p>
@@ -314,6 +314,30 @@
         <tag>多机部署</tag>
         <tag>NTPD</tag>
         <tag>时间平滑同步</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>多机部署之MySQL主从配置</title>
+    <url>/2018/01/01/17.html</url>
+    <content><![CDATA[<p>MySQL的主从配置可以让我们很好地减轻数据库的压力而完成更多的业务需求，下面笔者就来介绍一下简单的MySQL主从配置。</p>
+<a id="more"></a>
+<ol>
+<li>主（从）服务器配置，修改配置文件 <code>/etc/my.cnf</code> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">log-bin=mysql-bin #[必须]启用二进制日志</span><br><span class="line">server-id=110     #[必须]服务器唯一ID，默认是1，一般取IP最后一段</span><br></pre></td></tr></table></figure></li>
+<li>重启数据库 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/mysqld restart</span><br></pre></td></tr></table></figure></li>
+<li>登陆主服务器，给从服务器授权 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql &gt; GRANT REPLICATION SLAVE ON *.* TO '用户名'@'从服务器IP' identified by '密码';</span><br><span class="line"><span class="meta">#</span><span class="bash">查看是否添加成功</span></span><br><span class="line">mysql &gt; SELECT user,host,password FROM mysql.user;</span><br></pre></td></tr></table></figure></li>
+<li>查看主数据库状态 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql &gt; show master status;</span><br><span class="line"></span><br><span class="line">+——————+———-+————–+——————+——————-+</span><br><span class="line">| File | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |</span><br><span class="line">+——————+———-+————–+——————+——————-+</span><br><span class="line">| mysql-bin.000001 | 640 | | | |</span><br><span class="line">+——————+———-+————–+——————+——————-+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">这里需要记录File以及Position的值，在操作从服务器时会用到</span></span><br></pre></td></tr></table></figure></li>
+<li>登陆从数据库 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">执行sql</span></span><br><span class="line">mysql &gt; change master to master_host='主数据库ip',master_user='数据库登陆用户名',master_password='数据库登陆密码',master_log_file='mysql-bin.000001',master_log_pos=640;</span><br><span class="line"><span class="meta">#</span><span class="bash">启动同步进程</span></span><br><span class="line">mysql &gt; start slave;</span><br><span class="line"><span class="meta">#</span><span class="bash">主从同步检查</span></span><br><span class="line">mysql &gt; show slave status\G</span><br><span class="line"><span class="meta">#</span><span class="bash">可以看到：Slave_IO_Running | Slave_SQL_Running两个值都是YES，说明配置成功了</span></span><br></pre></td></tr></table></figure></li>
+<li>主从服务器测试 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">主服务器MySQL，建立数据库，并在这个库中建表插入一条数据</span></span><br><span class="line"><span class="meta">#</span><span class="bash">从服务器查看是否拥有此数据</span></span><br></pre></td></tr></table></figure></li>
+<li>MySQL主服务器给web服务器授权访问 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql &gt; GRANT ALL PRIVILEGES  ON 数据库名.* to '用户名'@'web服务器ip' identified by '密码';</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>多机部署</tag>
+        <tag>MySQL主从配置</tag>
       </tags>
   </entry>
   <entry>
@@ -400,31 +424,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Nginx配置--区分PC和WAP访问不同域名</title>
-    <url>/2018/01/13/18.html</url>
-    <content><![CDATA[<p>考虑到网站在多种设备下的兼容性，有很多网站会有手机版和电脑版两个版本。访问同一个网站URL，当服务器识别出用户使用电脑访问，就打开电脑版的页面，如果使用手机访问，就会得到手机版的页面。</p>
-<a id="more"></a>
-<p>要想让网站适配PC和WAP，首先要能做出准确的判断。HTTP请求的Header中的User-Agent可以区分客户端的浏览器类型，可以通过User-Agen来判断客户端的设备。<br><strong>下面举一个PC链接在WAP访问的例子：</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">    if ( $http_user_agent ~ "(MIDP)|(WAP)|(UP.Browser)|(Smartphone)|(Obigo)|(Mobile)|(AU.Browser)|(wxd.Mms)|(WxdB.Browser)|(CLDC)|(UP.Link)|(KM.Browser)|(UCWEB)|(SEMC-Browser)|(Mini)|(Symbian)|(Palm)|(Nokia)|(Panasonic)|(MOT-)|(SonyEricsson)|(NEC-)|(Alcatel)|(Ericsson)|(BENQ)|(BenQ)|(Amoisonic)|(Amoi-)|(Capitel)|(PHILIPS)|(SAMSUNG)|(Lenovo)|(Mitsu)|(Motorola)|(SHARP)|(WAPPER)|(LG-)|(LG/)|(EG900)|(CECT)|(Compal)|(kejian)|(Bird)|(BIRD)|(G900/V1.0)|(Arima)|(CTL)|(TDG)|(Daxian)|(DAXIAN)|(DBTEL)|(Eastcom)|(EASTCOM)|(PANTECH)|(Dopod)|(Haier)|(HAIER)|(KONKA)|(KEJIAN)|(LENOVO)|(Soutec)|(SOUTEC)|(SAGEM)|(SEC-)|(SED-)|(EMOL-)|(INNO55)|(ZTE)|(iPhone)|(Android)|(Windows CE)|(Wget)|(Java)|(curl)|(Opera)" ) &#123;</span><br><span class="line">        rewrite ^/(.*)$ http://m.nsxsg.com/wap/$1 last;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (!-e $request_filename) &#123;</span><br><span class="line">        rewrite  ^/(.*)$  /index.php/$1  last;</span><br><span class="line">        break;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>接下来解释一下其中的几个关键点：</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">location / &#123;&#125; #匹配所有的请求</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash">http_user_agent ~ “(一堆WAP匹配)” <span class="comment">#判断是wap</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash">http_user_agent !~ “(一堆WAP匹配)” <span class="comment">#判断不是wap</span></span></span><br><span class="line"></span><br><span class="line">rewrite regex replacement [flag] #rewrite重写，regex正则，replacement替换的内容，flag标志位（详情自行百度这里用last就可以了）</span><br></pre></td></tr></table></figure>
-
-<p>上述内容用一句话概括：</p>
-<blockquote>
-<p>匹配所有请求，如果客户端是wap，重写域名斜杠后面的所有内容为<a href="http://m.nsxsg.com/wap/......，即（类似于把http://www.nsxsg.com/member.html重写为http://m.nsxsg.com/wap/member.html）" target="_blank" rel="noopener">http://m.nsxsg.com/wap/......，即（类似于把http://www.nsxsg.com/member.html重写为http://m.nsxsg.com/wap/member.html）</a></p>
-</blockquote>
-<p>WAP链接在PC访问的具体配置自行修改。</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>NGINX</tag>
-        <tag>配置文件</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>MySQL无法重启的情况下备份数据库</title>
     <url>/2018/04/15/19.html</url>
     <content><![CDATA[<p>MySQL无法重启，报如下错误</p>
@@ -456,27 +455,28 @@
       </tags>
   </entry>
   <entry>
-    <title>多机部署之MySQL主从配置</title>
-    <url>/2018/01/01/17.html</url>
-    <content><![CDATA[<p>MySQL的主从配置可以让我们很好地减轻数据库的压力而完成更多的业务需求，下面笔者就来介绍一下简单的MySQL主从配置。</p>
+    <title>Nginx配置--区分PC和WAP访问不同域名</title>
+    <url>/2018/01/13/18.html</url>
+    <content><![CDATA[<p>考虑到网站在多种设备下的兼容性，有很多网站会有手机版和电脑版两个版本。访问同一个网站URL，当服务器识别出用户使用电脑访问，就打开电脑版的页面，如果使用手机访问，就会得到手机版的页面。</p>
 <a id="more"></a>
-<ol>
-<li>主（从）服务器配置，修改配置文件 <code>/etc/my.cnf</code> <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">log-bin=mysql-bin #[必须]启用二进制日志</span><br><span class="line">server-id=110     #[必须]服务器唯一ID，默认是1，一般取IP最后一段</span><br></pre></td></tr></table></figure></li>
-<li>重启数据库 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/mysqld restart</span><br></pre></td></tr></table></figure></li>
-<li>登陆主服务器，给从服务器授权 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql &gt; GRANT REPLICATION SLAVE ON *.* TO '用户名'@'从服务器IP' identified by '密码';</span><br><span class="line"><span class="meta">#</span><span class="bash">查看是否添加成功</span></span><br><span class="line">mysql &gt; SELECT user,host,password FROM mysql.user;</span><br></pre></td></tr></table></figure></li>
-<li>查看主数据库状态 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql &gt; show master status;</span><br><span class="line"></span><br><span class="line">+——————+———-+————–+——————+——————-+</span><br><span class="line">| File | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |</span><br><span class="line">+——————+———-+————–+——————+——————-+</span><br><span class="line">| mysql-bin.000001 | 640 | | | |</span><br><span class="line">+——————+———-+————–+——————+——————-+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">这里需要记录File以及Position的值，在操作从服务器时会用到</span></span><br></pre></td></tr></table></figure></li>
-<li>登陆从数据库 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">执行sql</span></span><br><span class="line">mysql &gt; change master to master_host='主数据库ip',master_user='数据库登陆用户名',master_password='数据库登陆密码',master_log_file='mysql-bin.000001',master_log_pos=640;</span><br><span class="line"><span class="meta">#</span><span class="bash">启动同步进程</span></span><br><span class="line">mysql &gt; start slave;</span><br><span class="line"><span class="meta">#</span><span class="bash">主从同步检查</span></span><br><span class="line">mysql &gt; show slave status\G</span><br><span class="line"><span class="meta">#</span><span class="bash">可以看到：Slave_IO_Running | Slave_SQL_Running两个值都是YES，说明配置成功了</span></span><br></pre></td></tr></table></figure></li>
-<li>主从服务器测试 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">主服务器MySQL，建立数据库，并在这个库中建表插入一条数据</span></span><br><span class="line"><span class="meta">#</span><span class="bash">从服务器查看是否拥有此数据</span></span><br></pre></td></tr></table></figure></li>
-<li>MySQL主服务器给web服务器授权访问 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql &gt; GRANT ALL PRIVILEGES  ON 数据库名.* to '用户名'@'web服务器ip' identified by '密码';</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
+<p>要想让网站适配PC和WAP，首先要能做出准确的判断。HTTP请求的Header中的User-Agent可以区分客户端的浏览器类型，可以通过User-Agen来判断客户端的设备。<br><strong>下面举一个PC链接在WAP访问的例子：</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">    if ( $http_user_agent ~ "(MIDP)|(WAP)|(UP.Browser)|(Smartphone)|(Obigo)|(Mobile)|(AU.Browser)|(wxd.Mms)|(WxdB.Browser)|(CLDC)|(UP.Link)|(KM.Browser)|(UCWEB)|(SEMC-Browser)|(Mini)|(Symbian)|(Palm)|(Nokia)|(Panasonic)|(MOT-)|(SonyEricsson)|(NEC-)|(Alcatel)|(Ericsson)|(BENQ)|(BenQ)|(Amoisonic)|(Amoi-)|(Capitel)|(PHILIPS)|(SAMSUNG)|(Lenovo)|(Mitsu)|(Motorola)|(SHARP)|(WAPPER)|(LG-)|(LG/)|(EG900)|(CECT)|(Compal)|(kejian)|(Bird)|(BIRD)|(G900/V1.0)|(Arima)|(CTL)|(TDG)|(Daxian)|(DAXIAN)|(DBTEL)|(Eastcom)|(EASTCOM)|(PANTECH)|(Dopod)|(Haier)|(HAIER)|(KONKA)|(KEJIAN)|(LENOVO)|(Soutec)|(SOUTEC)|(SAGEM)|(SEC-)|(SED-)|(EMOL-)|(INNO55)|(ZTE)|(iPhone)|(Android)|(Windows CE)|(Wget)|(Java)|(curl)|(Opera)" ) &#123;</span><br><span class="line">        rewrite ^/(.*)$ http://m.nsxsg.com/wap/$1 last;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (!-e $request_filename) &#123;</span><br><span class="line">        rewrite  ^/(.*)$  /index.php/$1  last;</span><br><span class="line">        break;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>接下来解释一下其中的几个关键点：</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">location / &#123;&#125; #匹配所有的请求</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash">http_user_agent ~ “(一堆WAP匹配)” <span class="comment">#判断是wap</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash">http_user_agent !~ “(一堆WAP匹配)” <span class="comment">#判断不是wap</span></span></span><br><span class="line"></span><br><span class="line">rewrite regex replacement [flag] #rewrite重写，regex正则，replacement替换的内容，flag标志位（详情自行百度这里用last就可以了）</span><br></pre></td></tr></table></figure>
+
+<p>上述内容用一句话概括：</p>
+<blockquote>
+<p>匹配所有请求，如果客户端是wap，重写域名斜杠后面的所有内容为<a href="http://m.nsxsg.com/wap/......，即（类似于把http://www.nsxsg.com/member.html重写为http://m.nsxsg.com/wap/member.html）" target="_blank" rel="noopener">http://m.nsxsg.com/wap/......，即（类似于把http://www.nsxsg.com/member.html重写为http://m.nsxsg.com/wap/member.html）</a></p>
+</blockquote>
+<p>WAP链接在PC访问的具体配置自行修改。</p>
 ]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>多机部署</tag>
-        <tag>MySQL主从配置</tag>
+        <tag>NGINX</tag>
+        <tag>配置文件</tag>
       </tags>
   </entry>
   <entry>
@@ -518,53 +518,6 @@
       <tags>
         <tag>数据库</tag>
         <tag>修改密码</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ubuntu系统下配置Apache虚拟主机</title>
-    <url>/2018/05/24/21.html</url>
-    <content><![CDATA[<p>Ubuntu系统下安装了Apache服务，想要通过IP、域名、端口访问多个Web应用。</p>
-<a id="more"></a>
-<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><blockquote>
-<p>此教程适合apt-get install apache2安装的apache</p>
-</blockquote>
-<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><ol>
-<li><p>进入配置文件目录</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /etc/apache2/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>配置文件说明</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apache2.conf  #apache总的配置文件</span><br><span class="line">ports.conf    #端口配置文件</span><br><span class="line">sites-enables/000-default.conf    #虚拟主机配置文件</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h2 id="配置多个虚拟主机"><a href="#配置多个虚拟主机" class="headerlink" title="配置多个虚拟主机"></a>配置多个虚拟主机</h2><ol>
-<li><p>使用不同的端口访问网站的不同目录</p>
-<ul>
-<li>新增目录 <code>/var/www/html1</code> ,新增文件<code>/var/www/html1/index.php</code>（index.php文件内容自定）</li>
-<li>修改 <code>ports.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Listen 8006</span><br></pre></td></tr></table></figure>
-效果如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdDN0MnhqMzBuNzA4cmpydi5qcGc?x-oss-process=image/format,png" alt=""></li>
-<li>修改 <code>sites-enables/000-default.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"> &lt;VirtualHost *:8006&gt;</span><br><span class="line">        ServerName 192.168.0.109</span><br><span class="line">        ServerAdmin webmaster@localhost</span><br><span class="line">        DocumentRoot /var/www/html1</span><br><span class="line"></span><br><span class="line">        ErrorLog $&#123;APACHE_LOG_DIR&#125;/error80.log</span><br><span class="line">        CustomLog $&#123;APACHE_LOG_DIR&#125;/access80.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
-内容如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDQuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVxcnYycnZqMzBydTBqZDQwcy5qcGc?x-oss-process=image/format,png" alt=""></li>
-<li>重启apache2<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/apache2 restart</span><br></pre></td></tr></table></figure></li>
-<li>访问 ( IP:8006 ) , 效果如下图<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdGhrcXFqMzBmMzA3Ymdsbi5qcGc?x-oss-process=image/format,png" alt=""></li>
-</ul>
-</li>
-<li><p>使用域名访问网站的不同目录</p>
-<ul>
-<li>修改本地host文件, 自定义一个域名, 指向服务器<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdHRqZ3NqMzBjdzA2N3dlaC5qcGc?x-oss-process=image/format,png" alt=""></li>
-<li>修改 <code>sites-enables/000-default.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"> &lt;VirtualHost *:80&gt;</span><br><span class="line">        ServerName abcd.com</span><br><span class="line">        ServerAdmin webmaster@localhost</span><br><span class="line">        DocumentRoot /var/www/html1</span><br><span class="line"></span><br><span class="line">        ErrorLog $&#123;APACHE_LOG_DIR&#125;/error801.log</span><br><span class="line">        CustomLog $&#123;APACHE_LOG_DIR&#125;/access801.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
-内容如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVxc2c4bDBqMzBvczBhN2pzYy5qcGc?x-oss-process=image/format,png" alt=""></li>
-<li>访问（<code>http://abcd.com</code>）, 效果如下图<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdTUxdjRqMzBkbTA2ZmdsbC5qcGc?x-oss-process=image/format,png" alt=""></li>
-</ul>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Apache</tag>
-        <tag>Ubuntu</tag>
       </tags>
   </entry>
   <entry>
@@ -616,29 +569,50 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>Git使用之开发者</title>
-    <url>/2018/10/18/23.html</url>
-    <content><![CDATA[<p>近年来Git的热度居高不下，本文是笔者对Git的一些常用命令做的记录。</p>
+    <title>Ubuntu系统下配置Apache虚拟主机</title>
+    <url>/2018/05/24/21.html</url>
+    <content><![CDATA[<p>Ubuntu系统下安装了Apache服务，想要通过IP、域名、端口访问多个Web应用。</p>
 <a id="more"></a>
-<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git init</span><br><span class="line"># 初始化本地仓库</span><br><span class="line"></span><br><span class="line">git remote add &lt;remote&gt; &lt;url&gt;</span><br><span class="line"># 添加远程版本库，remote可自行取名，默认origin，url为远程仓库的HTTPS或者SSH地址</span><br><span class="line"></span><br><span class="line">git remote -v</span><br><span class="line"># 查看远程版本库信息</span><br><span class="line"></span><br><span class="line">git remote remove &lt;remote&gt;</span><br><span class="line"># 删除远程remote链接</span><br><span class="line"></span><br><span class="line">git pull &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 下载代码及快速合并 remote为添加的版本库别名，branch可以是dev:master（dev为远端分支，master为本地分支）</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmx5MWZ0NGtjajdkcm5qMzBoMzBhdWdtYS5qcGc?x-oss-process=image/format,png" alt="image"></p>
-<h2 id="代码拉取和推送"><a href="#代码拉取和推送" class="headerlink" title="代码拉取和推送"></a>代码拉取和推送</h2><ul>
-<li><p><strong>每天开发之前需要先拉取一遍远程版本库的代码</strong>  </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git fetch &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 将远端库获取到本地但不合并，remote为添加的版本库别名，branch为远端的分支名</span><br><span class="line"></span><br><span class="line">git merge &lt;branch&gt;</span><br><span class="line"># 将获取的远端分支合并到本地目前所在的分支</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmx5MWZ0NGtjam9leWdqMzBmdDA5bHEzZi5qcGc?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><blockquote>
+<p>此教程适合apt-get install apache2安装的apache</p>
+</blockquote>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><ol>
+<li><p>进入配置文件目录</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /etc/apache2/</span><br></pre></td></tr></table></figure>
 </li>
-<li><p><strong>每天开发完成后进行代码提交（需要再次进行线上的拉取）</strong>  </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git add .</span><br><span class="line"># 添加所有改动到缓存区</span><br><span class="line"></span><br><span class="line">git commit -m &#39;描述&#39;</span><br><span class="line"># 提交缓存区内的文件，并提供描述</span><br><span class="line"></span><br><span class="line">git status</span><br><span class="line"># 查看当前版本状态（是否clean）</span><br><span class="line"></span><br><span class="line">git fetch &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 将远端库获取到本地但不合并，remote为添加的版本库别名，branch为远端的分支名</span><br><span class="line"></span><br><span class="line">git merge &lt;branch&gt;</span><br><span class="line"># 将获取的远端分支合并到本地目前所在的分支</span><br><span class="line"></span><br><span class="line">git push &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 上传代码及快速合并，remote为添加的版本库别名，branch可以是master:dev（master为本地分支，dev为远端分支）</span><br></pre></td></tr></table></figure>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDQuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmx5MWZ0NGtjazl6NW5qMzBnbjBleWFiMy5qcGc?x-oss-process=image/format,png" alt="image"></p>
+<li><p>配置文件说明</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apache2.conf  #apache总的配置文件</span><br><span class="line">ports.conf    #端口配置文件</span><br><span class="line">sites-enables/000-default.conf    #虚拟主机配置文件</span><br></pre></td></tr></table></figure>
+
 </li>
+</ol>
+<h2 id="配置多个虚拟主机"><a href="#配置多个虚拟主机" class="headerlink" title="配置多个虚拟主机"></a>配置多个虚拟主机</h2><ol>
+<li><p>使用不同的端口访问网站的不同目录</p>
+<ul>
+<li>新增目录 <code>/var/www/html1</code> ,新增文件<code>/var/www/html1/index.php</code>（index.php文件内容自定）</li>
+<li>修改 <code>ports.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Listen 8006</span><br></pre></td></tr></table></figure>
+效果如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdDN0MnhqMzBuNzA4cmpydi5qcGc?x-oss-process=image/format,png" alt=""></li>
+<li>修改 <code>sites-enables/000-default.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"> &lt;VirtualHost *:8006&gt;</span><br><span class="line">        ServerName 192.168.0.109</span><br><span class="line">        ServerAdmin webmaster@localhost</span><br><span class="line">        DocumentRoot /var/www/html1</span><br><span class="line"></span><br><span class="line">        ErrorLog $&#123;APACHE_LOG_DIR&#125;/error80.log</span><br><span class="line">        CustomLog $&#123;APACHE_LOG_DIR&#125;/access80.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+内容如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDQuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVxcnYycnZqMzBydTBqZDQwcy5qcGc?x-oss-process=image/format,png" alt=""></li>
+<li>重启apache2<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/apache2 restart</span><br></pre></td></tr></table></figure></li>
+<li>访问 ( IP:8006 ) , 效果如下图<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdGhrcXFqMzBmMzA3Ymdsbi5qcGc?x-oss-process=image/format,png" alt=""></li>
 </ul>
+</li>
+<li><p>使用域名访问网站的不同目录</p>
+<ul>
+<li>修改本地host文件, 自定义一个域名, 指向服务器<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdHRqZ3NqMzBjdzA2N3dlaC5qcGc?x-oss-process=image/format,png" alt=""></li>
+<li>修改 <code>sites-enables/000-default.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"> &lt;VirtualHost *:80&gt;</span><br><span class="line">        ServerName abcd.com</span><br><span class="line">        ServerAdmin webmaster@localhost</span><br><span class="line">        DocumentRoot /var/www/html1</span><br><span class="line"></span><br><span class="line">        ErrorLog $&#123;APACHE_LOG_DIR&#125;/error801.log</span><br><span class="line">        CustomLog $&#123;APACHE_LOG_DIR&#125;/access801.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+内容如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVxc2c4bDBqMzBvczBhN2pzYy5qcGc?x-oss-process=image/format,png" alt=""></li>
+<li>访问（<code>http://abcd.com</code>）, 效果如下图<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdTUxdjRqMzBkbTA2ZmdsbC5qcGc?x-oss-process=image/format,png" alt=""></li>
+</ul>
+</li>
+</ol>
 ]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Git</tag>
-        <tag>版本控制系统</tag>
+        <tag>Apache</tag>
+        <tag>Ubuntu</tag>
       </tags>
   </entry>
   <entry>
@@ -672,6 +646,32 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       <tags>
         <tag>ThinkPHP框架</tag>
         <tag>模型</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git使用之开发者</title>
+    <url>/2018/10/18/23.html</url>
+    <content><![CDATA[<p>近年来Git的热度居高不下，本文是笔者对Git的一些常用命令做的记录。</p>
+<a id="more"></a>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git init</span><br><span class="line"># 初始化本地仓库</span><br><span class="line"></span><br><span class="line">git remote add &lt;remote&gt; &lt;url&gt;</span><br><span class="line"># 添加远程版本库，remote可自行取名，默认origin，url为远程仓库的HTTPS或者SSH地址</span><br><span class="line"></span><br><span class="line">git remote -v</span><br><span class="line"># 查看远程版本库信息</span><br><span class="line"></span><br><span class="line">git remote remove &lt;remote&gt;</span><br><span class="line"># 删除远程remote链接</span><br><span class="line"></span><br><span class="line">git pull &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 下载代码及快速合并 remote为添加的版本库别名，branch可以是dev:master（dev为远端分支，master为本地分支）</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmx5MWZ0NGtjajdkcm5qMzBoMzBhdWdtYS5qcGc?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="代码拉取和推送"><a href="#代码拉取和推送" class="headerlink" title="代码拉取和推送"></a>代码拉取和推送</h2><ul>
+<li><p><strong>每天开发之前需要先拉取一遍远程版本库的代码</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git fetch &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 将远端库获取到本地但不合并，remote为添加的版本库别名，branch为远端的分支名</span><br><span class="line"></span><br><span class="line">git merge &lt;branch&gt;</span><br><span class="line"># 将获取的远端分支合并到本地目前所在的分支</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmx5MWZ0NGtjam9leWdqMzBmdDA5bHEzZi5qcGc?x-oss-process=image/format,png" alt="image"></p>
+</li>
+<li><p><strong>每天开发完成后进行代码提交（需要再次进行线上的拉取）</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git add .</span><br><span class="line"># 添加所有改动到缓存区</span><br><span class="line"></span><br><span class="line">git commit -m &#39;描述&#39;</span><br><span class="line"># 提交缓存区内的文件，并提供描述</span><br><span class="line"></span><br><span class="line">git status</span><br><span class="line"># 查看当前版本状态（是否clean）</span><br><span class="line"></span><br><span class="line">git fetch &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 将远端库获取到本地但不合并，remote为添加的版本库别名，branch为远端的分支名</span><br><span class="line"></span><br><span class="line">git merge &lt;branch&gt;</span><br><span class="line"># 将获取的远端分支合并到本地目前所在的分支</span><br><span class="line"></span><br><span class="line">git push &lt;remote&gt; &lt;branch&gt;</span><br><span class="line"># 上传代码及快速合并，remote为添加的版本库别名，branch可以是master:dev（master为本地分支，dev为远端分支）</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDQuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmx5MWZ0NGtjazl6NW5qMzBnbjBleWFiMy5qcGc?x-oss-process=image/format,png" alt="image"></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+        <tag>版本控制系统</tag>
       </tags>
   </entry>
   <entry>
@@ -711,48 +711,28 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>WordPress的IP验证不当漏洞处理过程</title>
-    <url>/2019/05/05/28.html</url>
-    <content><![CDATA[<p>今天登陆阿里云，站内信息提示我有漏洞需要处理。本文是笔者对WordPress的IP验证不当漏洞处理过程的记录。</p>
+    <title>Ubuntu下安装Redis</title>
+    <url>/2018/11/01/25.html</url>
+    <content><![CDATA[<p>许多的互联网公司将Redis作为数据库和缓存工具，本文笔者就如何在Ubuntu下安装Redis做一个记录。</p>
 <a id="more"></a>
-<h2 id="漏洞说明"><a href="#漏洞说明" class="headerlink" title="漏洞说明"></a>漏洞说明</h2><p>阿里云提示 WordPress IP验证不当漏洞</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2Nkbi5uc3hzZy5jb20vdXBsb2Fkcy8yMDE5MDQzMC8yMDE5MDQzMDEyMDU1OF9iNTU0ZmZlMjQ3M2UxYmRkYjdjMjg1OGI2MzJkZGEyNS5qcGVn?x-oss-process=image/format,png" alt="image"></p>
-<h2 id="修改方法"><a href="#修改方法" class="headerlink" title="修改方法"></a>修改方法</h2><ol>
-<li>进入http.php文件目录  </li>
-</ol>
-<p><code>[WordPress根目录]/wp-includes/http.php</code>  </p>
-<ol start="2">
-<li>定位到http.php文件第550行左右，修改正则表达式</li>
-</ol>
-<p><strong>原文件内容：</strong>  </p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2Nkbi5uc3hzZy5jb20vdXBsb2Fkcy8yMDE5MDQzMC8yMDE5MDQzMDEyMDU1OV9jYWQ3OTRjYWViN2NiN2IwMzdjMWI1ZTQ5YjEzYzFkOS5qcGVn?x-oss-process=image/format,png" alt="image"></p>
-<p><strong>修改后的文件内容：</strong></p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2Nkbi5uc3hzZy5jb20vdXBsb2Fkcy8yMDE5MDQzMC8yMDE5MDQzMDEyMDU1OV9lMGZmNTFkYWM0YTg5NDM0MGRmNzgyYzRmNGUyM2ZiYy5qcGVn?x-oss-process=image/format,png" alt="image"></p>
-<ol start="3">
-<li>定位到http.php文件第566行左右，修改ip验证</li>
-</ol>
-<p><strong>原文件内容：</strong></p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2Nkbi5uc3hzZy5jb20vdXBsb2Fkcy8yMDE5MDUwNi8yMDE5MDUwNjEyMDYxN181MzM4ZWY4NmY0Y2ZmMjg4MGIxNzdjZTJhMjFjMDA1NS5qcGVn?x-oss-process=image/format,png" alt="image"></p>
-<p><strong>修改后的文件内容：</strong></p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2Nkbi5uc3hzZy5jb20vdXBsb2Fkcy8yMDE5MDUwNi8yMDE5MDUwNjEyMDYxN19iNmFiNGMxYjA4ZDM5N2NhYjUyNTQ3ZWM0MzMyOTliOC5qcGVn?x-oss-process=image/format,png" alt="image"></p>
-<h2 id="测试漏洞"><a href="#测试漏洞" class="headerlink" title="测试漏洞"></a>测试漏洞</h2><ol>
-<li>去阿里云重新验证漏洞</li>
-</ol>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2Nkbi5uc3hzZy5jb20vdXBsb2Fkcy8yMDE5MDQzMC8yMDE5MDQzMDEyMDU1OV9hNTc5MmNmOGUxZmMzMzZhODc4NDdjZjFlNGExZWUxMC5qcGVn?x-oss-process=image/format,png" alt="image"></p>
-<ol start="2">
-<li>验证成功</li>
-</ol>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2Nkbi5uc3hzZy5jb20vdXBsb2Fkcy8yMDE5MDQzMC8yMDE5MDQzMDEyMDU1OV8xNTQwMGNiMzhkNDI3M2YxNTI3NjI2NGQ1MTIyZmUzYS5qcGVn?x-oss-process=image/format,png" alt="image"></p>
-<hr>
-<p>参考文章<a href="https://blog.csdn.net/dclnet/article/details/81869078" target="_blank" rel="noopener">https://blog.csdn.net/dclnet/article/details/81869078</a></p>
+<p><strong>1. 安装Redis服务器端</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install -y redis-server</span><br></pre></td></tr></table></figure>
+<p><strong>2. 查看Redis状态</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo /etc/init.d/redis-server status</span><br></pre></td></tr></table></figure>
+<p><strong>3. 链接Redis</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo redis-cli -h 127.0.0.1 -p 6379</span><br></pre></td></tr></table></figure>
+<p><strong>4. 简单操作</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看所有的key</span></span><br><span class="line">127.0.0.1:6379&gt; keys *</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置一个key</span></span><br><span class="line">127.0.0.1:6379&gt; set key1 'hello world'</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看key</span></span><br><span class="line">127.0.0.1:6379&gt; get key1</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除key</span></span><br><span class="line">127.0.0.1:6379&gt; del key1</span><br></pre></td></tr></table></figure>
+
+<p><strong>5. 删除Redis</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get remove -y redis-server</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>PHP</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>SSRF漏洞</tag>
-        <tag>WordPress</tag>
-        <tag>安全漏洞</tag>
+        <tag>Redis</tag>
+        <tag>Ubuntu</tag>
       </tags>
   </entry>
   <entry>
@@ -803,31 +783,6 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>Ubuntu下安装Redis</title>
-    <url>/2018/11/01/25.html</url>
-    <content><![CDATA[<p>许多的互联网公司将Redis作为数据库和缓存工具，本文笔者就如何在Ubuntu下安装Redis做一个记录。</p>
-<a id="more"></a>
-<p><strong>1. 安装Redis服务器端</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install -y redis-server</span><br></pre></td></tr></table></figure>
-<p><strong>2. 查看Redis状态</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo /etc/init.d/redis-server status</span><br></pre></td></tr></table></figure>
-<p><strong>3. 链接Redis</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo redis-cli -h 127.0.0.1 -p 6379</span><br></pre></td></tr></table></figure>
-<p><strong>4. 简单操作</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看所有的key</span></span><br><span class="line">127.0.0.1:6379&gt; keys *</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 设置一个key</span></span><br><span class="line">127.0.0.1:6379&gt; set key1 'hello world'</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看key</span></span><br><span class="line">127.0.0.1:6379&gt; get key1</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除key</span></span><br><span class="line">127.0.0.1:6379&gt; del key1</span><br></pre></td></tr></table></figure>
-
-<p><strong>5. 删除Redis</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get remove -y redis-server</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Redis</tag>
-        <tag>Ubuntu</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ThinkPHP5.1使用PHPExcel进行数据的导入导出</title>
     <url>/2019/01/18/27.html</url>
     <content><![CDATA[<p>数据的批量导入和导出是一个项目的基本功能，本文笔者介绍一下如何在ThinkPHP框架中使用PHPExcel进行数据的导入和导出。</p>
@@ -874,6 +829,51 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       <tags>
         <tag>ThinkPHP框架</tag>
         <tag>PHPExcel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>WordPress的IP验证不当漏洞处理过程</title>
+    <url>/2019/05/05/28.html</url>
+    <content><![CDATA[<p>今天登陆阿里云，站内信息提示我有漏洞需要处理。本文是笔者对WordPress的IP验证不当漏洞处理过程的记录。</p>
+<a id="more"></a>
+<h2 id="漏洞说明"><a href="#漏洞说明" class="headerlink" title="漏洞说明"></a>漏洞说明</h2><p>阿里云提示 WordPress IP验证不当漏洞</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2Nkbi5uc3hzZy5jb20vdXBsb2Fkcy8yMDE5MDQzMC8yMDE5MDQzMDEyMDU1OF9iNTU0ZmZlMjQ3M2UxYmRkYjdjMjg1OGI2MzJkZGEyNS5qcGVn?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="修改方法"><a href="#修改方法" class="headerlink" title="修改方法"></a>修改方法</h2><ol>
+<li>进入http.php文件目录  </li>
+</ol>
+<p><code>[WordPress根目录]/wp-includes/http.php</code>  </p>
+<ol start="2">
+<li>定位到http.php文件第550行左右，修改正则表达式</li>
+</ol>
+<p><strong>原文件内容：</strong>  </p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2Nkbi5uc3hzZy5jb20vdXBsb2Fkcy8yMDE5MDQzMC8yMDE5MDQzMDEyMDU1OV9jYWQ3OTRjYWViN2NiN2IwMzdjMWI1ZTQ5YjEzYzFkOS5qcGVn?x-oss-process=image/format,png" alt="image"></p>
+<p><strong>修改后的文件内容：</strong></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2Nkbi5uc3hzZy5jb20vdXBsb2Fkcy8yMDE5MDQzMC8yMDE5MDQzMDEyMDU1OV9lMGZmNTFkYWM0YTg5NDM0MGRmNzgyYzRmNGUyM2ZiYy5qcGVn?x-oss-process=image/format,png" alt="image"></p>
+<ol start="3">
+<li>定位到http.php文件第566行左右，修改ip验证</li>
+</ol>
+<p><strong>原文件内容：</strong></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2Nkbi5uc3hzZy5jb20vdXBsb2Fkcy8yMDE5MDUwNi8yMDE5MDUwNjEyMDYxN181MzM4ZWY4NmY0Y2ZmMjg4MGIxNzdjZTJhMjFjMDA1NS5qcGVn?x-oss-process=image/format,png" alt="image"></p>
+<p><strong>修改后的文件内容：</strong></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2Nkbi5uc3hzZy5jb20vdXBsb2Fkcy8yMDE5MDUwNi8yMDE5MDUwNjEyMDYxN19iNmFiNGMxYjA4ZDM5N2NhYjUyNTQ3ZWM0MzMyOTliOC5qcGVn?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="测试漏洞"><a href="#测试漏洞" class="headerlink" title="测试漏洞"></a>测试漏洞</h2><ol>
+<li>去阿里云重新验证漏洞</li>
+</ol>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2Nkbi5uc3hzZy5jb20vdXBsb2Fkcy8yMDE5MDQzMC8yMDE5MDQzMDEyMDU1OV9hNTc5MmNmOGUxZmMzMzZhODc4NDdjZjFlNGExZWUxMC5qcGVn?x-oss-process=image/format,png" alt="image"></p>
+<ol start="2">
+<li>验证成功</li>
+</ol>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2Nkbi5uc3hzZy5jb20vdXBsb2Fkcy8yMDE5MDQzMC8yMDE5MDQzMDEyMDU1OV8xNTQwMGNiMzhkNDI3M2YxNTI3NjI2NGQ1MTIyZmUzYS5qcGVn?x-oss-process=image/format,png" alt="image"></p>
+<hr>
+<p>参考文章<a href="https://blog.csdn.net/dclnet/article/details/81869078" target="_blank" rel="noopener">https://blog.csdn.net/dclnet/article/details/81869078</a></p>
+]]></content>
+      <categories>
+        <category>PHP</category>
+      </categories>
+      <tags>
+        <tag>SSRF漏洞</tag>
+        <tag>WordPress</tag>
+        <tag>安全漏洞</tag>
       </tags>
   </entry>
   <entry>
@@ -1096,6 +1096,52 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>Windows10下dnmp环境搭建</title>
+    <url>/2019/11/25/31.html</url>
+    <content><![CDATA[<p>本文是对Windows10系统下搭建dnmp环境的步骤做一次记录，顺便对搭建过程中遇到的问题进行相应的说明。</p>
+<a id="more"></a>
+<h2 id="安装MySQL"><a href="#安装MySQL" class="headerlink" title="安装MySQL"></a>安装MySQL</h2><ol>
+<li>去<a href="https://hub.docker.com/_/mysql?tab=tags" target="_blank" rel="noopener">仓库</a>找到相应的镜像</li>
+<li>在命令行中输入以下命令</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 拉取镜像</span><br><span class="line">docker pull mysql:5.7</span><br><span class="line">&#x2F;&#x2F; 启动容器</span><br><span class="line">docker run -p 3306:3306 --name mysql5.7 -d -v D:\dnmp\mysql:&#x2F;var&#x2F;lib&#x2F;mysql -e MYSQL_ROOT_PASSWORD&#x3D;123456 mysql:5.7</span><br><span class="line"></span><br><span class="line">注释：   </span><br><span class="line">--name mysql5.7 -- 容器名称  </span><br><span class="line">D:\dnmp\mysql:&#x2F;var&#x2F;lib&#x2F;mysql -- 冒号前面是本地路径，冒号后面是容器中的路径【默认不动】</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>进入容器</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker exec -it mysql5.7 &#x2F;bin&#x2F;bash</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装PHP"><a href="#安装PHP" class="headerlink" title="安装PHP"></a>安装PHP</h2><ol>
+<li>去<a href="https://hub.docker.com/_/php?tab=tags" target="_blank" rel="noopener">仓库</a>找到相应的镜像</li>
+<li>在命令行中输入以下命令</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 拉取镜像</span><br><span class="line">docker pull php:7.2-fpm</span><br><span class="line">&#x2F;&#x2F; 启动容器</span><br><span class="line">docker run --name  php-fpm7.2 -p 9000:9000 -v D:\dnmp\www:&#x2F;www -d php:7.2-fpm</span><br><span class="line"></span><br><span class="line">注释：</span><br><span class="line">D:\dnmp\www:&#x2F;www -- 冒号前面是本地路径（项目目录），冒号后面是容器中的路径【默认不动】</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>进入容器安装PDO扩展</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker exec -it php-fpm7.2 &#x2F;bin&#x2F;bash</span><br><span class="line">cd &#x2F;usr&#x2F;local&#x2F;bin&#x2F;</span><br><span class="line">docker-php-ext-install pdo pdo_mysql</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong> php要连接docker中运行的mysql是不能用localhost,127.0.0.1来连接的，因为每个docker运行容器的localhost、127.0.0.1都是自己容器本身，不是mysql容器，需要修改成母机 IP，或者是mysql容器名称。php中连接的 mysql host填写mysql 不用 localhost 或127.0.0.1</p>
+<h2 id="安装Nginx"><a href="#安装Nginx" class="headerlink" title="安装Nginx"></a>安装Nginx</h2><ol>
+<li>去<a href="https://hub.docker.com/_/nginx?tab=tags" target="_blank" rel="noopener">仓库</a>找到相应的镜像  </li>
+<li>在命令行输入以下命令</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 拉取镜像</span><br><span class="line">docker pull nginx:latest</span><br><span class="line">&#x2F;&#x2F; 启动容器</span><br><span class="line">docker run --name nginx -p 80:80 -v D:\dnmp\www:&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html:ro -v  D:\dnmp\nginx\conf\conf.d:&#x2F;etc&#x2F;nginx&#x2F;conf.d:ro -d nginx</span><br><span class="line"></span><br><span class="line">注释：</span><br><span class="line">D:\dnmp\www:&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html:ro -- 本地项目路径：容器项目路径：ro 【此处是映射关系，照样修改即可，ro指同步】</span><br><span class="line">D:\dnmp\nginx\conf\conf.d:&#x2F;etc&#x2F;nginx&#x2F;conf.d:ro -- 本地项目路径：容器项目路径：ro 【此处是映射关系，照样修改即可，ro指同步】</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Nginx配置文件</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  jingyi.com;</span><br><span class="line"></span><br><span class="line">    location &#x2F; &#123;</span><br><span class="line">        &#x2F;&#x2F; 项目根目录，注意目录结构</span><br><span class="line">        root   &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;public;</span><br><span class="line">        index  index.html index.htm index.php;</span><br><span class="line"></span><br><span class="line">        if (!-e $request_filename) &#123;</span><br><span class="line">            rewrite  ^(.*)$  &#x2F;index.php?s&#x3D;&#x2F;$1  last;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    error_page   500 502 503 504  &#x2F;50x.html;</span><br><span class="line">    location &#x3D; &#x2F;50x.html &#123;</span><br><span class="line">        &#x2F;&#x2F; 项目根目录，注意目录结构</span><br><span class="line">        root   &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;public;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location ~ \.php$ &#123;</span><br><span class="line">        fastcgi_pass   php:9000;</span><br><span class="line">        fastcgi_index  index.php;</span><br><span class="line">        &#x2F;&#x2F; 项目根目录，注意目录结构</span><br><span class="line">        fastcgi_param  SCRIPT_FILENAME  &#x2F;www&#x2F;public&#x2F;$fastcgi_script_name;</span><br><span class="line">        include        fastcgi_params;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Windows</category>
+      </categories>
+      <tags>
+        <tag>dnmp环境</tag>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用Dockerfile+Compose搭建dnmp开发环境</title>
     <url>/2019/11/27/32.html</url>
     <content><![CDATA[<p>本文是对Windows10系统下使用Dockerfile+Compose搭建dnmp开发环境的步骤做一次记录，顺便对搭建过程中遇到的问题进行相应的说明。</p>
@@ -1164,6 +1210,25 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>Windows10下Docker无法共享磁盘卷</title>
+    <url>/2019/11/28/33.html</url>
+    <content><![CDATA[<p>使用Docker-Compose启动时，无法共享本地磁盘卷，并且在 <code>Settings -&gt; Shared Drives</code> 中重新设置并单击 <code>Apply</code> 后，仍然失败无法应用。</p>
+<a id="more"></a>
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><ol>
+<li>查看docker日志，日志位置为： <code>C:\Users\[本机用户名]\AppData\Local\Docker</code> 。查看是否有权限问题，<em>基本不显示</em> 。</li>
+<li>修改策略组权限： <code>运行 -&gt; gpedit.msc -&gt; 计算机配置 -&gt; Windows设置 -&gt; 安全设置 -&gt; 本地策略 -&gt; 安全选项 -&gt; 网络访问：本地账户的共享和安全模式</code> 打开，设置为 <code>经典</code> 。</li>
+<li>保存后重新设置docker的共享文件。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Windows</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>磁盘共享</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用JS实现银行卡卡号和手机号的中间数字以星号表示</title>
     <url>/2017/09/27/4.html</url>
     <content><![CDATA[<p>在WAP开发过程中，肯定遇到过银行卡卡号和手机号的中间数字是星号的情况。下面来介绍一下如何使用原生JS实现这个功能。</p>
@@ -1191,68 +1256,100 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>Windows10下dnmp环境搭建</title>
-    <url>/2019/11/25/31.html</url>
-    <content><![CDATA[<p>本文是对Windows10系统下搭建dnmp环境的步骤做一次记录，顺便对搭建过程中遇到的问题进行相应的说明。</p>
+    <title>Centos环境下PHP5.3开启curl_init扩展</title>
+    <url>/2017/09/28/5.html</url>
+    <content><![CDATA[<p>Centos环境下PHP5.3开启curl_init扩展，也可根据此方法开启其它的PHP扩展。</p>
 <a id="more"></a>
-<h2 id="安装MySQL"><a href="#安装MySQL" class="headerlink" title="安装MySQL"></a>安装MySQL</h2><ol>
-<li>去<a href="https://hub.docker.com/_/mysql?tab=tags" target="_blank" rel="noopener">仓库</a>找到相应的镜像</li>
-<li>在命令行中输入以下命令</li>
+<ol>
+<li>进入到PHP源码包目录</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 拉取镜像</span><br><span class="line">docker pull mysql:5.7</span><br><span class="line">&#x2F;&#x2F; 启动容器</span><br><span class="line">docker run -p 3306:3306 --name mysql5.7 -d -v D:\dnmp\mysql:&#x2F;var&#x2F;lib&#x2F;mysql -e MYSQL_ROOT_PASSWORD&#x3D;123456 mysql:5.7</span><br><span class="line"></span><br><span class="line">注释：   </span><br><span class="line">--name mysql5.7 -- 容器名称  </span><br><span class="line">D:\dnmp\mysql:&#x2F;var&#x2F;lib&#x2F;mysql -- 冒号前面是本地路径，冒号后面是容器中的路径【默认不动】</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd 【PHP源码包目录】/ext/curl</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>运行phpize脚本</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/usr/local/php/bin/phpize</span><br></pre></td></tr></table></figure>
 
 <ol start="3">
-<li>进入容器</li>
+<li>编译安装模块</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker exec -it mysql5.7 &#x2F;bin&#x2F;bash</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./configure --with-php-config=/usr/local/php/bin/php-config --with-curl=DIR</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
 
-<h2 id="安装PHP"><a href="#安装PHP" class="headerlink" title="安装PHP"></a>安装PHP</h2><ol>
-<li>去<a href="https://hub.docker.com/_/php?tab=tags" target="_blank" rel="noopener">仓库</a>找到相应的镜像</li>
-<li>在命令行中输入以下命令</li>
+<p><strong>看清楚出现的提示，就说明成功了。然后去他给出的路径 <code>/usr/local/php/lib/php/extensions/no-debug-non-zts-20100525/</code> 目录下看看是否有 <code>curl.so</code> 文件</strong></p>
+<ol start="4">
+<li>配置php.ini文件，再最后加上 <code>extension=curl.so</code> </li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 拉取镜像</span><br><span class="line">docker pull php:7.2-fpm</span><br><span class="line">&#x2F;&#x2F; 启动容器</span><br><span class="line">docker run --name  php-fpm7.2 -p 9000:9000 -v D:\dnmp\www:&#x2F;www -d php:7.2-fpm</span><br><span class="line"></span><br><span class="line">注释：</span><br><span class="line">D:\dnmp\www:&#x2F;www -- 冒号前面是本地路径（项目目录），冒号后面是容器中的路径【默认不动】</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo 'extension=curl.so' &gt;&gt; /usr/local/php/php.ini</span><br></pre></td></tr></table></figure>
 
-<ol start="3">
-<li>进入容器安装PDO扩展</li>
+<ol start="5">
+<li>重启PHP</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker exec -it php-fpm7.2 &#x2F;bin&#x2F;bash</span><br><span class="line">cd &#x2F;usr&#x2F;local&#x2F;bin&#x2F;</span><br><span class="line">docker-php-ext-install pdo pdo_mysql</span><br></pre></td></tr></table></figure>
-
-<p><strong>注意：</strong> php要连接docker中运行的mysql是不能用localhost,127.0.0.1来连接的，因为每个docker运行容器的localhost、127.0.0.1都是自己容器本身，不是mysql容器，需要修改成母机 IP，或者是mysql容器名称。php中连接的 mysql host填写mysql 不用 localhost 或127.0.0.1</p>
-<h2 id="安装Nginx"><a href="#安装Nginx" class="headerlink" title="安装Nginx"></a>安装Nginx</h2><ol>
-<li>去<a href="https://hub.docker.com/_/nginx?tab=tags" target="_blank" rel="noopener">仓库</a>找到相应的镜像  </li>
-<li>在命令行输入以下命令</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 拉取镜像</span><br><span class="line">docker pull nginx:latest</span><br><span class="line">&#x2F;&#x2F; 启动容器</span><br><span class="line">docker run --name nginx -p 80:80 -v D:\dnmp\www:&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html:ro -v  D:\dnmp\nginx\conf\conf.d:&#x2F;etc&#x2F;nginx&#x2F;conf.d:ro -d nginx</span><br><span class="line"></span><br><span class="line">注释：</span><br><span class="line">D:\dnmp\www:&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html:ro -- 本地项目路径：容器项目路径：ro 【此处是映射关系，照样修改即可，ro指同步】</span><br><span class="line">D:\dnmp\nginx\conf\conf.d:&#x2F;etc&#x2F;nginx&#x2F;conf.d:ro -- 本地项目路径：容器项目路径：ro 【此处是映射关系，照样修改即可，ro指同步】</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>Nginx配置文件</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  jingyi.com;</span><br><span class="line"></span><br><span class="line">    location &#x2F; &#123;</span><br><span class="line">        &#x2F;&#x2F; 项目根目录，注意目录结构</span><br><span class="line">        root   &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;public;</span><br><span class="line">        index  index.html index.htm index.php;</span><br><span class="line"></span><br><span class="line">        if (!-e $request_filename) &#123;</span><br><span class="line">            rewrite  ^(.*)$  &#x2F;index.php?s&#x3D;&#x2F;$1  last;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    error_page   500 502 503 504  &#x2F;50x.html;</span><br><span class="line">    location &#x3D; &#x2F;50x.html &#123;</span><br><span class="line">        &#x2F;&#x2F; 项目根目录，注意目录结构</span><br><span class="line">        root   &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;public;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location ~ \.php$ &#123;</span><br><span class="line">        fastcgi_pass   php:9000;</span><br><span class="line">        fastcgi_index  index.php;</span><br><span class="line">        &#x2F;&#x2F; 项目根目录，注意目录结构</span><br><span class="line">        fastcgi_param  SCRIPT_FILENAME  &#x2F;www&#x2F;public&#x2F;$fastcgi_script_name;</span><br><span class="line">        include        fastcgi_params;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/php-fpm restart</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>Windows</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>dnmp环境</tag>
-        <tag>Docker</tag>
+        <tag>PHP5.3扩展</tag>
       </tags>
   </entry>
   <entry>
-    <title>Windows10下Docker无法共享磁盘卷</title>
-    <url>/2019/11/28/33.html</url>
-    <content><![CDATA[<p>使用Docker-Compose启动时，无法共享本地磁盘卷，并且在 <code>Settings -&gt; Shared Drives</code> 中重新设置并单击 <code>Apply</code> 后，仍然失败无法应用。</p>
+    <title>MySql开启安全审计（audit审计插件）</title>
+    <url>/2017/09/28/6.html</url>
+    <content><![CDATA[<p>为了安全和操作的可追溯性考虑，越来越多的公司加入了审计功能。MySql5.5推出了相关的审计功能，到5.6.20功能进一步完善。下面来介绍一下如何开启MySql的audit审计功能。</p>
 <a id="more"></a>
-<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><ol>
-<li>查看docker日志，日志位置为： <code>C:\Users\[本机用户名]\AppData\Local\Docker</code> 。查看是否有权限问题，<em>基本不显示</em> 。</li>
-<li>修改策略组权限： <code>运行 -&gt; gpedit.msc -&gt; 计算机配置 -&gt; Windows设置 -&gt; 安全设置 -&gt; 本地策略 -&gt; 安全选项 -&gt; 网络访问：本地账户的共享和安全模式</code> 打开，设置为 <code>经典</code> 。</li>
-<li>保存后重新设置docker的共享文件。</li>
+<ol>
+<li>查看MySql插件目录，即plugin目录</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; show global variables like &#39;plugin_fir&#39;;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>下载二进制包：<a href="https://bintray.com/mcafee/mysql-audit-plugin/release" target="_blank" rel="noopener">https://bintray.com/mcafee/mysql-audit-plugin/release</a>包含了5.1，5.5，5.6对应的二进制包（如果在plugin目录下有 <code>libaudit_plugin.so</code> 文件，就不用下载了），复制下载的so文件至MySql插件目录</li>
+<li>在线开启audit</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; INSTALL PLUGIN AUDIT SONAME &#39;libaudit_plugin.so&#39;;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>查看对应的版本</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; show global status like &#39;AUDIT_version&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><em>有结果即安装成功！</em>  <strong>查看audit的相关命令：</strong><br><code>mysql &gt; show global variables like &#39;%audit%&#39;;</code><br><strong>设置相关的参数：</strong><br><code>mysql &gt; set global (填写查询后的audit相关命令) = ......;</code></p>
+<ol start="5">
+<li>开启audit功能（关闭就把On改成Off）</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; set global audit_json_file&#x3D;On;</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>执行Sql语句（对数据库数据有操作就行），看MySql数据目录的 <code>mysql-audit.json</code> 文件是否有变化 <code>（【MySql安装目录】/data/mysql-audit.json）</code></li>
 </ol>
 ]]></content>
       <categories>
-        <category>Windows</category>
+        <category>MySQL</category>
       </categories>
       <tags>
-        <tag>Docker</tag>
-        <tag>磁盘共享</tag>
+        <tag>audit审计插件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用PHPMailer封装类发送邮件</title>
+    <url>/2017/09/30/7.html</url>
+    <content><![CDATA[<p>近期，打算做一个邮箱注册，使用的是smtp服务。可是奇怪的是在本地调试是好的，一搬到阿里云的服务器上就不行了。想了好久没有答案，所以提了一下工单给阿里云，以下是阿里云的回复。</p>
+<a id="more"></a>
+<blockquote>
+<p>由于国际与国内均对垃圾邮件进行严格管控，我国《互联网信息服务管理办法》、《中国互联网协会反垃圾邮件规范》均对垃圾邮件进行说明与管理规范。鉴于服务器25端口被大量垃圾邮件充斥，严重影响广大用户正常使用。为了共同维护良好的网络环境，自即日起阿里云新购服务器不再提供25端口邮件服务，建议您尝试使用465加密端口发送邮件，或与邮件发信提供商咨询是否还有其他smtp发信端口。</p>
+</blockquote>
+<p>好吧，原来是25端口不能用了。改呗，换端口，可是换完之后本地也不能用了。天哪，这是怎么回事。想了一想，原本是好的，但是换了端口就不行了，那么肯定是这个邮件发送类不支持其它端口。马上换个邮件发送类，在GitHub搜索<a href="https://github.com/PHPMailer/PHPMailer" target="_blank" rel="noopener">PHPMailer</a>， 一堆英文看不懂，尴尬了。好在看到了一个A Simple Example，行，照着改呗。下面就贴出这个简单的例子及我的一些中文注释。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="comment">// Import PHPMailer classes into the global namespace</span></span><br><span class="line">	<span class="comment">// These must be at the top of your script, not inside a function</span></span><br><span class="line">	<span class="comment">// use PHPMailer\PHPMailer\PHPMailer;</span></span><br><span class="line">	<span class="comment">// use PHPMailer\PHPMailer\Exception;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//Load composer’s autoloader</span></span><br><span class="line">	<span class="comment">// require ‘vendor/autoload.php’;</span></span><br><span class="line">	<span class="comment">//导入文件，文件内容自己去GitHub下载，地址：https://github.com/PHPMailer/PHPMailer</span></span><br><span class="line">    <span class="keyword">require</span> <span class="string">'./PHPMailer.php'</span>;</span><br><span class="line">    <span class="keyword">require</span> <span class="string">'./SMTP.php'</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	mail = <span class="keyword">new</span> PHPMailer(<span class="keyword">true</span>);                              <span class="comment">// Passing true enables exceptions</span></span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">	    <span class="comment">//Server settings（服务器设置）</span></span><br><span class="line">	    mail-&gt;SMTPDebug = <span class="number">2</span>;                                 <span class="comment">// Enable verbose debug output（启用详细调试输出）</span></span><br><span class="line">	    mail-&gt;isSMTP();                                      <span class="comment">// Set mailer to use SMTP（设置使用SMTP服务）</span></span><br><span class="line">	    mail-&gt;Host = <span class="string">'smtp.163.com'</span>;                         <span class="comment">// Specify main and backup SMTP servers（SMTP服务器）</span></span><br><span class="line">	    mail-&gt;SMTPAuth = <span class="keyword">true</span>;                               <span class="comment">// Enable SMTP authentication（启用SMTP验证）</span></span><br><span class="line">	    mail-&gt;Username = <span class="string">'abcde@163.com'</span>;                    <span class="comment">// SMTP username</span></span><br><span class="line">	    mail-&gt;Password = <span class="string">'abcde123456'</span>;                      <span class="comment">// SMTP password</span></span><br><span class="line">	    mail-&gt;SMTPSecure = <span class="string">'ssl'</span>;                            <span class="comment">// Enable TLS encryption, ssl also accepted（启用TLS加密，ssl也被接受）</span></span><br><span class="line">	    $mail-&gt;Port = <span class="number">465</span>;                                    <span class="comment">// TCP port to connect to（要连接的TCP端口）</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">//Recipients（收件人）</span></span><br><span class="line">		$mail-&gt;setFrom(<span class="string">'abcde@163.com'</span>, <span class="string">'Mailer'</span>);            <span class="comment">//Mailer随便写一个名字</span></span><br><span class="line">		$mail-&gt;addAddress(<span class="string">'123456@qq.com'</span>, <span class="string">'Joe User'</span>);       <span class="comment">// Add a recipient（添加一个收件人）</span></span><br><span class="line">		$mail-&gt;addAddress(<span class="string">'ellen@example.com'</span>);               <span class="comment">// Name is optional（再添加一个收件人，其中Joe User及名字可以不写）</span></span><br><span class="line">		$mail-&gt;addReplyTo(<span class="string">'info@example.com'</span>, <span class="string">'Information'</span>); <span class="comment">//抄送</span></span><br><span class="line">		<span class="comment">// $mail-&gt;addCC('cc@example.com');</span></span><br><span class="line">		<span class="comment">// $mail-&gt;addBCC('bcc@example.com');</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">//Attachments（附件）</span></span><br><span class="line">		$mail-&gt;addAttachment(<span class="string">'/var/tmp/file.tar.gz'</span>);         <span class="comment">// Add attachments（添加一个文件在服务器上的完整路径）</span></span><br><span class="line">		<span class="comment">// $mail-&gt;addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">//Content（邮件内容）</span></span><br><span class="line">		$mail-&gt;isHTML(<span class="keyword">true</span>);                                  <span class="comment">// Set email format to HTML</span></span><br><span class="line">		$mail-&gt;Subject = <span class="string">'Here is the subject'</span>;               <span class="comment">// 邮件标题</span></span><br><span class="line">		$mail-&gt;Body    = <span class="string">'This is the HTML message body &lt;b&gt;in bold!&lt;/b&gt;'</span>;               <span class="comment">//邮件内容（可以使用html标签）</span></span><br><span class="line">		<span class="comment">// $mail-&gt;AltBody = 'This is the body in plain text for non-HTML mail clients';</span></span><br><span class="line">		</span><br><span class="line">		$mail-&gt;send();</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">'Message has been sent'</span>;</span><br><span class="line">	&#125; <span class="keyword">catch</span> (<span class="keyword">Exception</span> e) &#123;</span><br><span class="line">	    <span class="keyword">echo</span> <span class="string">'Message could not be sent.'</span>;</span><br><span class="line">	    <span class="comment">// echo 'Mailer Error: ' . mail-&gt;ErrorInfo;          // 具体报错信息，基本不用，歪果仁写的就是好，一用就成功</span></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>各位大神，如果有好的见解，记得告诉我，让我完善完善。</strong></p>
+]]></content>
+      <categories>
+        <category>PHP</category>
+      </categories>
+      <tags>
+        <tag>PHPMailer</tag>
+        <tag>smtp服务</tag>
+        <tag>邮件发送类</tag>
       </tags>
   </entry>
   <entry>
@@ -1347,103 +1444,6 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
         <tag>LNMP</tag>
         <tag>一键脚本</tag>
         <tag>运行环境</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySql开启安全审计（audit审计插件）</title>
-    <url>/2017/09/28/6.html</url>
-    <content><![CDATA[<p>为了安全和操作的可追溯性考虑，越来越多的公司加入了审计功能。MySql5.5推出了相关的审计功能，到5.6.20功能进一步完善。下面来介绍一下如何开启MySql的audit审计功能。</p>
-<a id="more"></a>
-<ol>
-<li>查看MySql插件目录，即plugin目录</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; show global variables like &#39;plugin_fir&#39;;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>下载二进制包：<a href="https://bintray.com/mcafee/mysql-audit-plugin/release" target="_blank" rel="noopener">https://bintray.com/mcafee/mysql-audit-plugin/release</a>包含了5.1，5.5，5.6对应的二进制包（如果在plugin目录下有 <code>libaudit_plugin.so</code> 文件，就不用下载了），复制下载的so文件至MySql插件目录</li>
-<li>在线开启audit</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; INSTALL PLUGIN AUDIT SONAME &#39;libaudit_plugin.so&#39;;</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>查看对应的版本</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; show global status like &#39;AUDIT_version&#39;;</span><br></pre></td></tr></table></figure>
-
-<p><em>有结果即安装成功！</em>  <strong>查看audit的相关命令：</strong><br><code>mysql &gt; show global variables like &#39;%audit%&#39;;</code><br><strong>设置相关的参数：</strong><br><code>mysql &gt; set global (填写查询后的audit相关命令) = ......;</code></p>
-<ol start="5">
-<li>开启audit功能（关闭就把On改成Off）</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; set global audit_json_file&#x3D;On;</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>执行Sql语句（对数据库数据有操作就行），看MySql数据目录的 <code>mysql-audit.json</code> 文件是否有变化 <code>（【MySql安装目录】/data/mysql-audit.json）</code></li>
-</ol>
-]]></content>
-      <categories>
-        <category>MySQL</category>
-      </categories>
-      <tags>
-        <tag>audit审计插件</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Centos环境下PHP5.3开启curl_init扩展</title>
-    <url>/2017/09/28/5.html</url>
-    <content><![CDATA[<p>Centos环境下PHP5.3开启curl_init扩展，也可根据此方法开启其它的PHP扩展。</p>
-<a id="more"></a>
-<ol>
-<li>进入到PHP源码包目录</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd 【PHP源码包目录】/ext/curl</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>运行phpize脚本</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/usr/local/php/bin/phpize</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>编译安装模块</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./configure --with-php-config=/usr/local/php/bin/php-config --with-curl=DIR</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
-
-<p><strong>看清楚出现的提示，就说明成功了。然后去他给出的路径 <code>/usr/local/php/lib/php/extensions/no-debug-non-zts-20100525/</code> 目录下看看是否有 <code>curl.so</code> 文件</strong></p>
-<ol start="4">
-<li>配置php.ini文件，再最后加上 <code>extension=curl.so</code> </li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo 'extension=curl.so' &gt;&gt; /usr/local/php/php.ini</span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>重启PHP</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/php-fpm restart</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>PHP5.3扩展</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用PHPMailer封装类发送邮件</title>
-    <url>/2017/09/30/7.html</url>
-    <content><![CDATA[<p>近期，打算做一个邮箱注册，使用的是smtp服务。可是奇怪的是在本地调试是好的，一搬到阿里云的服务器上就不行了。想了好久没有答案，所以提了一下工单给阿里云，以下是阿里云的回复。</p>
-<a id="more"></a>
-<blockquote>
-<p>由于国际与国内均对垃圾邮件进行严格管控，我国《互联网信息服务管理办法》、《中国互联网协会反垃圾邮件规范》均对垃圾邮件进行说明与管理规范。鉴于服务器25端口被大量垃圾邮件充斥，严重影响广大用户正常使用。为了共同维护良好的网络环境，自即日起阿里云新购服务器不再提供25端口邮件服务，建议您尝试使用465加密端口发送邮件，或与邮件发信提供商咨询是否还有其他smtp发信端口。</p>
-</blockquote>
-<p>好吧，原来是25端口不能用了。改呗，换端口，可是换完之后本地也不能用了。天哪，这是怎么回事。想了一想，原本是好的，但是换了端口就不行了，那么肯定是这个邮件发送类不支持其它端口。马上换个邮件发送类，在GitHub搜索<a href="https://github.com/PHPMailer/PHPMailer" target="_blank" rel="noopener">PHPMailer</a>， 一堆英文看不懂，尴尬了。好在看到了一个A Simple Example，行，照着改呗。下面就贴出这个简单的例子及我的一些中文注释。</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="comment">// Import PHPMailer classes into the global namespace</span></span><br><span class="line">	<span class="comment">// These must be at the top of your script, not inside a function</span></span><br><span class="line">	<span class="comment">// use PHPMailer\PHPMailer\PHPMailer;</span></span><br><span class="line">	<span class="comment">// use PHPMailer\PHPMailer\Exception;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//Load composer’s autoloader</span></span><br><span class="line">	<span class="comment">// require ‘vendor/autoload.php’;</span></span><br><span class="line">	<span class="comment">//导入文件，文件内容自己去GitHub下载，地址：https://github.com/PHPMailer/PHPMailer</span></span><br><span class="line">    <span class="keyword">require</span> <span class="string">'./PHPMailer.php'</span>;</span><br><span class="line">    <span class="keyword">require</span> <span class="string">'./SMTP.php'</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	mail = <span class="keyword">new</span> PHPMailer(<span class="keyword">true</span>);                              <span class="comment">// Passing true enables exceptions</span></span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">	    <span class="comment">//Server settings（服务器设置）</span></span><br><span class="line">	    mail-&gt;SMTPDebug = <span class="number">2</span>;                                 <span class="comment">// Enable verbose debug output（启用详细调试输出）</span></span><br><span class="line">	    mail-&gt;isSMTP();                                      <span class="comment">// Set mailer to use SMTP（设置使用SMTP服务）</span></span><br><span class="line">	    mail-&gt;Host = <span class="string">'smtp.163.com'</span>;                         <span class="comment">// Specify main and backup SMTP servers（SMTP服务器）</span></span><br><span class="line">	    mail-&gt;SMTPAuth = <span class="keyword">true</span>;                               <span class="comment">// Enable SMTP authentication（启用SMTP验证）</span></span><br><span class="line">	    mail-&gt;Username = <span class="string">'abcde@163.com'</span>;                    <span class="comment">// SMTP username</span></span><br><span class="line">	    mail-&gt;Password = <span class="string">'abcde123456'</span>;                      <span class="comment">// SMTP password</span></span><br><span class="line">	    mail-&gt;SMTPSecure = <span class="string">'ssl'</span>;                            <span class="comment">// Enable TLS encryption, ssl also accepted（启用TLS加密，ssl也被接受）</span></span><br><span class="line">	    $mail-&gt;Port = <span class="number">465</span>;                                    <span class="comment">// TCP port to connect to（要连接的TCP端口）</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">//Recipients（收件人）</span></span><br><span class="line">		$mail-&gt;setFrom(<span class="string">'abcde@163.com'</span>, <span class="string">'Mailer'</span>);            <span class="comment">//Mailer随便写一个名字</span></span><br><span class="line">		$mail-&gt;addAddress(<span class="string">'123456@qq.com'</span>, <span class="string">'Joe User'</span>);       <span class="comment">// Add a recipient（添加一个收件人）</span></span><br><span class="line">		$mail-&gt;addAddress(<span class="string">'ellen@example.com'</span>);               <span class="comment">// Name is optional（再添加一个收件人，其中Joe User及名字可以不写）</span></span><br><span class="line">		$mail-&gt;addReplyTo(<span class="string">'info@example.com'</span>, <span class="string">'Information'</span>); <span class="comment">//抄送</span></span><br><span class="line">		<span class="comment">// $mail-&gt;addCC('cc@example.com');</span></span><br><span class="line">		<span class="comment">// $mail-&gt;addBCC('bcc@example.com');</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">//Attachments（附件）</span></span><br><span class="line">		$mail-&gt;addAttachment(<span class="string">'/var/tmp/file.tar.gz'</span>);         <span class="comment">// Add attachments（添加一个文件在服务器上的完整路径）</span></span><br><span class="line">		<span class="comment">// $mail-&gt;addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">//Content（邮件内容）</span></span><br><span class="line">		$mail-&gt;isHTML(<span class="keyword">true</span>);                                  <span class="comment">// Set email format to HTML</span></span><br><span class="line">		$mail-&gt;Subject = <span class="string">'Here is the subject'</span>;               <span class="comment">// 邮件标题</span></span><br><span class="line">		$mail-&gt;Body    = <span class="string">'This is the HTML message body &lt;b&gt;in bold!&lt;/b&gt;'</span>;               <span class="comment">//邮件内容（可以使用html标签）</span></span><br><span class="line">		<span class="comment">// $mail-&gt;AltBody = 'This is the body in plain text for non-HTML mail clients';</span></span><br><span class="line">		</span><br><span class="line">		$mail-&gt;send();</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">'Message has been sent'</span>;</span><br><span class="line">	&#125; <span class="keyword">catch</span> (<span class="keyword">Exception</span> e) &#123;</span><br><span class="line">	    <span class="keyword">echo</span> <span class="string">'Message could not be sent.'</span>;</span><br><span class="line">	    <span class="comment">// echo 'Mailer Error: ' . mail-&gt;ErrorInfo;          // 具体报错信息，基本不用，歪果仁写的就是好，一用就成功</span></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>各位大神，如果有好的见解，记得告诉我，让我完善完善。</strong></p>
-]]></content>
-      <categories>
-        <category>PHP</category>
-      </categories>
-      <tags>
-        <tag>PHPMailer</tag>
-        <tag>smtp服务</tag>
-        <tag>邮件发送类</tag>
       </tags>
   </entry>
 </search>
